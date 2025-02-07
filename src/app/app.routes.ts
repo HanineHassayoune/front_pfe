@@ -5,6 +5,12 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ExceptionsComponent } from './dashboards/exceptions/exceptions.component';
 import { TicketsComponent } from './dashboards/tickets/tickets.component';
 import { CompteComponent } from './dashboards/compte/compte.component';
+import { CardComponent } from './components/card/card.component';
+import { AddTicketComponent } from './dashboards/add-ticket/add-ticket.component';
+import { UsersComponent } from './dashboards/users/users.component';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { RadialChartComponent } from './components/radial-chart/radial-chart.component';
+
 
 export const routes: Routes = [
     {path:'navbar',component:NavbarDashboardComponent},
@@ -13,6 +19,12 @@ export const routes: Routes = [
     {path:'exceptions',component:ExceptionsComponent},
     {path:'tickets',component:TicketsComponent},
     {path:'compte',component:CompteComponent},
+    {path:'card',component:CardComponent},
+    {path:'addticket',component:AddTicketComponent},
+    {path:'users',component:UsersComponent},
+    {path:'pieChart',component:PieChartComponent},
+    {path:'radialChart',component:RadialChartComponent}
+
 
 
 ];
