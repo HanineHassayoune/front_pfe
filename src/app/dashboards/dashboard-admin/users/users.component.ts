@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { TableComponent } from '../../components/table/table.component';
+import { TableComponent } from '../../../components/table/table.component';
 import { CommonModule } from '@angular/common';
-import { PieChartComponent } from '../../components/pie-chart/pie-chart.component';
+import { PieChartComponent } from '../../../components/pie-chart/pie-chart.component';
 
 
 @Component({

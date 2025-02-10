@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { KinbanComponent } from '../../components/kinban/kinban.component';
+import { KinbanComponent } from '../../../components/kinban/kinban.component';
 import { CommonModule } from '@angular/common';
 
 @Component({

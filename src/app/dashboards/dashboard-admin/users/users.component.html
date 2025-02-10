@@ -5,6 +5,7 @@
         <div class="flex ms-6 ">
           <app-pie-chart ></app-pie-chart>
         </div> 
+
         <div class="flex">
           <app-table 
             class="w-full mx-auto p-4"
@@ -14,12 +15,14 @@
             [actionButtonText]="'Modifier'">
           </app-table>
         </div> 
+
         <!-- Bouton pour ouvrir la modale -->
         <div class="flex  ms-6">
             <button id="open-modal-btn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5" (click)="openModal()">
               Ajouter un utilisateur
             </button>
         </div>
+        
         <div *ngIf="isModalOpen" class="fixed inset-0 bg-gray-200 bg-opacity-2 z-40">
             <!-- Modale principale -->
             <div id="user-modal" tabindex="-1" aria-hidden="true" [ngClass]="{'hidden': !isModalOpen}" class="fixed inset-0 flex justify-center items-center z-50">

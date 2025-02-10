@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { TableComponent } from '../../components/table/table.component';
-import { KinbanComponent } from '../../components/kinban/kinban.component';
-import { CardComponent } from '../../components/card/card.component';
+import { TableComponent } from '../../../components/table/table.component';
+import { KinbanComponent } from '../../../components/kinban/kinban.component';
+import { CardComponent } from '../../../components/card/card.component';
 
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { TableComponent } from '../../components/table/table.component';
-import { RadialChartComponent } from '../../components/radial-chart/radial-chart.component';
+import { TableComponent } from '../../../components/table/table.component';
+import { RadialChartComponent } from '../../../components/radial-chart/radial-chart.component';
 
 
 @Component({

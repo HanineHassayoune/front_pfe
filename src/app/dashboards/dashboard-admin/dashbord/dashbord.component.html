@@ -1,8 +1,11 @@
 
-<app-navbar-dashboard></app-navbar-dashboard>
+<app-navbar-dashboard 
+[imageUrl]="'../../../assets/images/logo.png'"
+[userName]="'Admin'"
+[userAvatarUrl]="'../../../assets/images/avatar.png'"></app-navbar-dashboard>
 <div class="flex overflow-hidden bg-white pt-16">
 
-    <app-sidebar></app-sidebar>
+    <app-sidebar [links]="links"></app-sidebar>
   
 <!--   <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
     <main>

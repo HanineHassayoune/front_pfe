@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DashbordComponent } from './dashboards/dashbord/dashbord.component';
+import { DashbordComponent } from './dashboards/dashboard-admin/dashbord/dashbord.component';
+import { DashboardTesteurComponent } from './dashboards/dashboard-testeur/dashboard-testeur/dashboard-testeur.component';
+import { DashboardDeveloppeurComponent } from './dashboards/dashboard-developpeur/dashboard-developpeur/dashboard-developpeur.component';
 
 
 
@@ -9,7 +11,7 @@ import { DashbordComponent } from './dashboards/dashbord/dashbord.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,DashbordComponent],
+  imports: [RouterOutlet,DashbordComponent,DashboardTesteurComponent,DashboardDeveloppeurComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
