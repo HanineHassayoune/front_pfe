@@ -12,6 +12,13 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { RadialChartComponent } from './components/radial-chart/radial-chart.component';
 import { NotificationsComponent } from './dashboards/dashboard-testeur/notifications/notifications.component';
 import { TicketsDevComponent } from './dashboards/dashboard-developpeur/tickets-dev/tickets-dev.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { PartnersComponent } from './dashboards/dashboard-systeme/partners/partners.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { DashbordComponent } from './dashboards/dashboard-admin/dashbord/dashbord.component';
+
 
 
 export const routes: Routes = [
@@ -28,6 +35,12 @@ export const routes: Routes = [
     {path:'radialChart',component:RadialChartComponent},
     {path:'notifications',component:NotificationsComponent},
     {path:'ticketsdev',component:TicketsDevComponent},
+    {path:'login',component:LoginComponent},
+    {path:'forgot-password',component:ForgotPasswordComponent},
+    {path:'register',component:RegisterComponent},
+    {path:'partners',component:PartnersComponent},
+    {path:'reset-password',component:ResetPasswordComponent},
+  
     
 
 

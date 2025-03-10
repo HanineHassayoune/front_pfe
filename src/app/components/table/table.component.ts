@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-table',
@@ -12,6 +12,15 @@ export class TableComponent {
   @Input() title: string = '';
   @Input() columns: { field: string, header: string }[] = [];
   @Input() data: any[] = [];
-  @Input() actionButtonText: string = ''; 
+  @Input() actionButtonText1: string = ''; 
+  @Input() actionButtonText2: string = '';
+  @Output() tableAction = new EventEmitter<any>();
+
+  handleActionClick(row: any) {
+    this.tableAction.emit(row);
+  }
+
+  
+  
 
 }

@@ -2,9 +2,9 @@
     <div class="flex overflow-hidden  pt-16">
       <div id="main-content" class="h-full w-full  relative overflow-y-auto lg:ml-64">
         
-        <div class="flex ms-6 ">
+        <!-- <div class="flex ms-6 ">
           <app-pie-chart ></app-pie-chart>
-        </div> 
+        </div> --> 
 
         <div class="flex">
           <app-table 
@@ -12,87 +12,76 @@
             [title]="'La Liste des utilisateurs'"
             [columns]="columns"
             [data]="rows"
-            [actionButtonText]="'Modifier'">
+            [actionButtonText1]="'Activate'"
+            [actionButtonText2]="'Activate'"
+            (tableAction)="acceptUser($event.id)">
           </app-table>
         </div> 
 
         <!-- Bouton pour ouvrir la modale -->
         <div class="flex  ms-6">
-            <button id="open-modal-btn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5" (click)="openModal()">
-              Ajouter un utilisateur
+            <button id="open-modal-btn"  class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none" (click)="openModal()">
+              Add user
             </button>
         </div>
         
-        <div *ngIf="isModalOpen" class="fixed inset-0 bg-gray-200 bg-opacity-2 z-40">
-            <!-- Modale principale -->
-            <div id="user-modal" tabindex="-1" aria-hidden="true" [ngClass]="{'hidden': !isModalOpen}" class="fixed inset-0 flex justify-center items-center z-50">
-              <div class="relative p-4 w-full max-w-lg max-h-full">
-                <div class="relative bg-white rounded-lg shadow-md">
-                  
-                  <!-- En-tête de la modale -->
-                  <div class="flex items-center justify-between p-4 border-b rounded-t">
-                    <h3 class="text-lg font-semibold text-gray-900">
-                      Ajouter un Utilisateur
-                    </h3>
-                    <button type="button" (click)="closeModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 rounded-lg w-8 h-8 inline-flex justify-center items-center">
-                      <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </div>
-          
-                  <!-- Contenu du formulaire -->
-                  <div class="p-6">
-                    <form class="space-y-6">
-                      <div>
-                        <label class="block text-sm font-medium mb-2">Nom</label>
-                        <input type="text" placeholder="Entrez le nom" class="w-full p-2 border rounded-md focus:ring focus:ring-blue-300">
-                      </div>
-          
-                      <div>
-                        <label class="block text-sm font-medium mb-2">Email</label>
-                        <input type="email" placeholder="Entrez l'email" class="w-full p-2 border rounded-md">
-                      </div>
-          
-                      <div>
-                        <label class="block text-sm font-medium mb-2">Date de Naissance</label>
-                        <input type="date" class="w-full p-2 border rounded-md">
-                      </div>
-          
-                      <div>
-                        <label class="block text-sm font-medium mb-2">CIN</label>
-                        <input type="text" placeholder="Entrez le CIN" class="w-full p-2 border rounded-md">
-                      </div>
-          
-                      <!--select option-->
-                      <div>
-                        <label class="block text-sm font-medium mb-2">Rôle</label>
-                        <select class="w-full p-2 border rounded-md">
-                          <option value="developpeur">Développeur</option>
-                          <option value="testeur">Testeur</option>
-                          <option value="admin">Admin</option>
-                        </select>
-                      </div>
-                      <!--select option-->
-                      <div>
-                        <label class="block text-sm font-medium mb-2">Équipe</label>
-                        <select class="w-full p-2 border rounded-md">
-                          <option value="devops">DevOps</option>
-                          <option value="front">Front-End</option>
-                          <option value="back">Back-End</option>
-                        </select>
-                      </div>
-          
-                      <button type="button" class="bg-blue-500 text-white w-full p-2 rounded-md hover:bg-blue-600" (click)="submitUser()">
-                        Ajouter l'Utilisateur
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
 
+
+        <app-modal *ngIf="isModalOpen" (closeModalEvent)="closeModal()">
+          <!-- Titre de la modale -->
+          <div modal-title>
+            Add user
+          </div>
+        
+          <!-- Contenu de la modale -->
+          <div modal-body>
+            <form class="space-y-4">
+              <!-- Champ Nom -->
+              <div>
+                <label class="block text-sm font-medium mb-2 text-gray-700">Name</label>
+                <input type="text"  name="name" class="w-full p-3 border rounded-md focus:ring focus:ring-blue-300">
+              </div>
+        
+              <!-- Champ Email -->
+              <div>
+                <label class="block text-sm font-medium mb-2 text-gray-700">Email</label>
+                <input type="email"  name="email" class="w-full p-3 border rounded-md">
+              </div>
+        
+              <!-- Liste déroulante Rôle -->
+              <div>
+                <label class="block text-sm font-medium mb-2 text-gray-700">Role</label>
+                <select  name="role" class="w-full p-3 border rounded-md">
+                  <option value="" disabled selected>Select a role</option>
+                  <option value="developpeur">Developper</option>
+                  <option value="testeur">Tester</option>
+                </select>
+              </div>
+
+              <!-- Liste déroulante Team -->
+              <div>
+                <label class="block text-sm font-medium mb-2 text-gray-700">Team</label>
+                <select  name="role" class="w-full p-3 border rounded-md">
+                  <option value="front-end" selected>Front-end</option>
+                  <option value="back-end">Back-end</option>
+                  <option value="devops">Devops</option>
+                </select>
+              </div>
+
+              <!-- Champ Password -->
+              <div>
+                <label class="block text-sm font-medium mb-2 text-gray-700">Password</label>
+                <input type="password"  name="Password" class="w-full p-3 border rounded-md">
+              </div>
+        
+              <!-- Bouton Ajouter -->
+              <button type="button"  class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none" >
+                Ajouter
+              </button>
+            </form>
+          </div>
+        </app-modal>
+        
 
       </div>
     </div>
