@@ -1,0 +1,14 @@
+<app-navbar-dashboard 
+  [imageUrl]="'../../../assets/images/logo.png'"
+  [userName]="'Partner'"
+  [userAvatarUrl]="'../../../assets/images/avatar.png'">
+</app-navbar-dashboard>
+
+<div class="flex overflow-hidden bg-white pt-16">
+  <app-sidebar [links]="links"></app-sidebar>
+  
+  <!-- Contenu principal où s'afficheront les composants en fonction des routes -->
+  <div class="content w-full ">
+    <router-outlet></router-outlet>
+  </div>
+</div>
