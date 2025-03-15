@@ -17,6 +17,9 @@ export class SidebarComponent {
   }
 
   @Input() links: { name: string; href: string; iconPath: string }[] = [];
+  @Input() userAvatarUrl: string = '';  
+  @Input() userName: string = '';
+  
 
   
 }

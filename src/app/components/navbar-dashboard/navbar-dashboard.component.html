@@ -1,34 +1,17 @@
-<nav class="bg-white border-b border-gray-200 fixed z-30 w-full">
-    <div class="px-3 py-3 lg:px-5 lg:pl-3">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center justify-start">
-       
-          <!-- <a href="" class="text-xl font-bold flex items-center lg:ml-2.5">
-            <img src="../../../assets/images/logo.png" class="h-10 mr-2" alt="Wind Logo" >
-            <span class="self-center whitespace-nowrap">Windster</span> 
-          </a> -->
-          <a href="" class="text-xl font-bold flex items-center lg:ml-2.5">
-            <img *ngIf="imageUrl" [src]="imageUrl" class="h-10 mr-2" alt="Logo">
-            <!-- <span *ngIf="title" class="self-center whitespace-nowrap">{{ title }}</span> -->
-           <!--  <span class="self-center whitespace-nowrap">Windster</span>  -->
-          </a>
-          
-    
+<nav class="bg-white border-b border-gray-200 fixed top-0 left-0 z-30 w-full lg:w-[calc(100%-16rem)] lg:left-64">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start">
+        <a href="" class="text-xl font-bold flex items-center lg:ml-2.5">
+          <img *ngIf="imageUrl" [src]="imageUrl" class="h-10 mr-2" alt="Logo">
+        </a>
+      </div>
+      <div class="flex items-center">
+        <div *ngIf="userName || userAvatarUrl" class="flex items-center space-x-4">
+          <span *ngIf="userName" class="text-base font-normal text-gray-700">{{ userName }}</span>
+          <img *ngIf="userAvatarUrl" [src]="userAvatarUrl" alt="User Avatar" class="w-8 h-8 rounded-full">
         </div>
-        <div class="flex items-center">
-            <!-- <div class="flex items-center space-x-4">
-                <span class="text-base font-normal text-gray-700">Admin</span>
-                <img src="../../../assets/images/avatar.png" alt="User Avatar" class="w-8 h-8 rounded-full">
-              </div> -->
-              <div *ngIf="userName || userAvatarUrl" class="flex items-center space-x-4">
-                <span *ngIf="userName" class="text-base font-normal text-gray-700">{{ userName }}</span>
-                <img *ngIf="userAvatarUrl" [src]="userAvatarUrl" alt="User Avatar" class="w-8 h-8 rounded-full">
-              </div>
-          </div>
       </div>
     </div>
-  </nav>
-
-
-  
-  
+  </div>
+</nav>
