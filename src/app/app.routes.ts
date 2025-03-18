@@ -21,6 +21,9 @@ import { DashboardAdminComponent } from './dashboards/admin/dashboard-admin/dash
 import { DashboardTesterComponent } from './dashboards/tester/dashboard-tester/dashboard-tester.component';
 import { DashboardDeveloppeurComponent } from './dashboards/developper/dashboard-developpeur/dashboard-developpeur.component';
 import { DashboardPartnerComponent } from './dashboards/partner/dashboard-partner/dashboard-partner.component';
+import { authGuard } from './services/auth.guard';
+
+
 
 
 
@@ -43,20 +46,22 @@ export const routes: Routes = [
     {path:'register',component:RegisterComponent},
     {path:'partners',component:PartnersComponent},
     {path:'reset-password',component:ResetPasswordComponent},
-    { path: 'login', component: LoginComponent },
+   
 
     {
-        path: 'admin',
-        component: DashboardAdminComponent, 
-        data: { role: 'admin' },
-        children: [
-          { path: 'partners', component: PartnersComponent } 
-        ]
+      path: 'admin',
+      component: DashboardAdminComponent, 
+      canActivate: [authGuard], 
+      data: { role: 'ADMIN' },
+      children: [
+        { path: 'partners', component: PartnersComponent } 
+      ]
     },
     { 
       path: 'tester', 
       component: DashboardTesterComponent, 
-      data: { role: 'tester' },
+      canActivate: [authGuard], 
+      data: { role: 'TESTER' },
       children: [
         {path:'addticket',component:AddTicketComponent},
         {path:'notifications',component:NotificationsComponent},
@@ -65,7 +70,8 @@ export const routes: Routes = [
     { 
       path: 'developper', 
       component:DashboardDeveloppeurComponent,
-      data: { role: 'developper' },
+      canActivate: [authGuard], 
+      data: { role: 'DEVELOPPER' },
       children: [
         {path:'ticketsdev',component:TicketsDevComponent},
       
@@ -75,14 +81,14 @@ export const routes: Routes = [
     { 
       path: 'partner', 
       component:DashboardPartnerComponent,
-      data: { role: 'partner' },
+      canActivate: [authGuard], 
+      data: { role: 'PARTNER' },
       children: [
         {path:'compte',component:CompteComponent},
         {path:'exceptions',component:ExceptionsComponent},
         {path:'tickets',component:TicketsComponent},
         {path:'users',component:UsersComponent},
-        
-       
+         
       ]
     },
   

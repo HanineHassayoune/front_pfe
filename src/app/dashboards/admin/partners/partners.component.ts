@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TableComponent } from '../../../components/table/table.component';
-import { ModalComponent } from '../../../components/modal/modal.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterService } from '../../../services/register.service';
 import { ActivationService } from '../../../services/activation.service';
@@ -8,7 +7,7 @@ import { ActivationService } from '../../../services/activation.service';
 @Component({
   selector: 'app-partners',
   standalone: true,
-  imports: [TableComponent,ModalComponent,FormsModule],
+  imports: [TableComponent,FormsModule],
   templateUrl: './partners.component.html',
   styleUrl: './partners.component.css'
 })

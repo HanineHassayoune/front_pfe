@@ -4,12 +4,15 @@ import { CommonModule } from '@angular/common';
 import { PieChartComponent } from '../../../components/pie-chart/pie-chart.component';
 import { RegisterService } from '../../../services/register.service';
 import { ModalComponent } from '../../../components/modal/modal.component';
+import { UserService } from '../../../services/user.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
 
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [TableComponent,CommonModule,PieChartComponent,ModalComponent],
+  imports: [TableComponent,CommonModule,PieChartComponent,ModalComponent,ReactiveFormsModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -20,18 +23,26 @@ export class UsersComponent implements OnInit {
   ];
 
   rows: { name: string; email: string }[] = [];
-
-
+  isModalOpen = false;
+  userForm: FormGroup;
 
   constructor(
     private registerService: RegisterService,
-
-  ) {} // Injection of service
+    private userService: UserService,
+    private fb: FormBuilder
+  ) {
+    this.userForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      role: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
 
   ngOnInit() {
     this.loadUsers();
   }
-
+  
   // get users which they demand for registration 
   loadUsers() {
     this.registerService.getData().subscribe({
@@ -65,13 +76,6 @@ export class UsersComponent implements OnInit {
   }
  
 
- /*  onTableActionClick(event: any) {
-    console.log("Action clicked:", event);
-  }
-   */
-
-  isModalOpen = false;
-
   openModal(): void {
     this.isModalOpen = true;
   }
@@ -79,9 +83,19 @@ export class UsersComponent implements OnInit {
   closeModal(): void {
     this.isModalOpen = false;
   }
-  submitUser() {
-    alert('Utilisateur est ajouté avec succès !');
-    this.closeModal();
-  }
 
+  submitUser() {
+    if (this.userForm.valid) {
+      this.userService.addUser(this.userForm.value).subscribe({
+        next: () => {
+          alert('Utilisateur ajouté avec succès !');
+          this.closeModal();
+          this.loadUsers(); 
+        },
+        error: (err) => console.error('Erreur lors de l’ajout de l’utilisateur:', err),
+      });
+    } else {
+      alert("Veuillez remplir tous les champs correctement.");
+    }
+  }
 }

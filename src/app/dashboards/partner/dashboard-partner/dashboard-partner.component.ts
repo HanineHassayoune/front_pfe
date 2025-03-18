@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { NavbarDashboardComponent } from '../../../components/navbar-dashboard/navbar-dashboard.component';
 import { FooterDashboardComponent } from '../../../components/footer-dashboard/footer-dashboard.component';
 import { SidebarComponent } from '../../../components/sidebar/sidebar.component';
-import { RouterModule } from '@angular/router';
+import {Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+
 
 @Component({
   selector: 'app-dashboard-partner',
@@ -13,11 +15,11 @@ import { RouterModule } from '@angular/router';
 })
 export class DashboardPartnerComponent {
   links = [
-    {
+    /* {
       name: 'Exceptions',
       href: '/partner/exceptions',
       iconPath: 'M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v5a1 1 0 1 0 2 0V8Zm-1 7a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z" clip-rule="evenodd',
-    },
+    }, */
     {
       name: 'Tickets',
       href: '/partner/tickets',
@@ -33,9 +35,26 @@ export class DashboardPartnerComponent {
       href: '/partner/compte',
       iconPath: 'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v1h16v-1c0-2.66-5.33-4-8-4z',
     },
-    
-
-
-
+    {
+      name: 'Logout',
+      href: '',
+      iconPath: 'M16 17L21 12L16 7V10H9V14H16V17ZM5 19H11V21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H11V5H5V19Z',
+      action: () => this.logout()  
+    },
   ];
+  constructor(private authService: AuthService, private router: Router) {}
+
+  logout(): void {
+    console.log("Méthode logout() appelée !");
+    this.authService.logout().subscribe({
+      next: () => {
+        console.log("Redirection après logout");
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error("Erreur lors du logout :", err);
+      }
+    });
+  }
+  
 }

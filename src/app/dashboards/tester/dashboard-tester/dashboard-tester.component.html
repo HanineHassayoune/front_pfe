@@ -4,7 +4,11 @@
 [userName]="'Testeur'"
 [userAvatarUrl]="'../../../assets/images/avatar.png'"></app-navbar-dashboard>
 <div class="flex overflow-hidden bg-white pt-16">
-    <app-sidebar [links]="links"></app-sidebar>
+    <app-sidebar 
+    [links]="links"
+    [userAvatarUrl]="'../../../assets/images/avatar.png'" 
+    [userName]="'Tester'"
+    ></app-sidebar>
     <div class="content w-full p-4">
       <router-outlet></router-outlet>
     </div>
