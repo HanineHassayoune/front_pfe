@@ -27,7 +27,6 @@ export class UsersComponent implements OnInit {
   userForm: FormGroup;
 
   constructor(
-    private registerService: RegisterService,
     private userService: UserService,
     private fb: FormBuilder
   ) {
@@ -43,19 +42,22 @@ export class UsersComponent implements OnInit {
     this.loadUsers();
   }
   
-  // get users which they demand for registration 
+  // get users whith role TESTER , DEVELOPER , MANAGER
   loadUsers() {
-    this.registerService.getData().subscribe({
+    this.userService.getUsers().subscribe({
       next: (data) => {
-        this.rows = data.map((user: any) => ({
-          id:user.id,
-          name: user.name,
-          email: user.email,
-        })); 
+        this.rows = data
+          .map((user: any) => ({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            enabled: user.enabled
+          }));
       },
       error: (err) => {
         console.error('Erreur lors de la récupération des utilisateurs:', err);
-      },
+      }
     });
   }
 

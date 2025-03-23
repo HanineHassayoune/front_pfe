@@ -19,17 +19,17 @@
         </td>
 
         <td class="px-6 py-4 text-center">
-          <button 
-            (click)="handleActionClick(row)"  
-            class="bg-[#4F959D] text-white px-4 py-2 rounded-lg hover:bg-[#98D2C0] focus:outline-none">
-            {{ actionButtonText1 }}
+          <button (click)="handleActionClick(row, 'approve')"  
+          class="bg-[#4F959D] text-white px-4 py-2 rounded-lg hover:bg-[#98D2C0] focus:outline-none">
+          {{ actionButtonText1 }}
           </button>
-          
-          <button 
-            (click)="handleActionClick(row)"  
-            class="bg-[#B82132] text-white px-4 py-2 rounded-lg hover:bg-[#D2665A] focus:outline-none mx-2">
-            {{ actionButtonText2 }}
-          </button>
+
+        <button 
+          (click)="handleActionClick(row, 'block')"  
+          class="bg-[#B82132] text-white px-4 py-2 rounded-lg hover:bg-[#D2665A] focus:outline-none mx-2">
+          {{ actionButtonText2 }}
+        </button>
+
         </td>
         
       </tr>

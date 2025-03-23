@@ -17,10 +17,5 @@ export class RegisterService {
     );
   }
   
-  getData(): Observable<any> {
-    return this.http.get<any>(
-      `${this.baseUrl}/api/v1/auth/registrations`,
-      
-    );
-  }
+  
 }

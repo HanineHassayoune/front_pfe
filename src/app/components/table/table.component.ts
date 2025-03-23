@@ -16,9 +16,10 @@ export class TableComponent {
   @Input() actionButtonText2: string = '';
   @Output() tableAction = new EventEmitter<any>();
 
-  handleActionClick(row: any) {
-    this.tableAction.emit(row);
+  handleActionClick(row: any, action: string) {
+    this.tableAction.emit({ ...row, action });
   }
+  
 
   
   

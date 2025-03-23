@@ -12,11 +12,19 @@
             [title]="'List of partners'"
             [columns]="columns"
             [data]="rows"
-            [actionButtonText1]="'Activate'"
-            [actionButtonText2]="'Desactivate'"
+            [actionButtonText1]="'Approve'"
+            [actionButtonText2]="'Block'"
             (tableAction)="onTableActionClick($event)">
           </app-table>
         </div> 
+
+        <app-alert
+  *ngIf="alertVisible"
+  [type]="alertType"
+  [message]="alertMessage"
+  [isVisible]="alertVisible">
+</app-alert>
+
       </div>
     </div>
   </body>

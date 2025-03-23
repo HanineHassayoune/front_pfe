@@ -8,7 +8,7 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/v1/auth/authenticate';
+  private apiUrl = 'http://localhost:8080/api/v1/auth';
   private logoutUrl = 'http://localhost:8080/api/v1/auth/logout';
 
   constructor(private http: HttpClient) {}
@@ -24,10 +24,11 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post(this.apiUrl, { email, password }).pipe(
+    return this.http.post(this.apiUrl + '/authenticate', { email, password }).pipe(
       tap((response: any) => { //tap to store the token and role in localStorage 
         localStorage.setItem('auth_token', response.token);
         localStorage.setItem('role', response.role); 
+        localStorage.setItem('tenant', response.tenant); 
       })
     );
   }
@@ -51,5 +52,7 @@ export class AuthService {
       localStorage.clear(); 
       return of();
     }
+
+    
    
 }
