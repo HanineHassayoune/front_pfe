@@ -1,9 +1,8 @@
-<p>modal works!</p>
-<div class="fixed inset-0 bg-gray-200 bg-opacity-50 z-40 flex justify-center items-center">
+
+<div class="fixed inset-0 bg-black/40  z-40 flex justify-center items-center transition-opacity duration-300">
     <div class="relative p-4 w-full max-w-lg max-h-full">
-      <div class="relative bg-white rounded-lg shadow-md">
-        <!-- En-tête de la modale -->
-        <div class="flex items-center justify-between p-4 border-b rounded-t">
+      <div class="relative bg-white rounded-lg shadow-lg transform transition-all duration-300 scale-95 hover:scale-100">
+         <div class="flex items-center justify-between p-4 border-b rounded-t">
           <h3 class="text-lg font-semibold text-gray-900">
             <ng-content select="[modal-title]"></ng-content>
           </h3>
@@ -13,11 +12,10 @@
             </svg>
           </button>
         </div>
-        <!-- Content of modal -->
+       
         <div class="p-6">
           <ng-content select="[modal-body]"></ng-content>
         </div>
       </div>
     </div>
-  </div>
-  
+</div>

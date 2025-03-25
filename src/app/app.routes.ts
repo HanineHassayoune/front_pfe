@@ -5,7 +5,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ExceptionsComponent } from './dashboards/partner/exceptions/exceptions.component';
 import { TicketsComponent } from './dashboards/partner/tickets/tickets.component';
 import { CompteComponent } from './dashboards/partner/compte/compte.component';
-import { CardComponent } from './components/card/card.component';
 import { AddTicketComponent } from './dashboards/tester/add-ticket/add-ticket.component';
 import { UsersComponent } from './dashboards/partner/users/users.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
@@ -22,6 +21,8 @@ import { DashboardTesterComponent } from './dashboards/tester/dashboard-tester/d
 import { DashboardDeveloppeurComponent } from './dashboards/developper/dashboard-developpeur/dashboard-developpeur.component';
 import { DashboardPartnerComponent } from './dashboards/partner/dashboard-partner/dashboard-partner.component';
 import { authGuard } from './services/auth.guard';
+import { ProjectsComponent } from './dashboards/partner/projects/projects.component';
+import { ProjectDetailsComponent } from './dashboards/partner/project-details/project-details.component';
 
 
 
@@ -34,7 +35,6 @@ export const routes: Routes = [
     {path:'exceptions',component:ExceptionsComponent},
     {path:'tickets',component:TicketsComponent},
     {path:'compte',component:CompteComponent},
-    {path:'card',component:CardComponent},
     {path:'addticket',component:AddTicketComponent},
     {path:'users',component:UsersComponent},
     {path:'pieChart',component:PieChartComponent},
@@ -46,7 +46,8 @@ export const routes: Routes = [
     {path:'register',component:RegisterComponent},
     {path:'partners',component:PartnersComponent},
     {path:'reset-password',component:ResetPasswordComponent},
-   
+    {path:'projects',component:ProjectsComponent},
+    { path: 'projects/:id', component: ProjectDetailsComponent } ,
 
     {
       path: 'admin',
@@ -88,6 +89,9 @@ export const routes: Routes = [
         {path:'exceptions',component:ExceptionsComponent},
         {path:'tickets',component:TicketsComponent},
         {path:'users',component:UsersComponent},
+        {path:'projects',component:ProjectsComponent},
+       /*  { path: 'projects/create', component: CreateProjectComponent }, */
+        { path: 'projects/:id', component: ProjectDetailsComponent } 
          
       ]
     },

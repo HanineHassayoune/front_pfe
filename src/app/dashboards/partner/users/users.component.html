@@ -9,18 +9,20 @@
           [columns]="columns"
           [data]="rows"
           [actionButtonText1]="'Activate'"
-          [actionButtonText2]="'Disactivate'"
+          [actionButtonText2]="'Delete'"
           (tableAction)="acceptUser($event.id)">
         </app-table>
       </div> 
 
+     
       <!-- Bouton pour ouvrir la modale -->
       <div class="flex ms-6">
           <button id="open-modal-btn" class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba] focus:outline-none" (click)="openModal()">
-            Add user
+            + Add user
           </button>
       </div>
 
+      
       <app-modal *ngIf="isModalOpen" (closeModalEvent)="closeModal()">
         <!-- Title of modal-->
         <div modal-title>
@@ -87,6 +89,13 @@
           </form>
         </div>
       </app-modal>
+
+      <app-alert
+            *ngIf="alertVisible"
+            [type]="alertType"
+            [message]="alertMessage"
+            [isVisible]="alertVisible">
+        </app-alert>
       
     </div>
   </div>

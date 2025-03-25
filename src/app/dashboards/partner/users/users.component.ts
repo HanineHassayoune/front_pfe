@@ -6,13 +6,14 @@ import { RegisterService } from '../../../services/register.service';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { UserService } from '../../../services/user.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AlertComponent } from '../../../components/alert/alert.component';
 
 
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [TableComponent,CommonModule,PieChartComponent,ModalComponent,ReactiveFormsModule],
+  imports: [TableComponent,CommonModule,PieChartComponent,ModalComponent,ReactiveFormsModule,AlertComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -20,11 +21,16 @@ export class UsersComponent implements OnInit {
   columns = [
     { field: 'name', header: 'Nom' },
     { field: 'email', header: 'Email' },
+    { field: 'role', header: 'Role' },
   ];
 
-  rows: { name: string; email: string }[] = [];
+  rows: { name: string; email: string;role:String }[] = [];
   isModalOpen = false;
   userForm: FormGroup;
+
+  alertType: 'success' | 'danger' | 'warning' | 'info' = 'info';
+  alertMessage: string = '';
+  alertVisible: boolean = false;
 
   constructor(
     private userService: UserService,
@@ -52,6 +58,7 @@ export class UsersComponent implements OnInit {
             name: user.name,
             email: user.email,
             password: user.password,
+            role:user.role,
             enabled: user.enabled
           }));
       },
@@ -86,18 +93,37 @@ export class UsersComponent implements OnInit {
     this.isModalOpen = false;
   }
 
+  // add user by the partner
   submitUser() {
     if (this.userForm.valid) {
+      // Si le formulaire est valide, ajouter l'utilisateur
       this.userService.addUser(this.userForm.value).subscribe({
         next: () => {
-          alert('Utilisateur ajouté avec succès !');
+    
           this.closeModal();
-          this.loadUsers(); 
+  
+          this.alertType = 'success';
+          this.alertMessage = 'User added successfully!';
+          this.alertVisible = true;
+          this.loadUsers();
+          setTimeout(() => { this.alertVisible = false; }, 5000);
         },
-        error: (err) => console.error('Erreur lors de l’ajout de l’utilisateur:', err),
+        error: (err) => {
+          console.error('Error adding user:', err);
+  
+      
+          this.alertType = 'danger';
+          this.alertMessage = 'Error adding user. Please try again.';
+          this.alertVisible = true;
+          setTimeout(() => { this.alertVisible = false; }, 5000);
+        },
       });
     } else {
-      alert("Veuillez remplir tous les champs correctement.");
+      // if form was not valid : warning
+      this.alertType = 'warning';
+      this.alertMessage = 'Please fill in all required fields correctly.';
+      this.alertVisible = true;
+      setTimeout(() => { this.alertVisible = false; }, 5000);
     }
   }
 }
