@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment/environment';
 
 
 @Injectable({
@@ -9,34 +10,34 @@ import { Observable } from 'rxjs';
 
 export class UserService {
   
-    private apiUrl = 'http://localhost:8080/api/v1/users'; 
-    private baseUrl = 'http://localhost:8080/api/v1/auth';
+    private usersUrl = environment.usersUrl; 
+    private authUrl = environment.authUrl;
 
   constructor(private http: HttpClient) {}
 
  
   getPartners(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/getPartners`,
+    return this.http.get<any>(`${this.usersUrl}/getPartners`,
       
     );
   }
 
   getUsers(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/getUsers`,
+    return this.http.get<any>(`${this.usersUrl}/getUsers`,
       
     );
   }
   
  addUser(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add`, user);
+    return this.http.post(`${this.usersUrl}/add`, user);
   } 
  
   activeUser(id: number): Observable<string> {
-    return this.http.put(`${this.baseUrl}/approveUser/${id}`, {}, { responseType: 'text' });
+    return this.http.put(`${this.authUrl}/approveUser/${id}`, {}, { responseType: 'text' });
   }
   
   blockUser(userId: number): Observable<string> {
-    return this.http.put(`${this.baseUrl}/blockUser/${userId}`, {}, { responseType: 'text' });
+    return this.http.put(`${this.authUrl}/blockUser/${userId}`, {}, { responseType: 'text' });
 }
 
   

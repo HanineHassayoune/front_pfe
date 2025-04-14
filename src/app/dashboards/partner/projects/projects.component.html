@@ -81,21 +81,29 @@
                     </svg>   
                     Upload Image
                   </label>
-                  <input type="file"  class="w-full p-3 border rounded-md">
+                  <input type="text" formControlName="imageUrl" class="w-full p-3 border rounded-md">
                 </div>
           
                 <!-- Add Button -->
-                <button type="button" class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba] focus:outline-none">
-                  Add Project
+                <button 
+                    type="button" 
+                    class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba] focus:outline-none" 
+                    (click)="onSubmit()">
+                    Add Project
                 </button>
+
               </form>
             </div>
           </app-modal>
   
           <!-- Grid of projects -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <app-project-card *ngFor="let project of projects" [project]="project"></app-project-card>
+            <app-project-card 
+              *ngFor="let project of projects" 
+              [project]="project">
+            </app-project-card>
           </div>
+
         </div>
       </div>
     </div>

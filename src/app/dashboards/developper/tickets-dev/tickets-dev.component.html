@@ -1,65 +1,58 @@
 <body class="bg-gray-100 min-h-screen">
-    <div class="flex overflow-hidden bg-gray-100 pt-16">
+  <div class="flex overflow-hidden bg-gray-100 pt-16">
       <div id="main-content" class="h-full w-full bg-gray-100 relative overflow-y-auto lg:ml-64">
-        <div class="flex  ">
-          <app-table
-            class="w-full mx-auto p-4 "
-            [title]="title"
-            [columns]="columns"
-            [data]="data"
-            [actionButtonText1]="'Résoudre'"
-            [actionButtonText2]="'Résoudre'">
-          </app-table>
+        <div class="flex">
+          <app-kinban 
+            [title]="'List of tasks'"
+            [column1Title]="column1Title"
+            [column2Title]="column2Title"
+            [column3Title]="column3Title"
+            [column1Data]="column1Data"
+            [column2Data]="column2Data"
+            [column3Data]="column3Data"
+            class="w-full mx-auto p-4">
+          </app-kinban>
         </div>
+          <div class="flex">
+              <app-table-one-btn
+                  class="w-full mx-auto p-4"
+                  [title]="title"
+                  [columns]="columns"
+                  [data]="data"
+                  [actionButtonText]="'Solution'"
+                  (actionButtonClick)="openModal()"
+              >
+              </app-table-one-btn>
+          </div>
+          
 
-        <!-- Bouton pour ouvrir la modale -->
-<div class="flex ms-6">
-  <button id="open-modal-btn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5" (click)="openModal()">
-    Proposer une Solution
-  </button>
-</div>
-
-<div *ngIf="isModalOpen" class="fixed inset-0 bg-gray-200 bg-opacity-50 z-40">
-  <!-- Modale principale -->
-  <div id="solution-modal" tabindex="-1" class="fixed inset-0 flex justify-center items-center z-50">
-    <div class="relative p-4 w-full max-w-lg max-h-full">
-      <div class="relative bg-white rounded-lg shadow-md">
-        
-        <!-- En-tête de la modale -->
-        <div class="flex items-center justify-between p-4 border-b rounded-t">
-          <h3 class="text-lg font-semibold text-gray-900">
-            Solution Proposée
-          </h3>
-          <button type="button" (click)="closeModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 rounded-lg w-8 h-8 inline-flex justify-center items-center">
-            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-
-        <!-- Contenu du formulaire -->
-        <div class="p-6">
-          <form class="space-y-6">
-            <div>
-              <label class="block text-sm font-medium mb-2">Solution</label>
-              <textarea placeholder="Décrivez votre solution ici..." class="w-full p-2 border rounded-md focus:ring focus:ring-blue-300" rows="5"></textarea>
-            </div>
-
-            <button type="button" class="bg-blue-500 text-white w-full p-2 rounded-md hover:bg-blue-600" (click)="submitSolution()">
-              Envoyer la Solution
-            </button>
-          </form>
-        </div>
+          <!-- Modal (Apparaît quand isModalOpen = true) -->
+          <app-modal *ngIf="isModalOpen" (closeModalEvent)="closeModal()">
+              <div modal-title>
+                  Add Solution
+              </div>
+              <div modal-body>
+                  <form class="space-y-4" (ngSubmit)="submitSolution()">
+                      <div>
+                          <label class="text-sm font-medium mb-2 text-gray-700 flex items-center gap-2">
+                              Solution
+                          </label>
+                          <textarea 
+                              formControlName="solution" 
+                              class="w-full p-3 border rounded-md focus:ring focus:ring-blue-300" 
+                              rows="4">
+                          </textarea>
+                      </div>
+                      
+                      <!-- Bouton Submit -->
+                      <div class="flex justify-end">
+                          <button type="submit" class="bg-[#4F959D] text-white px-4 py-2 rounded-lg hover:bg-[#98D2C0] focus:outline-none">
+                              Submit
+                          </button>
+                      </div>
+                  </form>
+              </div>
+          </app-modal>
       </div>
-    </div>
   </div>
-</div>
-
-        
-      </div>
-    </div>
-  </body>
-  
-  
-  
-  
+</body>

@@ -1,16 +1,32 @@
 import { Component } from '@angular/core';
-import { TableComponent } from '../../../components/table/table.component';
 import { CommonModule } from '@angular/common';
+import { TableOneBtnComponent } from '../../../components/table-one-btn/table-one-btn.component';
+import { ActivatedRoute } from '@angular/router';
+import { ModalComponent } from '../../../components/modal/modal.component';
+import { KinbanComponent } from '../../../components/kinban/kinban.component';
 
 @Component({
   selector: 'app-tickets-dev',
   standalone: true,
-  imports: [TableComponent,CommonModule],
+  imports: [TableOneBtnComponent,CommonModule,ModalComponent,KinbanComponent],
   templateUrl: './tickets-dev.component.html',
   styleUrl: './tickets-dev.component.css'
 })
 export class TicketsDevComponent {
-  title = 'Liste des Tickets';
+  column1Title: string = 'To Do';
+  column2Title: string = 'In Progress';
+  column3Title: string = 'Done';
+  column1Data: string[] = ['Tâche 1', 'Tâche 2'];
+  column2Data: string[] = ['Tâche 3', 'Tâche 4'];
+  column3Data: string[] = ['Tâche 5', 'Tâche 6'];
+
+  projectId: number;
+  
+    constructor(private route: ActivatedRoute) {
+      this.projectId = Number(this.route.snapshot.paramMap.get('id'));
+    }
+  
+  title = 'List of tickets';
   
   columns = [
     { field: 'ticketName', header: 'Nom du Ticket' },
@@ -26,21 +42,23 @@ export class TicketsDevComponent {
     { ticketName: 'Hotfix #456', deadline: '2025-02-08', developer: 'Alice', status: 'Done', team: 'Back-End' }
   ];
 
+ //Modal 
+ isModalOpen = false;
 
-  isModalOpen = false;
+ openModal(): void {
+   console.log('Modal open triggered');
+   this.isModalOpen = true;
+ }
 
-  openModal() {
-    this.isModalOpen = true;
-  }
-
-  closeModal() {
-    this.isModalOpen = false;
-  }
-
-  submitSolution() {
-    alert('Solution est ajoutée avec succès !');
-    this.closeModal();
-  }
+ closeModal(): void {
+   this.isModalOpen = false;
+ }
+ 
+ submitSolution() {
+  //console.log("Solution submitted:", this.form.value.solution);
+  console.log("Solution submitted:");
+  this.closeModal(); // Ferme le modal après la soumission
+}
 
 
 }

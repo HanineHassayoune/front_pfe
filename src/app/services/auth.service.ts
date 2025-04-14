@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from '../../environment/environment';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/v1/auth';
-  private logoutUrl = 'http://localhost:8080/api/v1/auth/logout';
+  private authUrl = environment.authUrl;
+  private logoutUrl = environment.logoutUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -24,7 +25,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post(this.apiUrl + '/authenticate', { email, password }).pipe(
+    return this.http.post(this.authUrl + '/authenticate', { email, password }).pipe(
       tap((response: any) => { //tap to store the token and role in localStorage 
         localStorage.setItem('auth_token', response.token);
         localStorage.setItem('role', response.role); 

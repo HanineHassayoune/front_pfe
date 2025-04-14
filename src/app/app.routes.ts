@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { NavbarDashboardComponent } from './components/navbar-dashboard/navbar-dashboard.component';
 import { FooterDashboardComponent } from './components/footer-dashboard/footer-dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { ExceptionsComponent } from './dashboards/partner/exceptions/exceptions.component';
 import { TicketsComponent } from './dashboards/partner/tickets/tickets.component';
 import { CompteComponent } from './dashboards/partner/compte/compte.component';
 import { AddTicketComponent } from './dashboards/tester/add-ticket/add-ticket.component';
@@ -23,16 +22,12 @@ import { DashboardPartnerComponent } from './dashboards/partner/dashboard-partne
 import { authGuard } from './services/auth.guard';
 import { ProjectsComponent } from './dashboards/partner/projects/projects.component';
 import { ProjectDetailsComponent } from './dashboards/partner/project-details/project-details.component';
-
-
-
-
+import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
 
 export const routes: Routes = [
    {path:'navbar',component:NavbarDashboardComponent},
     {path:'footer',component:FooterDashboardComponent},
     {path:'sidebar',component:SidebarComponent},
-    {path:'exceptions',component:ExceptionsComponent},
     {path:'tickets',component:TicketsComponent},
     {path:'compte',component:CompteComponent},
     {path:'addticket',component:AddTicketComponent},
@@ -48,6 +43,7 @@ export const routes: Routes = [
     {path:'reset-password',component:ResetPasswordComponent},
     {path:'projects',component:ProjectsComponent},
     { path: 'projects/:id', component: ProjectDetailsComponent } ,
+    { path: 'ticket-details/:id', component: TicketDetailsComponent },
 
     {
       path: 'admin',
@@ -72,7 +68,7 @@ export const routes: Routes = [
       path: 'developper', 
       component:DashboardDeveloppeurComponent,
       canActivate: [authGuard], 
-      data: { role: 'DEVELOPPER' },
+      data: { role: 'DEVELOPER' },
       children: [
         {path:'ticketsdev',component:TicketsDevComponent},
       
@@ -86,13 +82,12 @@ export const routes: Routes = [
       data: { role: 'PARTNER' },
       children: [
         {path:'compte',component:CompteComponent},
-        {path:'exceptions',component:ExceptionsComponent},
         {path:'tickets',component:TicketsComponent},
         {path:'users',component:UsersComponent},
         {path:'projects',component:ProjectsComponent},
-       /*  { path: 'projects/create', component: CreateProjectComponent }, */
-        { path: 'projects/:id', component: ProjectDetailsComponent } 
-         
+        { path: 'projects/:id', component: ProjectDetailsComponent } ,
+        { path: 'ticket-details/:id', component: TicketDetailsComponent }
+      
       ]
     },
   

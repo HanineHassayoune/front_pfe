@@ -12,7 +12,10 @@ export class TableOneBtnComponent {
   @Input() title: string = '';
   @Input() columns: { field: string, header: string }[] = [];
   @Input() data: any[] = [];
-  @Input() actionButtonText: string = ''; 
- 
+  @Input() actionButtonText: string = '';
+  @Output() actionButtonClick = new EventEmitter<any>();
 
+  onActionButtonClick(row: any): void {
+    this.actionButtonClick.emit(row);
+  }
 }

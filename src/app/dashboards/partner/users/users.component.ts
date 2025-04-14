@@ -22,9 +22,11 @@ export class UsersComponent implements OnInit {
     { field: 'name', header: 'Nom' },
     { field: 'email', header: 'Email' },
     { field: 'role', header: 'Role' },
+    { field: 'enabled', header: 'Status' },
   ];
 
-  rows: { name: string; email: string;role:String }[] = [];
+  rows: { id: number; name: string; email: string ; role:String ; enabled: boolean }[] = []; 
+
   isModalOpen = false;
   userForm: FormGroup;
 
@@ -68,22 +70,83 @@ export class UsersComponent implements OnInit {
     });
   }
 
- acceptUser(id: number) {
-    /* this.acceptationService.registerUser(id).subscribe({
-      next: (response) => {
-        if (response) {
-          alert('Utilisateur accepté avec succès !');
-          this.loadUsers(); 
-        } else {
-          alert('Erreur: L’utilisateur n’a pas pu être accepté.');
-        }
-      },
-      error: (err) => {
-        console.error('Erreur lors de l’acceptation de l’utilisateur:', err);
+    // to activate and block users (TESTER,MANAGER,DEVELOPER)
+    onTableActionClick(event: any) {
+      console.log("Action received:", event);
+    
+      if (!event.id || !event.action) {
+        console.error("Invalid event data:", event);
+        return;
       }
-    }); */
-  }
+    
+      // Trouver l'utilisateur dans la liste actuelle
+      const user = this.rows.find(user => user.id === event.id);
+    
+      if (!user) {
+        console.error("User not found in the list:", event.id);
+        return;
+      }
+    
+      if (event.action === 'approve') {
+        if (user.enabled) {
+          this.alertType = 'warning';
+          this.alertMessage = 'Partner is already approved!';
+          this.alertVisible = true;
+          setTimeout(() => { this.alertVisible = false; }, 5000);
+          return; // Empêcher l'appel à l'API
+        }
+    
+        console.log("Activating user ID:", event.id);
+        this.userService.activeUser(event.id).subscribe({
+          next: (response) => {
+            console.log('User activated successfully:', response);
+            this.alertType = 'success';
+            this.alertMessage = 'Partner was approved successfully!';
+            this.alertVisible = true;
+            setTimeout(() => { this.alertVisible = false; }, 5000);
+            this.loadUsers();
+          },
+          error: (err) => {
+            console.error("Error while activating the user:", err);
+            this.alertType = 'danger';
+            this.alertMessage = 'Error occurred while approving the user!';
+            setTimeout(() => { this.alertVisible = false; }, 5000);
+            this.alertVisible = true;
+          }
+        });
+    
+      } else if (event.action === 'block') {
+        if (!user.enabled) {
+          this.alertType = 'warning';
+          this.alertMessage = 'User is already blocked!';
+          this.alertVisible = true;
+          setTimeout(() => { this.alertVisible = false; }, 5000);
+          return; // Empêcher l'appel à l'API
+        }
+    
+        console.log("Blocking user ID:", event.id);
+        this.userService.blockUser(event.id).subscribe({
+          next: (response) => {
+            console.log('User blocked successfully:', response);
+            this.alertType = 'success';
+            this.alertMessage = 'User was blocked successfully!';
+            this.alertVisible = true;
+            setTimeout(() => { this.alertVisible = false; }, 5000);
+            this.loadUsers();
+          },
+          error: (err) => {
+            console.error("Error while blocking the user:", err);
+            this.alertType = 'danger';
+            this.alertMessage = 'Error occurred while blocking the user!';
+            setTimeout(() => { this.alertVisible = false; }, 5000);
+            this.alertVisible = true;
+          }
+        });
+      }
+    }
+    
  
+  
 
   openModal(): void {
     this.isModalOpen = true;
