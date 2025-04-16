@@ -40,5 +40,17 @@ export class UserService {
     return this.http.put(`${this.authUrl}/blockUser/${userId}`, {}, { responseType: 'text' });
 }
 
+getConnectedUser(): Observable<any> {
+    return this.http.get<any>(`${this.usersUrl}/me`);
+}
+
+updateProfile(data: any): Observable<any> {
+    return this.http.patch(`${this.usersUrl}/updateProfile`, data);
+ }
+
+/*  checkCurrentPassword(currentPassword: string): Observable<{ isValid: boolean }> {
+  return this.http.post<{ isValid: boolean }>(`${this.usersUrl}/check-current-password`, { currentPassword });
+}
+ */
   
 }

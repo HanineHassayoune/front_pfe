@@ -23,6 +23,7 @@ import { authGuard } from './services/auth.guard';
 import { ProjectsComponent } from './dashboards/partner/projects/projects.component';
 import { ProjectDetailsComponent } from './dashboards/partner/project-details/project-details.component';
 import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
+import { ProfilComponent } from './dashboards/admin/profil/profil.component';
 
 export const routes: Routes = [
    {path:'navbar',component:NavbarDashboardComponent},
@@ -44,14 +45,17 @@ export const routes: Routes = [
     {path:'projects',component:ProjectsComponent},
     { path: 'projects/:id', component: ProjectDetailsComponent } ,
     { path: 'ticket-details/:id', component: TicketDetailsComponent },
-
+    { path: 'profil', component: ProfilComponent } ,
     {
       path: 'admin',
       component: DashboardAdminComponent, 
       canActivate: [authGuard], 
       data: { role: 'ADMIN' },
       children: [
-        { path: 'partners', component: PartnersComponent } 
+        { path: 'partners', component: PartnersComponent } ,
+        { path: 'profil', component: ProfilComponent } ,
+        
+
       ]
     },
     { 
