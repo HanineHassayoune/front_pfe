@@ -24,6 +24,7 @@ import { ProjectsComponent } from './dashboards/partner/projects/projects.compon
 import { ProjectDetailsComponent } from './dashboards/partner/project-details/project-details.component';
 import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
 import { ProfilComponent } from './dashboards/admin/profil/profil.component';
+import { TablePaginationComponent } from './components/table-pagination/table-pagination.component';
 
 export const routes: Routes = [
    {path:'navbar',component:NavbarDashboardComponent},
@@ -46,6 +47,7 @@ export const routes: Routes = [
     { path: 'projects/:id', component: ProjectDetailsComponent } ,
     { path: 'ticket-details/:id', component: TicketDetailsComponent },
     { path: 'profil', component: ProfilComponent } ,
+    {path: 'table-pagination', component:TablePaginationComponent},
     {
       path: 'admin',
       component: DashboardAdminComponent, 

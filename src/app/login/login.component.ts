@@ -4,17 +4,19 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { AlertComponent } from '../components/alert/alert.component';
 import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, AlertComponent,CommonModule],
+  imports: [FormsModule, AlertComponent,CommonModule,MatProgressSpinnerModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  isLoading: boolean = false;
 
   alertType: 'success' | 'danger' | 'warning' | 'info' = 'info';
   alertMessage: string = '';

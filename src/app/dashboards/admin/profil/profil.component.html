@@ -1,8 +1,8 @@
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-100 min-h-screen ">
     <div class="flex overflow-hidden pt-9">
       <div id="main-content" class="h-full w-full relative overflow-y-auto lg:ml-64">
   
-        <div class="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow space-y-8">
+        <div class="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-2xl space-y-8">
   
           <app-alert 
             *ngIf="alertVisible" 
@@ -15,7 +15,7 @@
           <div class="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-6 space-y-4 sm:space-y-0">
             <div class="relative w-24 h-24">
               <img
-                [src]="user.profileImage || '../../../../assets/images/avatar.png'" 
+                [src]="'http://localhost:8222/images/' + user.profileImage"
                 alt="Profile Image"
                 class="w-24 h-24 rounded-full object-cover border border-gray-300"
               />
@@ -23,8 +23,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
-                <input type="file" id="imageUpload" class="hidden" />
-               <!--  <input type="file" id="imageUpload" class="hidden" (change)="onImageSelected($event)" /> -->
+                <input type="file" id="imageUpload" class="hidden" (change)="onImageSelected($event)" />
               </label>
             </div>
             <div class="text-center sm:text-left">
@@ -33,37 +32,38 @@
             </div>
           </div>
     
-          <!-- Modifier nom -->
-        <form class="space-y-4" (ngSubmit)="updateName()">
-          <h3 class="text-lg font-semibold">Update Profile</h3>
-          <div>
-            <label class="block text-sm font-medium">Name</label>
-            <input type="text" name="name" class="w-full mt-1 p-2 border rounded" [(ngModel)]="user.name" required />
-          </div>
-          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-            Save Changes
-          </button>
-        </form>
-
-      <!-- Changer mot de passe -->
-      <form class="space-y-4" (ngSubmit)="updatePassword()">
-        <h3 class="text-lg font-semibold">Change Password</h3>
-        <div>
-          <label class="block text-sm font-medium">Current Password</label>
-          <input type="password" name="currentPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="currentPassword" required />
-        </div>
-        <div>
-          <label class="block text-sm font-medium">New Password</label>
-          <input type="password" name="newPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="newPassword" required />
-        </div>
-        <div>
-          <label class="block text-sm font-medium">Confirm New Password</label>
-          <input type="password" name="confirmationPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="confirmationPassword" required />
-        </div>
-        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-          Update Password
-        </button>
-      </form>
+          <form class="space-y-4" (ngSubmit)="updateProfile()">
+            <h3 class="text-lg font-semibold">Update Profile</h3>
+          
+            <!-- Nom -->
+            <div>
+              <label class="block text-sm font-medium">Name</label>
+              <input type="text" name="name" class="w-full mt-1 p-2 border rounded" [(ngModel)]="user.name" required />
+            </div>
+          
+            <!-- Mot de passe actuel -->
+            <div>
+              <label class="block text-sm font-medium">Current Password</label>
+              <input type="password" name="currentPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="currentPassword" />
+            </div>
+          
+            <!-- Nouveau mot de passe -->
+            <div>
+              <label class="block text-sm font-medium">New Password</label>
+              <input type="password" name="newPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="newPassword" />
+            </div>
+          
+            <!-- Confirmer nouveau mot de passe -->
+            <div>
+              <label class="block text-sm font-medium">Confirm New Password</label>
+              <input type="password" name="confirmationPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="confirmationPassword" />
+            </div>
+          
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+              Save Changes
+            </button>
+          </form>
+          
 
         </div>
   

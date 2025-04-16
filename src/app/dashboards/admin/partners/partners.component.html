@@ -1,7 +1,7 @@
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-100 min-h-screen ">
   <div class="flex overflow-hidden pt-16">
     <div id="main-content" class="h-full w-full relative overflow-y-auto lg:ml-64">
-
+    
       <!-- Conteneur titre + search bar -->
       <div class="flex justify-between items-center p-4">
         <h1 class="text-2xl font-bold text-gray-800">List of partners</h1>
@@ -23,19 +23,22 @@
             type="text"
             class="px-9 py-1.5 border h-11 rounded-lg focus:ring focus:ring-blue-300 w-full text-sm"
             placeholder="Search..."
+            [(ngModel)]="filterName"
+            (ngModelChange)="loadUsers()" 
           />
         </div>
       </div>
 
-      <!-- Tableau -->
+      <!-- Table Pagination -->
       <div class="flex">
-        <app-table-action
-          class="w-full mx-auto p-2"
-          [title]="''"
-          [columns]="columns"
+        <app-table-pagination
+          class="w-full mx-auto p-2 "
           [data]="rows"
-          (actionClicked)="onTableAction($event)">
-        </app-table-action>
+          [columns]="columns"
+          [totalRows]="totalRows"
+          (pageChanged)="onPageChange($event)"
+          (actionTriggered)="onTableAction($event)">
+        </app-table-pagination>
       </div>
 
       <!-- Alert -->
