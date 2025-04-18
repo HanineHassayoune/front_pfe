@@ -3,7 +3,6 @@ import { NavbarDashboardComponent } from './components/navbar-dashboard/navbar-d
 import { FooterDashboardComponent } from './components/footer-dashboard/footer-dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TicketsComponent } from './dashboards/partner/tickets/tickets.component';
-import { CompteComponent } from './dashboards/partner/compte/compte.component';
 import { AddTicketComponent } from './dashboards/tester/add-ticket/add-ticket.component';
 import { UsersComponent } from './dashboards/partner/users/users.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
@@ -23,7 +22,7 @@ import { authGuard } from './services/auth.guard';
 import { ProjectsComponent } from './dashboards/partner/projects/projects.component';
 import { ProjectDetailsComponent } from './dashboards/partner/project-details/project-details.component';
 import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
-import { ProfilComponent } from './dashboards/admin/profil/profil.component';
+import { ProfilComponent } from './components/profil/profil.component';
 import { TablePaginationComponent } from './components/table-pagination/table-pagination.component';
 
 export const routes: Routes = [
@@ -31,7 +30,6 @@ export const routes: Routes = [
     {path:'footer',component:FooterDashboardComponent},
     {path:'sidebar',component:SidebarComponent},
     {path:'tickets',component:TicketsComponent},
-    {path:'compte',component:CompteComponent},
     {path:'addticket',component:AddTicketComponent},
     {path:'users',component:UsersComponent},
     {path:'pieChart',component:PieChartComponent},
@@ -87,12 +85,12 @@ export const routes: Routes = [
       canActivate: [authGuard], 
       data: { role: 'PARTNER' },
       children: [
-        {path:'compte',component:CompteComponent},
         {path:'tickets',component:TicketsComponent},
         {path:'users',component:UsersComponent},
         {path:'projects',component:ProjectsComponent},
         { path: 'projects/:id', component: ProjectDetailsComponent } ,
-        { path: 'ticket-details/:id', component: TicketDetailsComponent }
+        { path: 'ticket-details/:id', component: TicketDetailsComponent },
+        { path: 'profil', component: ProfilComponent } ,
       
       ]
     },

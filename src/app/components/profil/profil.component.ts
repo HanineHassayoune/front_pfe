@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user.service';
-import { AlertComponent } from '../../../components/alert/alert.component';
+import { UserService } from '../../services/user.service';
+import { AlertComponent } from '../alert/alert.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -20,23 +20,25 @@ export class ProfilComponent implements OnInit {
   alertVisible: boolean = false;
   alertMessage: string = '';
   alertType: 'success' | 'danger' | 'warning' | 'info' | 'dark' = 'info';
+  originalUserName: string = '';
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    // Charge les données de l'utilisateur au démarrage
     this.loadUserProfile();
   }
 
   loadUserProfile(): void {
     this.userService.getConnectedUser().subscribe({
       next: (res) => {
-        this.user = res; // On met à jour l'utilisateur avec les données récupérées
+        this.user = res; 
+        this.originalUserName = res.name;
       },
       error: (err) => {
         this.alertType = 'danger';
-        this.alertMessage = 'Erreur lors du chargement du profil.';
+        this.alertMessage = 'Error loading users.';
         this.alertVisible = true;
+        setTimeout(() => { this.alertVisible = false; }, 2000);
       }
     });
   }
@@ -49,6 +51,30 @@ export class ProfilComponent implements OnInit {
   }
 
   updateProfile(): void {
+    //if there is no modification
+    const nameUnchanged = this.user.name.trim() === this.originalUserName.trim();
+    const noImageChange = !this.selectedImage;
+    const noPasswordChange = this.currentPassword.trim() === '' &&
+                             this.newPassword.trim() === '' &&
+                             this.confirmationPassword.trim() === '';
+  
+    if (nameUnchanged && noImageChange && noPasswordChange) {
+      this.alertType = 'warning';
+      this.alertMessage = 'No changes detected.';
+      this.alertVisible = true;
+      setTimeout(() => { this.alertVisible = false; }, 2000);
+      return;
+    }
+  
+    
+    if (this.newPassword !== this.confirmationPassword) {
+      this.alertType = 'warning';
+      this.alertMessage = 'New password and confirmation do not match.';
+      this.alertVisible = true;
+      setTimeout(() => { this.alertVisible = false; }, 2000);
+      return;
+    }
+  
     const profileData = {
       name: this.user.name,
       currentPassword: this.currentPassword,
@@ -56,21 +82,30 @@ export class ProfilComponent implements OnInit {
       confirmationPassword: this.confirmationPassword,
       profileImage: this.selectedImage ?? undefined
     };
-
-    // Appel de l'API pour mettre à jour le profil
+  
     this.userService.updateProfile(profileData).subscribe({
       next: () => {
         this.alertType = 'success';
-        this.alertMessage = 'Profil mis à jour avec succès !';
+        this.alertMessage = 'Profile updated successfully!';
         this.alertVisible = true;
+        setTimeout(() => { this.alertVisible = false; }, 2000);
+  
+        // Resetting fields
+        this.currentPassword = '';
+        this.newPassword = '';
+        this.confirmationPassword = '';
+        this.selectedImage = null;
+        this.loadUserProfile(); 
       },
       error: (err) => {
         this.alertType = 'danger';
-        this.alertMessage = err.error?.message || 'Une erreur est survenue.';
+        this.alertMessage = err.error?.message || 'An error occurred.';
         this.alertVisible = true;
+        setTimeout(() => { this.alertVisible = false; }, 2000);
       }
     });
   }
+  
 }
 
 

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProjectService } from '../../../services/project.service';  
+import { UserService } from '../../../services/user.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ProjectsComponent implements OnInit {
     this.isModalOpen = false;
  }
 
-  
+ 
 
 ngOnInit(): void {
   this.projectService.getProjects().subscribe(
@@ -40,7 +41,7 @@ ngOnInit(): void {
 
   projectForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private projectService: ProjectService) { 
+  constructor(private fb: FormBuilder, private projectService: ProjectService,private userService: UserService,) { 
     this.projectForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],

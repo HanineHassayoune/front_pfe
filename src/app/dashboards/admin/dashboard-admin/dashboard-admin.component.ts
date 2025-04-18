@@ -4,6 +4,7 @@ import { SidebarComponent } from '../../../components/sidebar/sidebar.component'
 import { PartnersComponent } from '../partners/partners.component';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -13,6 +14,14 @@ import { AuthService } from '../../../services/auth.service';
   styleUrl: './dashboard-admin.component.css'
 })
 export class DashboardAdminComponent {
+  user: any = { name: '', email: '', profileImage: '' };
+  currentPassword: string = '';
+  newPassword: string = '';
+  confirmationPassword: string = '';
+  selectedImage: File | null = null;
+  alertVisible: boolean = false;
+  alertMessage: string = '';
+  alertType: 'success' | 'danger' | 'warning' | 'info' | 'dark' = 'info';
   links = [
     {
       name: 'Partners',
@@ -31,10 +40,9 @@ export class DashboardAdminComponent {
         action: () => this.logout()  
        },
      ];
-     constructor(private authService: AuthService, private router: Router) {}
+     constructor(private authService: AuthService, private router: Router,private userService: UserService) {}
    
      logout(): void {
-       console.log("Méthode logout() appelée !");
        this.authService.logout().subscribe({
          next: () => {
            console.log("Redirection après logout");
@@ -45,5 +53,23 @@ export class DashboardAdminComponent {
          }
        });
      }
+
+       ngOnInit(): void {
+         this.loadUserProfile();
+       }
+     
+       loadUserProfile(): void {
+         this.userService.getConnectedUser().subscribe({
+           next: (res) => {
+             this.user = res; 
+           },
+           error: (err) => {
+             this.alertType = 'danger';
+             this.alertMessage = 'Error loading profile..';
+             this.alertVisible = true;
+             setTimeout(() => { this.alertVisible = false; }, 2000);
+           }
+         });
+       }
 
 }

@@ -1,14 +1,14 @@
 <app-navbar-dashboard 
   [imageUrl]="'../../../assets/images/images.png'"
-  [userName]="'Admin'"
-  [userAvatarUrl]="'../../../assets/images/avatar.png'">
+  [userName]="user.email"
+  [userAvatarUrl]="user.profileImage">
 </app-navbar-dashboard>
 
 <div class="flex overflow-hidden bg-white pt-16">
   <app-sidebar
    [links]="links"
-   [userAvatarUrl]="'../../../assets/images/avatar.png'" 
-   [userName]="'Admin'">
+   [userAvatarUrl]="user.profileImage" 
+   [userName]="user.name">
   </app-sidebar>
   <div class="content w-full bg-gray-100">
     <router-outlet></router-outlet>

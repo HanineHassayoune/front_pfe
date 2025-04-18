@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environment/environment';
@@ -16,32 +16,24 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
  
-  /* getPartners(): Observable<any> {
-    return this.http.get<any>(`${this.usersUrl}/getPartners`,
-      
-    );
-  } */
-
  
-    getPartners(name: string = '', page: number = 0, size: number = 5): Observable<any> {
-      const params = {
-        name: name, 
-        page: page.toString(),
-        size: size.toString()
-      };
-  
-      return this.http.get<any>(`${this.usersUrl}/getPartners`, { params });
-    }
+    getUsers(roles: string[], name: string = '', page: number = 0, size: number = 5): Observable<any> {
+      let params = new HttpParams()
+        .set('name', name)
+        .set('page', page.toString())
+        .set('size', size.toString());
     
+      roles.forEach(role => {
+        params = params.append('roles', role);
+      });
+    
+      return this.http.get(`${this.usersUrl}/`, { params });
 
-  getUsers(): Observable<any> {
-    return this.http.get<any>(`${this.usersUrl}/getUsers`,
-      
-    );
-  }
+    }
+ 
   
  addUser(user: any): Observable<any> {
-    return this.http.post(`${this.usersUrl}/add`, user);
+    return this.http.post(`${this.usersUrl}/`, user);
   } 
  
   activeUser(id: number): Observable<string> {
