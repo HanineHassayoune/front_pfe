@@ -1,11 +1,14 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, tap} from 'rxjs';
+import { StorageService } from './storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('token');
+    const storageService = inject(StorageService);
+    const token = storageService.getAuthToken();
+    
     
     // Exclure l'endpoint /register
   if (req.url.includes('/api/v1/auth/register')) {

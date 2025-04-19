@@ -1,111 +1,101 @@
 <body class="bg-gray-100 min-h-screen">
-    <div class="flex overflow-hidden bg-gray-100 pt-16">
-      <div id="main-content" class="h-full w-full bg-gray-100 relative overflow-y-auto lg:ml-64">
-        <div class="container mx-auto p-6">
-          <!-- Title-->
-          <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">List of Projects</h1>
-            <div class="flex space-x-4">
-              <!-- Search Bar -->
-              <div class="relative flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 absolute left-3 text-gray-500">
-                  <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
-                </svg>
-                <input
-                  type="text"
-                  class="px-10 py-2 border rounded-lg focus:ring focus:ring-blue-300 w-full"
-                  placeholder="Search by title"
-                />
+  <div class="flex overflow-hidden bg-gray-100 pt-16">
+    <div id="main-content" class="h-full w-full bg-gray-100 relative overflow-y-auto lg:ml-64" >
+      <div class="container mx-auto p-6">
+        <!-- Title -->
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-2xl font-bold text-gray-800">List of Projects</h1>
+          <div class="flex space-x-4">
+            <!-- Search Bar -->
+            <div class="relative flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                class="w-6 h-6 absolute left-3 text-gray-500">
+                <path fill-rule="evenodd"
+                  d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <input type="text" class="px-10 py-2 border rounded-lg focus:ring focus:ring-blue-300 w-full"
+                placeholder="Search by title" [(ngModel)]="searchQuery" />
+            </div>
+
+            <!-- Add Project Button -->
+            <button class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba]"
+              (click)="openModal()">
+              + Add Project
+            </button>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <app-modal *ngIf="isModalOpen" (closeModalEvent)="closeModal()">
+          <div modal-title>Add Project</div>
+
+          <div modal-body>
+            <form [formGroup]="projectForm" class="space-y-4">
+              <!-- Title -->
+              <div>
+                <label class="text-sm font-medium text-gray-700 flex items-center">
+                  <mat-icon class="mr-2">title</mat-icon> Title
+                </label>
+                <input type="text" formControlName="title" class="w-full p-3 border rounded-md" />
               </div>
               
-              <!-- Add Project Button -->
-              <button 
-                class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba] focus:outline-none" 
-                (click)="openModal()"
-              >
-                + Add Project
+              <div>
+                <label class="text-sm font-medium text-gray-700 flex items-center">
+                  <mat-icon class="mr-2">description</mat-icon> Description
+                </label>
+                <textarea formControlName="description" class="w-full p-3 border rounded-md"></textarea>
+              </div>
+              
+              <div>
+                <label class="text-sm font-medium text-gray-700 flex items-center">
+                  <mat-icon class="mr-2">memory</mat-icon> Technologies
+                </label>
+                <app-chips
+                  [label]="'Technologies'"
+                  [placeholder]="'Add tech...'"
+                  [allItems]="allTechnologies"
+                  [selectedItems]="projectForm.get('technologies')?.value"
+                  (selectedItemsChange)="projectForm.get('technologies')?.setValue($event)">
+                </app-chips>
+              </div>
+              
+              <div>
+                <label class="text-sm font-medium text-gray-700 flex items-center">
+                  <mat-icon class="mr-2">group</mat-icon> Assigned Users
+                </label>
+                <app-chips
+                  [label]="'Users'"
+                  [placeholder]="'Add a user...'"
+                  [allItems]="allUsers"
+                  [selectedItems]="projectForm.get('users')?.value"
+                  (selectedItemsChange)="projectForm.get('users')?.setValue($event)"
+                  [displayWith]="displayWith">
+                </app-chips>
+              </div>
+              
+              <div>
+                <label class="text-sm font-medium text-gray-700 flex items-center">
+                  <mat-icon class="mr-2">image</mat-icon> Upload Image
+                </label>
+                <input type="file" (change)="onFileSelected($event)" class="w-full p-3 border rounded-md" />
+              </div>
+              
+              
+
+              <!-- Submit -->
+              <button type="button" class="bg-[#205781] text-white px-4 py-2 rounded-lg" (click)="onSubmit()">
+                Add Project
               </button>
-            </div>
+            </form>
           </div>
-  
-          <!-- Modal -->
-          <app-modal *ngIf="isModalOpen" (closeModalEvent)="closeModal()">
-            <!-- Title of modal -->
-            <div modal-title>
-              Add Project
-            </div>
-          
-            <!-- Content of modal -->
-            <div modal-body>
-              <form [formGroup]="projectForm" class="space-y-4">
-                <!-- Project Title -->
-                <div>
-                  <label class="text-sm font-medium mb-2 text-gray-700 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                      <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                      <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
-                    </svg>   
-                    Title
-                  </label>
-                  <input type="text" formControlName="title" class="w-full p-3 border rounded-md focus:ring focus:ring-blue-300">
-                </div>
-          
-                <!-- Project Description -->
-                <div>
-                  <label class="text-sm font-medium mb-2 text-gray-700 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                      <path fill-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625ZM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15Zm.75 2.25a.75.75 0 0 0 0 1.5H12a.75.75 0 0 0 0-1.5H8.25Z" clip-rule="evenodd" />
-                      <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
-                    </svg>    
-                    Description
-                  </label>
-                  <textarea formControlName="description" class="w-full p-3 border rounded-md"></textarea>
-                </div>
-          
-                <!-- Project Technologies -->
-                <div>
-                  <label class="text-sm font-medium mb-2 text-gray-700 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                      <path fill-rule="evenodd" d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm14.25 6a.75.75 0 0 1-.22.53l-2.25 2.25a.75.75 0 1 1-1.06-1.06L15.44 12l-1.72-1.72a.75.75 0 1 1 1.06-1.06l2.25 2.25c.141.14.22.331.22.53Zm-10.28-.53a.75.75 0 0 0 0 1.06l2.25 2.25a.75.75 0 1 0 1.06-1.06L8.56 12l1.72-1.72a.75.75 0 1 0-1.06-1.06l-2.25 2.25Z" clip-rule="evenodd" />
-                    </svg> 
-                    Technologies
-                  </label>
-                  <input type="text" formControlName="technologies" class="w-full p-3 border rounded-md" placeholder="Ex: Angular, Spring Boot, PostgreSQL">
-                </div>
-          
-                <!-- Project Image Upload -->
-                <div>
-                  <label class="text-sm font-medium mb-2 text-gray-700 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                      <path d="M11.47 1.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1-1.06 1.06l-1.72-1.72V7.5h-1.5V4.06L9.53 5.78a.75.75 0 0 1-1.06-1.06l3-3ZM11.25 7.5V15a.75.75 0 0 0 1.5 0V7.5h3.75a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-9a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h3.75Z" />
-                    </svg>   
-                    Upload Image
-                  </label>
-                  <input type="text" formControlName="imageUrl" class="w-full p-3 border rounded-md">
-                </div>
-          
-                <!-- Add Button -->
-                <button 
-                    type="button" 
-                    class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba] focus:outline-none" 
-                    (click)="onSubmit()">
-                    Add Project
-                </button>
+        </app-modal>
 
-              </form>
-            </div>
-          </app-modal>
-  
-          <!-- Grid of projects -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <app-project-card 
-              *ngFor="let project of projects" 
-              [project]="project">
-            </app-project-card>
-          </div>
-
+        <!-- Project Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <app-project-card *ngFor="let project of filteredProjects()" [project]="project"></app-project-card>
         </div>
       </div>
     </div>
-  </body>
-  
+  </div>
+</body>

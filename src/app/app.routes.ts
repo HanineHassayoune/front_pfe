@@ -83,6 +83,7 @@ export const routes: Routes = [
       path: 'partner', 
       component:DashboardPartnerComponent,
       canActivate: [authGuard], 
+      //canLoad:[authGuard],
       data: { role: 'PARTNER' },
       children: [
         {path:'tickets',component:TicketsComponent},

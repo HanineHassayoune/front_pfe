@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { AlertComponent } from '../components/alert/alert.component';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,7 @@ export class LoginComponent {
   alertMessage: string = '';
   alertVisible: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router , private storageService: StorageService) {}
   onSubmit() {
     // Reset alert visibility
     this.alertVisible = false;
@@ -48,7 +49,7 @@ export class LoginComponent {
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
         // Store token in localStorage
-        localStorage.setItem('token', response.token);
+        this.storageService.setAuthToken(response.token);
   
 
         // Set alert for success

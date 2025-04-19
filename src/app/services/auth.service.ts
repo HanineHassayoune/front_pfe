@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environment/environment';
+import { StorageService } from './storage.service';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ export class AuthService {
   private authUrl = environment.authUrl;
   private logoutUrl = environment.logoutUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private storageService : StorageService) {}
 
 
   isAuthenticated(): boolean {
@@ -27,9 +28,10 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http.post(this.authUrl + '/authenticate', { email, password }).pipe(
       tap((response: any) => { //tap to store the token and role in localStorage 
-        localStorage.setItem('auth_token', response.token);
-        localStorage.setItem('role', response.role); 
-        localStorage.setItem('tenant', response.tenant); 
+        this.storageService.setAuthToken(response.token);
+        this.storageService.setRole(response.role);
+        this.storageService.setTenant(response.tenant);
+       
       })
     );
   }

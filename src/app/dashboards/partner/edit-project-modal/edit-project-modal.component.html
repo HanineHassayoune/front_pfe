@@ -1,0 +1,67 @@
+<app-modal (closeModalEvent)="dialogRef.close()">
+    <div modal-title>Edit Project</div>
+  
+    <div modal-body>
+      <form [formGroup]="projectForm" class="space-y-4">
+        <!-- Title -->
+        <div>
+          <label class="text-sm font-medium text-gray-700 flex items-center">
+            <mat-icon class="mr-2">title</mat-icon> Title
+          </label>
+          <input type="text" formControlName="title" class="w-full p-3 border rounded-md" />
+        </div>
+  
+        <!-- Description -->
+        <div>
+          <label class="text-sm font-medium text-gray-700 flex items-center">
+            <mat-icon class="mr-2">description</mat-icon> Description
+          </label>
+          <textarea formControlName="description" class="w-full p-3 border rounded-md"></textarea>
+        </div>
+  
+        <!-- Technologies -->
+        <div>
+          <label class="text-sm font-medium text-gray-700 flex items-center">
+            <mat-icon class="mr-2">memory</mat-icon> Technologies
+          </label>
+          <app-chips
+            [label]="'Technologies'"
+            [placeholder]="'Add tech...'"
+            [allItems]="allTechnologies"
+            [selectedItems]="projectForm.get('technologies')?.value"
+            (selectedItemsChange)="projectForm.get('technologies')?.setValue($event)"
+            [displayWith]="displayWith">
+          </app-chips>
+        </div>
+  
+        <!-- Users -->
+        <div>
+          <label class="text-sm font-medium text-gray-700 flex items-center">
+            <mat-icon class="mr-2">group</mat-icon> Assigned Users
+          </label>
+          <app-chips
+            [label]="'Users'"
+            [placeholder]="'Add a user...'"
+            [allItems]="allUsers"
+            [selectedItems]="projectForm.get('users')?.value"
+            (selectedItemsChange)="projectForm.get('users')?.setValue($event)"
+            [displayWith]="displayWith">
+          </app-chips>
+        </div>
+  
+        <!-- Image -->
+        <div>
+          <label class="text-sm font-medium text-gray-700 flex items-center">
+            <mat-icon class="mr-2">image</mat-icon> Upload Image
+          </label>
+          <input type="file" (change)="onFileSelected($event)" class="w-full p-3 border rounded-md" />
+        </div>
+  
+        <!-- Submit -->
+        <button type="button" class="bg-[#205781] text-white px-4 py-2 rounded-lg" (click)="onSubmit()">
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </app-modal>
+  

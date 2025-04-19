@@ -5,32 +5,52 @@ import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { MatTableModule } from '@angular/material/table';
 import { ProjectService } from '../../../services/project.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditProjectModalComponent } from '../edit-project-modal/edit-project-modal.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-project-details',
   standalone: true,
-  imports: [TableOneBtnComponent,CommonModule,ModalComponent,MatTableModule],
+  imports: [TableOneBtnComponent, CommonModule, ModalComponent, MatTableModule,MatIcon],
   templateUrl: './project-details.component.html',
   styleUrl: './project-details.component.css'
 })
 export class ProjectDetailsComponent implements OnInit {
 
   projectId: number;
-  project: any; 
+  project: any;
 
-  constructor(private route: ActivatedRoute,private router: Router, private projectService: ProjectService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private projectService: ProjectService,
+    private dialog: MatDialog
+  ) {
     this.projectId = Number(this.route.snapshot.paramMap.get('id'));
   }
-
 
   ngOnInit(): void {
     this.fetchProjectDetails();
   }
 
+  openEditProjectModal() {
+    const dialogRef = this.dialog.open(EditProjectModalComponent, {
+      width: '600px',
+      data: { project: this.project }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.project = result; // mettre à jour l'affichage si modifié
+      }
+    });
+  }
+
   fetchProjectDetails() {
     this.projectService.getProjectById(this.projectId).subscribe(
       (data) => {
-        this.project = data; 
+        this.project = data;
       },
       (error) => {
         console.error('Error fetching project details:', error);
@@ -58,10 +78,8 @@ export class ProjectDetailsComponent implements OnInit {
     { field: 'status', header: 'Status' },
     { field: 'description', header: 'Description' },
     { field: 'timestamp', header: 'Timestamp' },
-  
   ];
 
-  // Exemple de données à afficher
   rows = [
     {
       id: 1,
@@ -72,40 +90,34 @@ export class ProjectDetailsComponent implements OnInit {
       description: 'Occurred while trying to access a null object.',
       timestamp: '2025-02-05 12:45:00',
     },
-  
     {
       id: 2,
       exception: 'Index Out Of Bound Exception',
       type: 'Error',
       level: 'Medium',
-      status:'In progress',
+      status: 'In progress',
       description: 'Tried to access an element outside of the array bounds.',
       timestamp: '2025-02-05 14:30:15',
-      
     },
     {
       id: 3,
       exception: 'SQL Syntax Error',
       type: 'Error',
       level: 'Low',
-      status:'Resolved',
+      status: 'Resolved',
       description: 'SQL query contains incorrect syntax.',
       timestamp: '2025-02-05 16:22:45',
-     
     },
     {
       id: 4,
       exception: 'File Not Found',
       type: 'Error',
       level: 'High',
-      status:'To do',
+      status: 'To do',
       description: 'The requested file could not be located.',
       timestamp: '2025-02-05 18:00:30',
-      
     }
   ];
-
-  
 
   goToTicketDetails(ticket: any) {
     if (ticket && ticket.id) {
@@ -114,7 +126,5 @@ export class ProjectDetailsComponent implements OnInit {
       console.error('Ticket ID is undefined!');
     }
   }
-  
-
   
 }

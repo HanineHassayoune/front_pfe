@@ -15,9 +15,10 @@ export class ProjectService {
 
  
 
-  addProject(project: any): Observable<any> {
+  addProject(project: FormData): Observable<any> {
     return this.http.post<any>(`${this.projectUrl}/add`, project);
   }
+  
 
   getProjects(): Observable<any[]> {
     return this.http.get<any[]>(this.projectUrl + '/get');
@@ -25,6 +26,10 @@ export class ProjectService {
   
   getProjectById(id: number): Observable<any> {
     return this.http.get<any>(`${this.projectUrl}/${id}`);
+  }
+  
+  updateProject(id: number, project: FormData): Observable<any> {
+    return this.http.put<any>(`${this.projectUrl}/update/${id}`, project);
   }
   
 }
