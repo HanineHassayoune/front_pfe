@@ -2,7 +2,7 @@
     <div modal-title>Edit Project</div>
   
     <div modal-body>
-      <form [formGroup]="projectForm" class="space-y-4">
+        <form *ngIf="projectForm" [formGroup]="projectForm" class="space-y-4">
         <!-- Title -->
         <div>
           <label class="text-sm font-medium text-gray-700 flex items-center">
@@ -29,8 +29,7 @@
             [placeholder]="'Add tech...'"
             [allItems]="allTechnologies"
             [selectedItems]="projectForm.get('technologies')?.value"
-            (selectedItemsChange)="projectForm.get('technologies')?.setValue($event)"
-            [displayWith]="displayWith">
+            (selectedItemsChange)="projectForm.get('technologies')?.setValue($event)">
           </app-chips>
         </div>
   

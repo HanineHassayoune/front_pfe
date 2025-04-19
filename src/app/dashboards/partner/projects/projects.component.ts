@@ -73,14 +73,14 @@ export class ProjectsComponent implements OnInit {
   }
 
   fetchProjects(): void {
-    this.projectService.getProjects().subscribe((response: any) => {
-      this.projects = response.map((p: any) => ({
-        ...p,
-        imageUrl: p.projectImage // adapte la clé ici
-      }));
-    });
-  }
-  
+  this.projectService.getProjects().subscribe((response: any) => {
+    this.projects = response.map((p: any) => ({
+      ...p,
+      imageUrl: p.projectImage // adapte la clé ici
+    }));
+  });
+}
+
   selectedImageFile: File | null = null;
 
   onFileSelected(event: Event): void {
