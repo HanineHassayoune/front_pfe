@@ -4,7 +4,7 @@
       <div class="container mx-auto p-6">
         <!-- Title -->
         <div class="flex justify-between items-center mb-6">
-          <h1 class="text-2xl font-bold text-gray-800">List of Projects</h1>
+          <h1 class="text-3xl font-bold text-[#205781] ">List of projects</h1>
           <div class="flex space-x-4">
             <!-- Search Bar -->
             <div class="relative flex items-center">
@@ -30,7 +30,8 @@
         <app-modal *ngIf="isModalOpen" (closeModalEvent)="closeModal()">
           <div modal-title>Add Project</div>
 
-          <div modal-body>
+          <div modal-body class="max-h-[70vh] overflow-y-auto pr-2">
+
             <form [formGroup]="projectForm" class="space-y-4">
               <!-- Title -->
               <div>
@@ -91,10 +92,18 @@
           </div>
         </app-modal>
 
-        <!-- Project Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <app-project-card *ngFor="let project of filteredProjects()" [project]="project"></app-project-card>
-        </div>
+       <!-- Project Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <app-project-card *ngFor="let project of filteredProjects()" [project]="project"></app-project-card>
+      </div>
+
+      <!-- No Projects Found -->
+      <div *ngIf="filteredProjects().length === 0" class="col-span-full text-center mt-10">
+        <img src="assets/images/no-projects.png" alt="No projects" class="mx-auto mb-4 w-48 h-48 opacity-70" />
+        <h2 class="text-xl font-semibold text-gray-700">No project found</h2>
+        <p class="text-gray-500 mt-2">Try adding a new project to get started.</p>
+      </div>
+
       </div>
     </div>
   </div>

@@ -1,9 +1,9 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProjectModalComponent } from '../edit-project-modal/edit-project-modal.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
 
 @Component({
@@ -15,12 +15,11 @@ import { ProjectService } from '../../../services/project.service';
 export class DescriptionComponent implements OnInit {
  
 
-   projectId: number;
+    projectId: number;
     project: any;
   
     constructor(
       private route: ActivatedRoute,
-      private router: Router,
       private projectService: ProjectService,
       private dialog: MatDialog
     ) {

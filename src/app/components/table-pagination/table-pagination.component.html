@@ -16,7 +16,7 @@
         <ng-template #notAction>
           <ng-container *ngIf="column.field === 'profileImage'; else defaultCell">
             <img
-              [src]="element[column.field]"
+              [src]="element[column.field] || 'assets/images/default-user.jpg'"
               alt="User image"
               class="w-10 h-10 rounded-full object-cover"
             />

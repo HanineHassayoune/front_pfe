@@ -1,13 +1,13 @@
 <app-navbar-dashboard 
   [imageUrl]="'../../../assets/images/images.png'"
   [userName]="user.email"
-  [userAvatarUrl]="user.profileImage">
+  [userAvatarUrl]="user.profileImage !== null ? user.profileImage : 'assets/images/default-user.jpg'">
 </app-navbar-dashboard>
 
 <div class="flex overflow-hidden bg-white pt-16">
   <app-sidebar 
   [links]="links"
-  [userAvatarUrl]="user.profileImage" 
+  [userAvatarUrl]="user.profileImage !== null ? user.profileImage : 'assets/images/default-user.jpg'" 
   [userName]="'Partner'">
   >
 
