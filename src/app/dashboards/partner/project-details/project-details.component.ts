@@ -3,22 +3,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TableOneBtnComponent } from '../../../components/table-one-btn/table-one-btn.component';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../../../components/modal/modal.component';
-import { MatTableModule } from '@angular/material/table';
-import { ProjectService } from '../../../services/project.service';
-import { MatDialog } from '@angular/material/dialog';
-import { EditProjectModalComponent } from '../edit-project-modal/edit-project-modal.component';
 import { MatIcon } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { DescriptionComponent } from '../description/description.component';
+import { TicketsProjectComponent } from '../tickets-project/tickets-project.component';
+import { TeamComponent } from '../team/team.component';
 
 @Component({
   selector: 'app-project-details',
   standalone: true,
-  imports: [TableOneBtnComponent, CommonModule, ModalComponent, MatTableModule,MatIcon],
+  imports: [TableOneBtnComponent, CommonModule, ModalComponent,MatIcon,MatTabsModule,DescriptionComponent,TicketsProjectComponent,TeamComponent],
   templateUrl: './project-details.component.html',
   styleUrl: './project-details.component.css'
 })
-export class ProjectDetailsComponent implements OnInit {
+export class ProjectDetailsComponent  {
 
-  projectId: number;
+  /* projectId: number;
   project: any;
 
   constructor(
@@ -42,7 +42,7 @@ export class ProjectDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.project = result; // mettre à jour l'affichage si modifié
+        this.project = result; 
       }
     });
   }
@@ -126,5 +126,5 @@ export class ProjectDetailsComponent implements OnInit {
       console.error('Ticket ID is undefined!');
     }
   }
-  
+   */
 }

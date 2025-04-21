@@ -7,6 +7,8 @@ import { ModalComponent } from '../../../components/modal/modal.component';
 import { ChipsComponent } from '../../../components/chips/chips.component';
 import { UserService } from '../../../services/user.service';
 import { ProjectService } from '../../../services/project.service';
+import { AlertComponent } from '../../../components/alert/alert.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-edit-project-modal',
@@ -16,12 +18,19 @@ import { ProjectService } from '../../../services/project.service';
     ReactiveFormsModule,
     MatIconModule,
     ModalComponent,
-    ChipsComponent
+    ChipsComponent,AlertComponent,
+    MatProgressSpinnerModule
   ],
   templateUrl: './edit-project-modal.component.html',
   styleUrl: './edit-project-modal.component.css'
 })
 export class EditProjectModalComponent implements OnInit {
+  isLoading = false;
+
+  alertType: 'success' | 'danger' | 'warning' | 'info' = 'info';
+  alertMessage = '';
+  alertVisible = false;
+
   projectForm!: FormGroup;
   selectedFile: File | null = null;
   allTechnologies: string[] = [
@@ -53,22 +62,6 @@ export class EditProjectModalComponent implements OnInit {
   ) {}
   
 
- /*  ngOnInit() {
-    
-    // Convertir userIds en objets depuis allUsers
-    const userIds = this.data.project?.userIds || [];
-    const selectedUsers = this.allUsers.filter(user => userIds.includes(user.id));
-   console.log(userIds)
-    this.projectForm = this.fb.group({
-      title: [this.data.project?.title || ''],
-      description: [this.data.project?.description || ''],
-      technologies: [this.data.project?.technologies || []],
-      users: [selectedUsers || []],
-      image: [null]
-    });
-    
-  }
-   */
   ngOnInit() {
     this.loadUsers();
   }
@@ -125,7 +118,7 @@ export class EditProjectModalComponent implements OnInit {
         this.dialogRef.close(true); 
       },
       error: (err) => {
-        console.error('Erreur lors de la mise à jour du projet', err);
+        console.error('An error occurred while updating the project. Please try again.', err);
       }
     });
   }

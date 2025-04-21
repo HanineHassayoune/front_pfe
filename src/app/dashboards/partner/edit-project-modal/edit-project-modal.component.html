@@ -60,6 +60,16 @@
         <button type="button" class="bg-[#205781] text-white px-4 py-2 rounded-lg" (click)="onSubmit()">
           Save Changes
         </button>
+
+        <!-- Loading Spinner -->
+        <div *ngIf="isLoading" class="flex justify-center py-2">
+            <mat-spinner diameter="40"></mat-spinner>
+        </div>
+        
+        <!-- Alert -->
+        <app-alert *ngIf="alertVisible" [type]="alertType" [message]="alertMessage"></app-alert>
+  
+
       </form>
     </div>
   </app-modal>
