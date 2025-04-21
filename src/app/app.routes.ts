@@ -25,6 +25,7 @@ import { TicketDetailsComponent } from './dashboards/partner/ticket-details/tick
 import { ProfilComponent } from './components/profil/profil.component';
 import { TablePaginationComponent } from './components/table-pagination/table-pagination.component';
 
+
 export const routes: Routes = [
    {path:'navbar',component:NavbarDashboardComponent},
     {path:'footer',component:FooterDashboardComponent},
@@ -46,6 +47,7 @@ export const routes: Routes = [
     { path: 'ticket-details/:id', component: TicketDetailsComponent },
     { path: 'profil', component: ProfilComponent } ,
     {path: 'table-pagination', component:TablePaginationComponent},
+  
     {
       path: 'admin',
       component: DashboardAdminComponent, 

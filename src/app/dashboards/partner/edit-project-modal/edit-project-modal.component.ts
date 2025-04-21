@@ -98,6 +98,8 @@ export class EditProjectModalComponent implements OnInit {
     this.selectedFile = event.target.files[0];
   }
 
+
+
   onSubmit() {
     const formValues = this.projectForm.value;
   
@@ -125,5 +127,4 @@ export class EditProjectModalComponent implements OnInit {
 
   displayWith = (user: any) => user?.name || '';
 
-  
 }

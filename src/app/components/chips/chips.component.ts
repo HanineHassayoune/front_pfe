@@ -121,18 +121,16 @@ export class ChipsComponent<T> implements OnInit {
     );
   }
 
-  private _filter(value: string): T[] {
-    const filterValue = (value || '').toLowerCase(); // Normalize the input value
-    console.debug('Filtering value:', filterValue); // Debug input filtering value
+  private _filter(value: any): T[] {
+    const filterValue = typeof value === 'string' ? value.toLowerCase() : '';
+   
   
     return this.allItems.filter((item) => {
-      const displayValue = this.displayWith(item); // Validate display output for each item
-      console.debug('Display value:', displayValue); // Log the display value
+      const displayValue = this.displayWith(item);
   
-      return typeof displayValue === 'string' && displayValue.toLowerCase().includes(filterValue); // Safely filter strings
+      return typeof displayValue === 'string' && displayValue.toLowerCase().includes(filterValue);
     });
   }
-  
   
   
 
@@ -143,7 +141,6 @@ export class ChipsComponent<T> implements OnInit {
 
   trackByFn(index: number, item: T): any {
     if (!this.displayWith || typeof this.displayWith !== 'function') {
-      //console.warn('displayWith is invalid. Using default function.');
       this.displayWith = (item: T) => String(item);
     }
     return this.displayWith(item) || index;

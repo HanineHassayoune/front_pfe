@@ -1,10 +1,11 @@
 <div class="p-6 w-full max-w-2xl">
   <h2 class="text-2xl font-semibold mb-4 flex items-center gap-2">
-    <mat-icon>edit</mat-icon>
-    Edit Project
+    <mat-icon>Add</mat-icon>
+    Add Project
   </h2>
 
   <form *ngIf="projectForm" [formGroup]="projectForm" class="space-y-4">
+
     <!-- Title -->
     <div>
       <label class="text-sm font-medium text-gray-700 flex items-center">
@@ -29,13 +30,13 @@
       <app-chips
         [label]="'Technologies'"
         [placeholder]="'Add tech...'"
-        [allItems]="allTechnologies"
+        [allItems]="data.allTechnologies"
         [selectedItems]="projectForm.get('technologies')?.value"
         (selectedItemsChange)="projectForm.get('technologies')?.setValue($event)">
       </app-chips>
     </div>
 
-    <!-- Users -->
+    <!-- Assigned Users -->
     <div>
       <label class="text-sm font-medium text-gray-700 flex items-center">
         <mat-icon class="mr-2">group</mat-icon> Assigned Users
@@ -43,14 +44,14 @@
       <app-chips
         [label]="'Users'"
         [placeholder]="'Add a user...'"
-        [allItems]="allUsers"
+        [allItems]="data.allUsers"
         [selectedItems]="projectForm.get('users')?.value"
         (selectedItemsChange)="projectForm.get('users')?.setValue($event)"
         [displayWith]="displayWith">
       </app-chips>
     </div>
 
-    <!-- Image -->
+    <!-- Image Upload -->
     <div>
       <label class="text-sm font-medium text-gray-700 flex items-center">
         <mat-icon class="mr-2">image</mat-icon> Upload Image
@@ -58,16 +59,19 @@
       <input type="file" (change)="onFileSelected($event)" class="w-full p-3 border rounded-md" />
     </div>
 
-    <!-- Submit -->
+     <!-- Submit -->
     <div class="flex justify-end gap-3 pt-4">
-      <button type="button" class="bg-[#B82132] text-white px-4 py-2 rounded-lg hover:bg-[#D2665A]" (click)="dialogRef.close()">
-        Cancel
-      </button>
-      <button type="button" class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba]" (click)="onSubmit()">
-        Save Changes
-      </button>
+      <button mat-button (click)="close()" class="bg-[#B82132] text-white px-4 py-2 rounded-lg hover:bg-[#D2665A]">Cancel</button>
+      <button mat-raised-button (click)="submit()" class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba]" >Add Project</button>
     </div>
-    
+
+    <!-- Spinner -->
+<div *ngIf="isLoading" class="flex justify-center">
+  <mat-spinner diameter="30" color="primary"></mat-spinner>
+</div>
 
   </form>
 </div>
+
+
+

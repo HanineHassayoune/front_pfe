@@ -1,26 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { ProjectCardComponent } from '../../../components/project-card/project-card.component';
-import { CommonModule } from '@angular/common';
-import { ModalComponent } from '../../../components/modal/modal.component';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ProjectService } from '../../../services/project.service';  
+import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProjectService } from '../../../services/project.service';
 import { UserService } from '../../../services/user.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ProjectCardComponent } from '../project-card/project-card.component';
 import { ChipsComponent } from '../../../components/chips/chips.component';
-import { MatIconModule } from '@angular/material/icon';
 
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { AddProjectDialogComponent } from '../add-project-dialog/add-project-dialog.component';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  profileImage: string | null;
+  role: string;
+  enabled: boolean;
+}
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [RouterModule, ProjectCardComponent, CommonModule, ModalComponent, ReactiveFormsModule, ChipsComponent, FormsModule,MatIconModule ],
+  imports: [
+    RouterModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    ProjectCardComponent,
+    ChipsComponent,
+    MatDialogModule,
+    AddProjectDialogComponent 
+  ],
   templateUrl: './projects.component.html',
-  styleUrl: './projects.component.css'
+  styleUrl: './projects.component.css',
 })
 
 
 export class ProjectsComponent implements OnInit {
-  projectForm!: FormGroup;
-  isModalOpen = false;
+  private fb = inject(FormBuilder);
+  private projectService = inject(ProjectService);
+  private userService = inject(UserService);
+  private dialog = inject(MatDialog);
+
   projects: any[] = [];
   allTechnologies: string[] = [
     // Frontend
@@ -43,108 +67,56 @@ export class ProjectsComponent implements OnInit {
     'GraphQL', 'REST API', 'WebSockets', 'JSON', 'YAML', 'Markdown', 'Webpack', 'Vite', 'Babel', 'ESLint', 'Prettier'
   ];
 
-  allUsers: { name: string }[] = [];
-
-  
-  displayWith(item: any): string {
-    const display = item?.name || ''; // Safely handle undefined or null values
-    console.debug('Calling displayWith:', display); // Log the processed output
-    return display;
-  }
-  
-  
-  
-  
+  allUsers: { id: number; name: string }[] = [];
   searchQuery = '';
 
-  constructor(private fb: FormBuilder, private projectService: ProjectService, private userService: UserService) {}
-
   ngOnInit(): void {
-    this.projectForm = this.fb.group({
-      title: ['', Validators.required],
-      description: [''],
-      technologies: [[]],
-      users: [[]],
-      imageUrl: ['']
-    });
-
     this.fetchProjects();
     this.loadUsers();
   }
 
   fetchProjects(): void {
-  this.projectService.getProjects().subscribe((response: any) => {
-    this.projects = response.map((p: any) => ({
-      ...p,
-      imageUrl: p.projectImage // adapte la clé ici
-    }));
-  });
-}
-
-  selectedImageFile: File | null = null;
-
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedImageFile = input.files[0];
-    }
+    this.projectService.getProjects().subscribe((response: any) => {
+      this.projects = response.map((p: any) => ({
+        ...p,
+        imageUrl: p.projectImage,
+      }));
+    });
   }
-  
+
   loadUsers(): void {
     this.userService.getUsers(['MANAGER', 'TESTER', 'DEVELOPER']).subscribe({
-      next: (data: { content: { id: number; name: string; email: string; profileImage: string | null; role: string; enabled: boolean }[] }) => {
+      next: (data) => {
         this.allUsers = data.content
-          .filter((user) => user.enabled)
-          .map((user) => ({ id: user.id, name: user.name }));
+          .filter((user:User) => user.enabled)
+          .map((user:User) => ({ id: user.id, name: user.name }));
       },
-      error: (err) => {
-        console.error('Failed to load users:', err);
-      },
-    });
-  }
-  
-  
-  
-
-  openModal(): void {
-    this.isModalOpen = true;
-  }
-
-  closeModal(): void {
-    this.isModalOpen = false;
-    this.projectForm.reset({
-      title: '',
-      description: '',
-      technologies: [],
-      users: [],
-      projectImage: ''
+      error: (err) => console.error('Failed to load users:', err),
     });
   }
 
-  onSubmit() {
-    const formData = new FormData();
-    formData.append('title', this.projectForm.value.title);
-    formData.append('description', this.projectForm.value.description);
-    formData.append('technologies', JSON.stringify(this.projectForm.value.technologies));
-    
-    const userIds = this.projectForm.value.users.map((user: any) => user.id);
-    formData.append('users', JSON.stringify(userIds));
-  
-    if (this.selectedImageFile) {
-      formData.append('image', this.selectedImageFile);
-    }
-  
-      this.projectService.addProject(formData).subscribe(() => {
+  displayWith(item: any): string {
+    return item?.name || '';
+  }
+
+  openAddProjectDialog(): void {
+    const dialogRef = this.dialog.open(AddProjectDialogComponent, {
+      width: '600px',
+      data: {
+        allTechnologies: this.allTechnologies,
+        allUsers: this.allUsers,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'refresh') {
         this.fetchProjects();
-        this.closeModal();
-      });
-    }
-  
-  
-  
+      }
+    });
+  }
 
   filteredProjects(): any[] {
-    return this.projects.filter(p =>
+    return this.projects.filter((p) =>
       p.title.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
