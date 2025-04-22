@@ -1,0 +1,8 @@
+/* Ajout facultatif de transitions douces */
+img {
+    transition: transform 0.3s ease;
+  }
+  img:hover {
+    transform: scale(1.05);
+  }
+  

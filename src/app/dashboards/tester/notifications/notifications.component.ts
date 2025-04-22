@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { TableComponent } from '../../../components/table/table.component';
+
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [TableComponent],
+  imports: [],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.css'
 })

@@ -6,7 +6,7 @@ import { AlertComponent } from '../components/alert/alert.component';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StorageService } from '../services/storage.service';
-
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -24,65 +24,40 @@ export class LoginComponent {
   alertVisible: boolean = false;
 
   constructor(private authService: AuthService, private router: Router , private storageService: StorageService) {}
-  onSubmit() {
-    // Reset alert visibility
+  onSubmit(form: NgForm) {
     this.alertVisible = false;
   
-    
-    if (!this.email) {
+    if (!form.valid) {
       this.alertType = 'warning';
-      this.alertMessage = ' Please fill in the Email field.';
+      this.alertMessage = 'Please fill in all required fields correctly.';
       this.alertVisible = true;
       setTimeout(() => { this.alertVisible = false; }, 2000);
-      return; 
+      return;
     }
   
-    if (!this.password) {
-      this.alertType = 'warning';
-      this.alertMessage = ' Please fill in the Password field.';
-      this.alertVisible = true;
-      setTimeout(() => { this.alertVisible = false; }, 2000);
-      return; 
-    }
+    this.isLoading = true;
   
-    
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
-        // Store token in localStorage
         this.storageService.setAuthToken(response.token);
-  
-
-        // Set alert for success
         this.alertType = 'success';
-        this.alertMessage = ' Login successful!';
+        this.alertMessage = 'Login successful!';
         this.alertVisible = true;
   
-        // Redirect based on role
-       // Delay the redirection to allow the alert to be visible
-      setTimeout(() => {
-        // Redirect based on role
-        switch (response.role.toUpperCase()) {
-          case 'ADMIN':
-            this.router.navigate(['/admin']);
-            break;
-          case 'TESTER':
-            this.router.navigate(['/tester']);
-            break;
-          case 'DEVELOPER':
-            this.router.navigate(['/developper']);
-            break;
-          case 'PARTNER':
-            this.router.navigate(['/partner']);
-            break;
-          default:
-            this.router.navigate(['/login']);
-            break;
-        }
-      }, 2000); // Wait for 2 seconds before redirecting
+        setTimeout(() => {
+          switch (response.role.toUpperCase()) {
+            case 'ADMIN': this.router.navigate(['/admin']); break;
+            case 'TESTER': this.router.navigate(['/tester']); break;
+            case 'DEVELOPER': this.router.navigate(['/developper']); break;
+            case 'PARTNER': this.router.navigate(['/partner']); break;
+            case 'MANAGER': this.router.navigate(['/manager']); break;
+            default: this.router.navigate(['/login']); break;
+          }
+        }, 2000);
       },
       error: (error) => {
         this.alertType = 'danger';
-        this.alertMessage = error.error?.message || ' Login error. Please check your credentials.';
+        this.alertMessage = error.error?.message || 'Login error. Please check your credentials.';
         this.alertVisible = true;
         setTimeout(() => { this.alertVisible = false; }, 2000);
       }

@@ -1,73 +1,84 @@
-<body class="bg-gray-100 min-h-screen ">
-    <div class="flex overflow-hidden pt-9">
-      <div id="main-content" class="h-full w-full relative overflow-y-auto lg:ml-64">
-  
-        <div class="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-2xl space-y-8">
-  
-          <app-alert 
-            *ngIf="alertVisible" 
-            [type]="alertType" 
-            [message]="alertMessage" 
-            [isVisible]="alertVisible">
-          </app-alert>
+<body class="bg-gray-100 min-h-screen">
+  <div class="flex overflow-hidden pt-9">
+    <div id="main-content" class="h-full w-full relative overflow-y-auto lg:ml-64">
+      <div class="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-2xl space-y-8">
 
-          <!-- Image de profil -->
-          <div class="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-6 space-y-4 sm:space-y-0">
-            <div class="relative w-24 h-24">
-              <img
+        <app-alert 
+          *ngIf="alertVisible" 
+          [type]="alertType" 
+          [message]="alertMessage" 
+          [isVisible]="alertVisible">
+        </app-alert>
+
+        <!-- Image de profil -->
+        <div class="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-6 space-y-4 sm:space-y-0">
+          <div class="relative w-24 h-24">
+            <img
               [src]="user.profileImage !== null ? user.profileImage : 'assets/images/default-user.jpg'"
               alt="Profile Image"
               class="w-24 h-24 rounded-full object-cover border border-gray-300"
-              />
-              <label for="imageUpload" class="absolute bottom-0 right-0 bg-blue-600 text-white p-1 rounded-full cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
-                <input type="file" id="imageUpload" class="hidden" (change)="onImageSelected($event)" />
-              </label>
-            </div>
-            <div class="text-center sm:text-left">
-              <h2 class="text-2xl font-bold">{{ user.name }}</h2>
-              <p class="text-gray-500">{{ user.email }}</p>
-            </div>
+            />
+            <label for="imageUpload" class="absolute bottom-0 right-0 bg-blue-600 text-white p-1 rounded-full cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              <input type="file" id="imageUpload" class="hidden" (change)="onImageSelected($event)" />
+            </label>
           </div>
-    
-          <form class="space-y-4" (ngSubmit)="updateProfile()">
-            <h3 class="text-lg font-semibold">Update Profile</h3>
-          
-            <!-- Nom -->
-            <div>
-              <label class="block text-sm font-medium">Name</label>
-              <input type="text" name="name" class="w-full mt-1 p-2 border rounded" [(ngModel)]="user.name" required />
-            </div>
-          
-            <!-- Mot de passe actuel -->
-            <div>
-              <label class="block text-sm font-medium">Current Password</label>
-              <input type="password" name="currentPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="currentPassword" />
-            </div>
-          
-            <!-- Nouveau mot de passe -->
-            <div>
-              <label class="block text-sm font-medium">New Password</label>
-              <input type="password" name="newPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="newPassword" />
-            </div>
-          
-            <!-- Confirmer nouveau mot de passe -->
-            <div>
-              <label class="block text-sm font-medium">Confirm New Password</label>
-              <input type="password" name="confirmationPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="confirmationPassword" />
-            </div>
-          
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-              Save Changes
-            </button>
-          </form>
-          
-
+          <div class="text-center sm:text-left">
+            <h2 class="text-2xl font-bold">{{ user.name }}</h2>
+            <p class="text-gray-500">{{ user.email }}</p>
+            <p class="text-gray-500">{{ user.role }}</p>
+          </div>
         </div>
-  
+
+        <form class="space-y-4" (ngSubmit)="updateProfile()">
+          <h3 class="text-lg font-semibold">Update Profile</h3>
+
+          <!-- Nom -->
+          <div>
+            <label class="flex items-center text-sm font-medium space-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+              </svg>
+              <span>Name</span>
+            </label>
+            <input type="text" name="name" class="w-full mt-1 p-2 border rounded" [(ngModel)]="user.name" required />
+          </div>
+
+          <!-- Mot de passe actuel -->
+          <div>
+            <label class="flex items-center text-sm font-medium space-x-2">
+             
+              <span>Current Password</span>
+            </label>
+            <input type="password" name="currentPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="currentPassword" />
+          </div>
+
+          <!-- Nouveau mot de passe -->
+          <div>
+            <label class="flex items-center text-sm font-medium space-x-2">
+              
+              <span>New Password</span>
+            </label>
+            <input type="password" name="newPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="newPassword" />
+          </div>
+
+          <!-- Confirmer nouveau mot de passe -->
+          <div>
+            <label class="flex items-center text-sm font-medium space-x-2">
+             
+              <span>Confirm New Password</span>
+            </label>
+            <input type="password" name="confirmationPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="confirmationPassword" />
+          </div>
+
+          <button type="submit" class=" bg-[#205781] text-white p-3  rounded-md hover:bg-[#4F959D] transition">
+            Save Changes
+          </button>
+        </form>
+
       </div>
     </div>
-  </body>
-  
+  </div>
+</body>

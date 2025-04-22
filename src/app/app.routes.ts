@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { NavbarDashboardComponent } from './components/navbar-dashboard/navbar-dashboard.component';
 import { FooterDashboardComponent } from './components/footer-dashboard/footer-dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { TicketsComponent } from './dashboards/partner/tickets/tickets.component';
 import { AddTicketComponent } from './dashboards/tester/add-ticket/add-ticket.component';
 import { UsersComponent } from './dashboards/partner/users/users.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
@@ -21,16 +20,17 @@ import { DashboardPartnerComponent } from './dashboards/partner/dashboard-partne
 import { authGuard } from './services/auth.guard';
 import { ProjectsComponent } from './dashboards/partner/projects/projects.component';
 import { ProjectDetailsComponent } from './dashboards/partner/project-details/project-details.component';
-import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { TablePaginationComponent } from './components/table-pagination/table-pagination.component';
+import { DashboardManagerComponent } from './dashboards/manager/dashboard-manager/dashboard-manager.component';
+import { ErrorDetailsComponent } from './dashboards/partner/error-details/error-details.component';
+import { ManagerProjectsComponent } from './dashboards/manager/manager-projects/manager-projects.component';
 
 
 export const routes: Routes = [
    {path:'navbar',component:NavbarDashboardComponent},
     {path:'footer',component:FooterDashboardComponent},
     {path:'sidebar',component:SidebarComponent},
-    {path:'tickets',component:TicketsComponent},
     {path:'addticket',component:AddTicketComponent},
     {path:'users',component:UsersComponent},
     {path:'pieChart',component:PieChartComponent},
@@ -44,10 +44,10 @@ export const routes: Routes = [
     {path:'reset-password',component:ResetPasswordComponent},
     {path:'projects',component:ProjectsComponent},
     { path: 'projects/:id', component: ProjectDetailsComponent } ,
-    { path: 'ticket-details/:id', component: TicketDetailsComponent },
     { path: 'profil', component: ProfilComponent } ,
     {path: 'table-pagination', component:TablePaginationComponent},
-  
+    { path: 'manager-projects', component: ManagerProjectsComponent },
+   
     {
       path: 'admin',
       component: DashboardAdminComponent, 
@@ -83,19 +83,27 @@ export const routes: Routes = [
        
       ]
     },
-    { 
-      path: 'partner', 
-      component:DashboardPartnerComponent,
-      canActivate: [authGuard], 
-      //canLoad:[authGuard],
+    {
+      path: 'partner',
+      component: DashboardPartnerComponent,
+      canActivate: [authGuard],
       data: { role: 'PARTNER' },
       children: [
-        {path:'tickets',component:TicketsComponent},
-        {path:'users',component:UsersComponent},
-        {path:'projects',component:ProjectsComponent},
-        { path: 'projects/:id', component: ProjectDetailsComponent } ,
-        { path: 'ticket-details/:id', component: TicketDetailsComponent },
-        { path: 'profil', component: ProfilComponent } ,
+        { path: 'users', component: UsersComponent },
+        { path: 'projects', component: ProjectsComponent },
+        { path: 'profil', component: ProfilComponent },
+        {path: 'projects/:id',component: ProjectDetailsComponent},
+        { path: 'projects/:projectId/error-details/:errorId', component: ErrorDetailsComponent }
+      ]
+    },
+    { 
+      path: 'manager', 
+      component:DashboardManagerComponent,
+      canActivate: [authGuard], 
+      data: { role: 'MANAGER' },
+      children: [
+        { path: 'profil', component: ProfilComponent } , 
+        { path: 'manager-projects', component: ManagerProjectsComponent },
       
       ]
     },

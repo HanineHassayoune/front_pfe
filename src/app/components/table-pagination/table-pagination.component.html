@@ -12,6 +12,7 @@
                [ngClass]="element.enabled ? 'fa-lock-open text-green-500' : 'fa-lock text-red-500'"></i>
           </button>
         </ng-container>
+        
       
         <ng-template #notAction>
           <ng-container *ngIf="column.field === 'profileImage'; else defaultCell">

@@ -1,0 +1,54 @@
+<div class="p-10 bg-gray-100 min-h-screen">
+    <h2 class="text-2xl font-bold mb-12 ml-6 text-gray-800 flex items-center gap-2">
+      <span>🎫</span> Ticket Kanban
+    </h2>
+  
+    <div
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      class="flex flex-wrap gap-8 justify-center"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div
+        class="w-full sm:w-[45%] md:w-[22%] rounded-2xl shadow-xl flex-shrink-0 border border-gray-200 transition-transform hover:scale-[1.02]"
+        [ngClass]="{
+          'bg-[#F8D7DA]': column.name === 'Pending',
+          'bg-[#D1ECF1]': column.name === 'Resolved',
+          'bg-[#D4EDDA]': column.name === 'Verified',
+          'bg-[#FFF3CD]': column.name === 'Merging'
+        }"
+        *ngFor="let column of board.columns"
+      >
+        <!-- Title -->
+        <div class="flex items-center gap-2 text-lg font-semibold px-4 py-3 border-b border-gray-300 text-gray-700 uppercase tracking-wide">
+          <span *ngIf="column.name === 'Pending'">⏳</span>
+          <span *ngIf="column.name === 'Resolved'">✅</span>
+          <span *ngIf="column.name === 'Verified'">🔍</span>
+          <span *ngIf="column.name === 'Merging'">🔀</span>
+          {{ column.name }}
+        </div>
+  
+        <!-- Tasks -->
+        <div
+          class="p-4 min-h-[180px] space-y-4"
+          id="{{ column.id }}"
+          [cdkDropListConnectedTo]="connectedDropLists"
+          cdkDropList
+          [cdkDropListData]="column.tasks"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div
+            class="bg-white text-gray-800 px-4 py-3 rounded-lg shadow-md cursor-grab transition-all duration-200 hover:shadow-lg hover:bg-blue-50"
+            *ngFor="let task of column.tasks"
+            cdkDrag
+          >
+            <div class="flex items-center gap-2">
+              <span class="text-blue-400">📌</span>
+              <span class="font-medium">{{ task }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -6,13 +6,14 @@ import { ModalComponent } from '../../../components/modal/modal.component';
 import { MatIcon } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DescriptionComponent } from '../description/description.component';
-import { TicketsProjectComponent } from '../tickets-project/tickets-project.component';
+
 import { TeamComponent } from '../team/team.component';
+import { ErrorsComponent } from '../errors/errors.component';
 
 @Component({
   selector: 'app-project-details',
   standalone: true,
-  imports: [TableOneBtnComponent, CommonModule, ModalComponent,MatIcon,MatTabsModule,DescriptionComponent,TicketsProjectComponent,TeamComponent],
+  imports: [TableOneBtnComponent, CommonModule, ModalComponent,MatIcon,MatTabsModule,DescriptionComponent,ErrorsComponent,TeamComponent],
   templateUrl: './project-details.component.html',
   styleUrl: './project-details.component.css'
 })

@@ -1,0 +1,53 @@
+<div class="mat-elevation-z3 rounded-lg overflow-hidden">
+    <table mat-table [dataSource]="dataSource" class="min-w-full">
+  
+      <!-- Timestamp -->
+      <ng-container matColumnDef="timestamp">
+        <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+        <td mat-cell *matCellDef="let element">{{ element.timestamp }}</td>
+      </ng-container>
+  
+      <!-- Level -->
+      <ng-container matColumnDef="level">
+        <th mat-header-cell *matHeaderCellDef>Level</th>
+        <td mat-cell *matCellDef="let element">{{ element.level }}</td>
+      </ng-container>
+  
+      <!-- Message -->
+      <ng-container matColumnDef="message">
+        <th mat-header-cell *matHeaderCellDef>Message</th>
+        <td mat-cell *matCellDef="let element">{{ element.message }}</td>
+      </ng-container>
+  
+      <!-- Stacktrace -->
+      <ng-container matColumnDef="stacktrace">
+        <th mat-header-cell *matHeaderCellDef>Stacktrace</th>
+        <td mat-cell *matCellDef="let element">{{ element.stacktrace }}</td>
+      </ng-container>
+  
+      <!-- Action -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+            <button (click)="onView(element)" class="text-[#205781] hover:text-[#799eba]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                  <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clip-rule="evenodd" />
+                </svg>
+              </button>
+              
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator
+      [length]="totalRows"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons>
+    </mat-paginator>
+  </div>
+  
