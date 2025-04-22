@@ -1,21 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PasswordService {
  
-  private apiUrl = 'http://localhost:8080/api/v1/password';
+ 
+  private pwdUrl = environment.pwdUrl;
 
   constructor(private http: HttpClient) {}
 
   forgotPassword(email: string): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl}/forgot-password`, { email });
+    return this.http.post(`${this.pwdUrl}/forgot-password`, { email }, { responseType: 'text' });
   }
 
   resetPassword(token: string, newPassword: string): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl}/reset-password?token=${token}&newPassword=${newPassword}`, {});
+    return this.http.post(`${this.pwdUrl}/reset-password?token=${token}&newPassword=${newPassword}`, {}, { responseType: 'text' });
   }
+  
+  
 }

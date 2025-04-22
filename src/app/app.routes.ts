@@ -68,6 +68,7 @@ export const routes: Routes = [
       children: [
         {path:'addticket',component:AddTicketComponent},
         {path:'notifications',component:NotificationsComponent},
+        { path: 'profil', component: ProfilComponent } ,
       ]
     },
     { 
@@ -77,6 +78,7 @@ export const routes: Routes = [
       data: { role: 'DEVELOPER' },
       children: [
         {path:'ticketsdev',component:TicketsDevComponent},
+        { path: 'profil', component: ProfilComponent } ,
       
        
       ]

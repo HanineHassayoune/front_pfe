@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NavbarDashboardComponent } from '../../../components/navbar-dashboard/navbar-dashboard.component';
 import { SidebarComponent } from '../../../components/sidebar/sidebar.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-dashboard-tester',
@@ -11,6 +13,14 @@ import { RouterModule } from '@angular/router';
   styleUrl: './dashboard-tester.component.css'
 })
 export class DashboardTesterComponent {
+  user: any = { name: '', email: '', profileImage: '' };
+  currentPassword: string = '';
+  newPassword: string = '';
+  confirmationPassword: string = '';
+  selectedImage: File | null = null;
+  alertVisible: boolean = false;
+  alertMessage: string = '';
+  alertType: 'success' | 'danger' | 'warning' | 'info' | 'dark' = 'info';
   links = [
     {
       name: 'Notifications',
@@ -27,9 +37,49 @@ export class DashboardTesterComponent {
       href: '/tester/solutions',
       iconPath: 'M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0l4-4Z',
     },
+    {
+      name: 'Profile',
+      href: '/tester/profil',
+      iconPath: 'M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z',
+    },
+    {
+      name: 'Logout',
+      href: '',
+      iconPath: 'M16 17L21 12L16 7V10H9V14H16V17ZM5 19H11V21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H11V5H5V19Z',
+      action: () => this.logout()  
+    },
 
     
   ]
+constructor(private authService: AuthService, private router: Router,private userService: UserService) {}
 
+  logout(): void {
+    console.log("Méthode logout() appelée !");
+    this.authService.logout().subscribe({
+      next: () => {
+        console.log("Redirection après logout");
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error("Erreur lors du logout :", err);
+      }
+    });
+  }
+  ngOnInit(): void {
+    this.loadUserProfile();
+  }
 
+  loadUserProfile(): void {
+    this.userService.getConnectedUser().subscribe({
+      next: (res) => {
+        this.user = res; 
+      },
+      error: (err) => {
+        this.alertType = 'danger';
+        this.alertMessage = 'Error loading profile..';
+        this.alertVisible = true;
+        setTimeout(() => { this.alertVisible = false; }, 2000);
+      }
+    });
+  }
 }

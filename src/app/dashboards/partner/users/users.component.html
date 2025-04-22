@@ -66,6 +66,13 @@
         </app-table-pagination>
       </div>
 
+      <!-- No Users Found -->
+<div *ngIf="rows.length === 0 && !isLoading" class="col-span-full text-center mt-10">
+  <img src="assets/images/no-projects.png" alt="No users" class="mx-auto mb-4 w-48 h-48 opacity-70" />
+  <h2 class="text-xl font-semibold text-gray-700">No users found</h2>
+  <p class="text-gray-500 mt-2">Try adding a new user to get started.</p>
+</div>
+
       <!-- Alert -->
       <app-alert
           *ngIf="alertVisible"

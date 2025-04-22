@@ -16,7 +16,7 @@ export class ForgotPasswordComponent {
 
   constructor(private passwordService: PasswordService) {}
 
-  sendResetLink() {
+  /* sendResetLink() {
     if (!this.email) {
       this.message = 'Please enter a valid email';
       return;
@@ -26,6 +26,24 @@ export class ForgotPasswordComponent {
       next: (response) => this.message = 'Reset link sent! Check your email.',
       error: (err) => this.message = 'Error sending email. Try again later.',
     });
-  }
+  } */
 
+    sendResetLink() {
+      if (!this.email) {
+        this.message = 'Please enter a valid email';
+        return;
+      }
+    
+      this.passwordService.forgotPassword(this.email).subscribe({
+        next: (response: string) => {
+          this.message = response; 
+        },
+        error: (err) => {
+          console.error(err);
+          this.message = 'Error sending email. Try again later.';
+        },
+      });
+    }
+    
+    
 }

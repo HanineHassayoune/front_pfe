@@ -4,6 +4,7 @@ export const environment = {
     logoutUrl: 'http://localhost:8222/api/v1/auth/logout',
     registerUrl:'http://localhost:8222/api/v1/auth/register',
     usersUrl :'http://localhost:8222/api/v1/users',
-    projectUrl:'http://localhost:8222/api/v1/projects'
+    projectUrl:'http://localhost:8222/api/v1/projects',
+    pwdUrl : 'http://localhost:8222/api/v1/password',
   };
   
