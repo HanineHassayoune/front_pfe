@@ -7,13 +7,19 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TablePaginationComponent } from '../../../components/table-pagination/table-pagination.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AddUserDialogComponent } from '../add-user-dialog/add-user-dialog.component';
 
-
+import { ConfirmationDialogComponent } from '../../../components/confirmation-dialog/confirmation-dialog.component'; 
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule,PieChartComponent,ModalComponent,ReactiveFormsModule,AlertComponent,MatProgressSpinnerModule,FormsModule,TablePaginationComponent],
+  imports: [CommonModule,PieChartComponent,ModalComponent,
+    ReactiveFormsModule,AlertComponent,MatProgressSpinnerModule,
+    FormsModule,TablePaginationComponent,MatDialogModule,
+    AddUserDialogComponent
+  ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -45,7 +51,7 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,private dialog: MatDialog 
   ) {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
@@ -82,12 +88,29 @@ export class UsersComponent implements OnInit {
 
     // to activate and block users (TESTER,MANAGER,DEVELOPER)
     onTableAction(event: { id: number; action: string }) {
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        data: { message: `Are you sure you want to ${event.action} this user?` },
+        width: '450px',
+        height: '200px'
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.triggerUserAction(event.id, event.action);
+        }
+      });
+    }
+  
+    triggerUserAction(id: number, action: string) {
       this.isLoading = true;
-      const successMsg = event.action === 'approve' ? 'User successfully activated' : 'User successfully blocked.';
-      const serviceCall = event.action === 'approve'
-        ? this.userService.activeUser(event.id)
-        : this.userService.blockUser(event.id);
-    
+      const successMsg = action === 'approve'
+        ? 'User successfully activated.'
+        : 'User successfully blocked.';
+  
+      const serviceCall = action === 'approve'
+        ? this.userService.activeUser(id)
+        : this.userService.blockUser(id);
+  
       serviceCall.subscribe({
         next: () => {
           this.alertType = 'success';
@@ -107,49 +130,50 @@ export class UsersComponent implements OnInit {
         }
       });
     }
+  
+
+    openModal(): void {
+      (document.activeElement as HTMLElement)?.blur();
     
-
-  openModal(): void {
-    this.isModalOpen = true;
-  }
-
-  closeModal(): void {
-    this.isModalOpen = false;
-  }
-
-  // add user by the partner
-  submitUser() {
-    if (this.userForm.valid) {
-      this.isLoading = true; // <-- Démarre le spinner
-  
-      this.userService.addUser(this.userForm.value).subscribe({
-        next: () => {
-          this.closeModal();
-          this.alertType = 'success';
-          this.alertMessage = 'User added successfully!';
-          this.alertVisible = true;
-          this.loadUsers();
-  
-          setTimeout(() => { this.alertVisible = false; }, 5000);
-        },
-        error: (err) => {
-          console.error('Error adding user:', err);
-          this.alertType = 'danger';
-          this.alertMessage = 'Error adding user. Please try again.';
-          this.alertVisible = true;
-  
-          setTimeout(() => { this.alertVisible = false; }, 5000);
-        },
-        complete: () => {
-          this.isLoading = false; // <-- Stoppe le spinner
+      const dialogRef = this.dialog.open(AddUserDialogComponent, {
+        width: '450px',
+        panelClass: 'custom-dialog-container'
+      });
+    
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.submitUser(result);
         }
       });
-    } else {
-      this.alertType = 'warning';
-      this.alertMessage = 'Please fill in all required fields correctly.';
-      this.alertVisible = true;
-      setTimeout(() => { this.alertVisible = false; }, 5000);
     }
+    
+    
+    
+ 
+  // add user by the partner
+  submitUser(formData: any) {
+    this.isLoading = true;
+    this.userService.addUser(formData).subscribe({
+      next: () => {
+        this.alertType = 'success';
+        this.alertMessage = 'User added successfully!';
+        this.alertVisible = true;
+        this.loadUsers();
+  
+        setTimeout(() => { this.alertVisible = false; }, 5000);
+      },
+      error: (err) => {
+        console.error('Error adding user:', err);
+        this.alertType = 'danger';
+        this.alertMessage = 'Error adding user. Please try again.';
+        this.alertVisible = true;
+  
+        setTimeout(() => { this.alertVisible = false; }, 5000);
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
   }
   
 }
