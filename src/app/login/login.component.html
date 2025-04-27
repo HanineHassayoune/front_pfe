@@ -7,12 +7,7 @@
       <div class="absolute top-0 left-0 w-full h-full bg-black opacity-40"></div> 
     </div>
 
-    <app-alert 
-      *ngIf="alertVisible" 
-      [type]="alertType" 
-      [message]="alertMessage" 
-      [isVisible]="alertVisible">
-    </app-alert>
+    
 
     <!-- Form section on the right -->
     <div class="w-1/2 p-8 flex flex-col justify-center">
@@ -63,13 +58,18 @@
         </div>
       
         <button type="submit"
-                class="w-full bg-[#205781] text-white p-3 rounded-md hover:bg-[#4F959D] transition">
+                class="w-full bg-[#205781] text-white p-3 rounded-md hover:bg-[#4F959D] transition cursor-pointer">
           Login
         </button>
       </form>
+      <div class="text-right">
+        <a href="/forgot-password" class="text-sm text-[#4F959D] hover:underline">
+          Forgot your password?
+        </a>
+      </div>
       
       <p class="text-center text-sm text-gray-600 mt-4">
-        Don't have an account? <a href="register" class="text-[#4F959D] hover:underline">Register</a>
+        Don't have an account? <a href="register" class="text-[#4F959D] hover:underline ">Register</a>
       </p>
     </div>
 

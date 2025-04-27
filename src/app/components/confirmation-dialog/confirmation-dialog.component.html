@@ -1,0 +1,32 @@
+<div class="w-full  p-6">
+    <h2 mat-dialog-title class="text-2xl font-semibold text-center mb-4">
+    ⚠️  Confirmation
+    </h2>
+  
+    <mat-dialog-content class="text-center text-lg">
+      <p>{{ data.message }}</p>
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="center" class="flex justify-center gap-6 mt-6">
+      <button
+       
+        (click)="onCancel()"
+        class="flex items-center gap-2 bg-[#B82132] text-white hover:bg-[#D2665A] px-6 py-2 rounded-md transition-all cursor-pointer"
+      >
+        
+      ❌ Cancel
+      </button>
+  
+      <button
+
+        (click)="onConfirm()"
+        class="flex items-center gap-2 bg-[#205781] text-white hover:bg-[#4F959D] px-6 py-2 rounded-md transition-all cursor-pointer"
+      >
+
+    
+   
+        ✔️ Confirm
+      </button>
+    </mat-dialog-actions>
+  </div>
+  

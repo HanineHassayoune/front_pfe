@@ -25,6 +25,7 @@ import { TablePaginationComponent } from './components/table-pagination/table-pa
 import { DashboardManagerComponent } from './dashboards/manager/dashboard-manager/dashboard-manager.component';
 import { ErrorDetailsComponent } from './dashboards/partner/error-details/error-details.component';
 import { ManagerProjectsComponent } from './dashboards/manager/manager-projects/manager-projects.component';
+import { PendingRegisterComponent } from './pending-register/pending-register.component';
 
 
 export const routes: Routes = [
@@ -47,6 +48,7 @@ export const routes: Routes = [
     { path: 'profil', component: ProfilComponent } ,
     {path: 'table-pagination', component:TablePaginationComponent},
     { path: 'manager-projects', component: ManagerProjectsComponent },
+    { path: 'pending-register', component: PendingRegisterComponent},
    
     {
       path: 'admin',
@@ -93,7 +95,8 @@ export const routes: Routes = [
         { path: 'projects', component: ProjectsComponent },
         { path: 'profil', component: ProfilComponent },
         {path: 'projects/:id',component: ProjectDetailsComponent},
-        { path: 'projects/:projectId/error-details/:errorId', component: ErrorDetailsComponent }
+        { path: 'projects/:projectId/error-details/:errorId', component: ErrorDetailsComponent },
+        { path: 'pending-register', component: PendingRegisterComponent},
       ]
     },
     { 

@@ -1,8 +1,9 @@
 <body class="bg-gray-100 min-h-screen">
   <div class="flex overflow-hidden pt-9">
     <div id="main-content" class="h-full w-full relative overflow-y-auto lg:ml-64">
-      <div class="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-2xl space-y-8">
+      <div class="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-2xl space-y-10">
 
+        <!-- Alert -->
         <app-alert 
           *ngIf="alertVisible" 
           [type]="alertType" 
@@ -10,74 +11,90 @@
           [isVisible]="alertVisible">
         </app-alert>
 
-        <!-- Image de profil -->
-        <div class="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-6 space-y-4 sm:space-y-0">
-          <div class="relative w-24 h-24">
+        <!-- Profile image section -->
+        <div class="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-6">
+          <div class="relative w-28 h-28">
             <img
-              [src]="user.profileImage !== null ? user.profileImage : 'assets/images/default-user.jpg'"
+              [src]="user.profileImage || 'assets/images/default-user.jpg'"
               alt="Profile Image"
-              class="w-24 h-24 rounded-full object-cover border border-gray-300"
+              class="w-28 h-28 rounded-full object-cover border border-gray-300 shadow-md"
             />
-            <label for="imageUpload" class="absolute bottom-0 right-0 bg-blue-600 text-white p-1 rounded-full cursor-pointer">
+            <label for="imageUpload" class="absolute bottom-1 right-1 bg-[#205781] hover:bg-[#4F959D] text-white p-1 rounded-full cursor-pointer shadow">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
               </svg>
               <input type="file" id="imageUpload" class="hidden" (change)="onImageSelected($event)" />
             </label>
           </div>
-          <div class="text-center sm:text-left">
-            <h2 class="text-2xl font-bold">{{ user.name }}</h2>
+          <div class="text-center sm:text-left mt-4 sm:mt-0">
+            <h2 class="text-2xl font-bold text-gray-800">{{ user.name }}</h2>
             <p class="text-gray-500">{{ user.email }}</p>
-            <p class="text-gray-500">{{ user.role }}</p>
+            <p class="text-gray-500 capitalize">{{ user.role }}</p>
           </div>
         </div>
 
-        <form class="space-y-4" (ngSubmit)="updateProfile()">
-          <h3 class="text-lg font-semibold">Update Profile</h3>
+        <!-- Formulaire -->
+        <form class="space-y-6" (ngSubmit)="updateProfile()">
+          <h3 class="text-xl font-semibold text-gray-700 border-b pb-2">Update Profile</h3>
 
-          <!-- Nom -->
-          <div>
-            <label class="flex items-center text-sm font-medium space-x-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-                <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
-              </svg>
-              <span>Name</span>
-            </label>
-            <input type="text" name="name" class="w-full mt-1 p-2 border rounded" [(ngModel)]="user.name" required />
-          </div>
+         <!-- Nom -->
+        <div>
+          <label class="flex items-center text-sm font-medium text-gray-600 mb-1 space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[#205781]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A4 4 0 016 16h12a4 4 0 01.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Name</span>
+          </label>
+          <input type="text" name="name"
+            class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-[#4F959D] focus:outline-none"
+            [(ngModel)]="user.name" required />
+        </div>
+
 
           <!-- Mot de passe actuel -->
-          <div>
-            <label class="flex items-center text-sm font-medium space-x-2">
-             
-              <span>Current Password</span>
-            </label>
-            <input type="password" name="currentPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="currentPassword" />
-          </div>
+        <div>
+          <label class="flex items-center text-sm font-medium text-gray-600 mb-1 space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[#205781]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3V6a3 3 0 00-6 0v2c0 1.657 1.343 3 3 3zm0 2a4 4 0 00-4 4v1h8v-1a4 4 0 00-4-4z" />
+            </svg>
+            <span>Current Password</span>
+          </label>
+          <input type="password" name="currentPassword"
+            class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-[#4F959D] focus:outline-none"
+            [(ngModel)]="currentPassword" />
+        </div>
+         <!-- Nouveau mot de passe -->
+        <div>
+          <label class="flex items-center text-sm font-medium text-gray-600 mb-1 space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[#205781]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3V6a3 3 0 00-6 0v2c0 1.657 1.343 3 3 3zm0 2a4 4 0 00-4 4v1h8v-1a4 4 0 00-4-4z" />
+            </svg>
+            <span>New Password</span>
+          </label>
+          <input type="password" name="newPassword"
+            class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-[#4F959D] focus:outline-none"
+            [(ngModel)]="newPassword" />
+        </div>
 
-          <!-- Nouveau mot de passe -->
-          <div>
-            <label class="flex items-center text-sm font-medium space-x-2">
-              
-              <span>New Password</span>
-            </label>
-            <input type="password" name="newPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="newPassword" />
-          </div>
+        <!-- Confirmer nouveau mot de passe -->
+        <div>
+          <label class="flex items-center text-sm font-medium text-gray-600 mb-1 space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[#205781]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3V6a3 3 0 00-6 0v2c0 1.657 1.343 3 3 3zm0 2a4 4 0 00-4 4v1h8v-1a4 4 0 00-4-4z" />
+            </svg>
+            <span>Confirm New Password</span>
+          </label>
+          <input type="password" name="confirmationPassword"
+            class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-[#4F959D] focus:outline-none"
+            [(ngModel)]="confirmationPassword" />
+        </div>
 
-          <!-- Confirmer nouveau mot de passe -->
-          <div>
-            <label class="flex items-center text-sm font-medium space-x-2">
-             
-              <span>Confirm New Password</span>
-            </label>
-            <input type="password" name="confirmationPassword" class="w-full mt-1 p-2 border rounded" [(ngModel)]="confirmationPassword" />
-          </div>
-
-          <button type="submit" class=" bg-[#205781] text-white p-3  rounded-md hover:bg-[#4F959D] transition">
+          <!-- Bouton -->
+          <button type="submit"
+            class="w-full bg-[#205781] text-white p-3 rounded-lg font-medium hover:bg-[#4F959D] transition duration-200 shadow-md cursor-pointer">
             Save Changes
           </button>
         </form>
-
       </div>
     </div>
   </div>
