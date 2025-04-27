@@ -37,9 +37,15 @@
           <input id="email" type="email" formControlName="email"
             class="w-full mt-1 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4F959D] focus:outline-none"
             placeholder="Enter your email" autocomplete="email">
-            <div *ngIf="registerForm.get('email')?.errors?.['email'] && registerForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
-              Please enter a valid email address.
+            <div *ngIf="registerForm.get('email')?.touched">
+              <div *ngIf="registerForm.get('email')?.errors?.['required']" class="text-red-500 text-sm mt-1">
+                Email is required.
+              </div>
+              <div *ngIf="registerForm.get('email')?.errors?.['email']" class="text-red-500 text-sm mt-1">
+                Please enter a valid email address.
+              </div>
             </div>
+            
             
         </div>
       
@@ -52,6 +58,22 @@
               Password is required.
             </div>
         </div>
+
+ 
+        <div>
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-600">Confirm Password</label>
+          <input id="confirmPassword" type="password" formControlName="confirmPassword"
+            class="w-full mt-1 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4F959D] focus:outline-none"
+            placeholder="Confirm your password" autocomplete="current-password">
+          <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required'] && registerForm.get('confirmPassword')?.touched" class="text-red-500 text-sm mt-1">
+            Confirm Password is required.
+          </div>
+          <!-- Message d'erreur si les mots de passe ne correspondent pas -->
+          <div *ngIf="registerForm.hasError('passwordMismatch')" class="text-red-500 text-sm mt-1">
+            Passwords do not match.
+          </div>
+        </div>
+       
         
         <button type="submit" 
           class="w-full bg-[#205781] text-white p-3 rounded-md hover:bg-[#4F959D] transition cursor-pointer">
