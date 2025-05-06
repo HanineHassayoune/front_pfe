@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PieChartComponent } from '../../../components/pie-chart/pie-chart.component';
-import { ModalComponent } from '../../../components/modal/modal.component';
 import { UserService } from '../../../services/user.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertComponent } from '../../../components/alert/alert.component';
@@ -15,7 +14,7 @@ import { ConfirmationDialogComponent } from '../../../components/confirmation-di
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule,PieChartComponent,ModalComponent,
+  imports: [CommonModule,PieChartComponent,
     ReactiveFormsModule,AlertComponent,MatProgressSpinnerModule,
     FormsModule,TablePaginationComponent,MatDialogModule,
     AddUserDialogComponent

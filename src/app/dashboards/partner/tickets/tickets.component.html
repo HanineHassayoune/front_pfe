@@ -1,5 +1,5 @@
-<div class="p-10 bg-gray-100 min-h-screen">
-    <h2 class="text-2xl font-bold mb-12 ml-6 text-gray-800 flex items-center gap-2">
+<div class=" bg-gray-100 min-h-screen mt-4">
+    <h2 class="text-2xl font-bold  mb-4 ml-9 text-gray-800 flex items-center gap-2">
       <span>🎫</span> Ticket Kanban
     </h2>
   
@@ -29,25 +29,27 @@
         </div>
   
         <!-- Tasks -->
-        <div
-          class="p-4 min-h-[180px] space-y-4"
-          id="{{ column.id }}"
-          [cdkDropListConnectedTo]="connectedDropLists"
-          cdkDropList
-          [cdkDropListData]="column.tasks"
-          (cdkDropListDropped)="drop($event)"
-        >
-          <div
-            class="bg-white text-gray-800 px-4 py-3 rounded-lg shadow-md cursor-grab transition-all duration-200 hover:shadow-lg hover:bg-blue-50"
-            *ngFor="let task of column.tasks"
-            cdkDrag
-          >
-            <div class="flex items-center gap-2">
-              <span class="text-blue-400">📌</span>
-              <span class="font-medium">{{ task }}</span>
-            </div>
-          </div>
-        </div>
+<div
+class="p-4 min-h-[180px] space-y-4"
+id="{{ column.id }}"
+[cdkDropListConnectedTo]="connectedDropLists"
+cdkDropList
+[cdkDropListData]="column.tasks"
+(cdkDropListDropped)="drop($event)"
+>
+<div
+  class="bg-white text-gray-800 px-4 py-3 rounded-lg shadow-md cursor-grab transition-all duration-200 hover:shadow-lg hover:bg-blue-50"
+  *ngFor="let ticket of column.tasks"
+  cdkDrag
+  (click)="openTicketDetails(ticket)"
+>
+  <div class="flex items-center gap-2">
+    <span class="text-blue-400">📌</span>
+    <span class="font-medium">{{ ticket.title }}</span>
+  </div>
+</div>
+</div>
+
       </div>
     </div>
   </div>

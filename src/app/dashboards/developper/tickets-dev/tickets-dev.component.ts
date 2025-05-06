@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableOneBtnComponent } from '../../../components/table-one-btn/table-one-btn.component';
 import { ActivatedRoute } from '@angular/router';
-import { ModalComponent } from '../../../components/modal/modal.component';
 import { KinbanComponent } from '../../../components/kinban/kinban.component';
 
 @Component({
   selector: 'app-tickets-dev',
   standalone: true,
-  imports: [TableOneBtnComponent,CommonModule,ModalComponent,KinbanComponent],
+  imports: [TableOneBtnComponent,CommonModule,KinbanComponent],
   templateUrl: './tickets-dev.component.html',
   styleUrl: './tickets-dev.component.css'
 })

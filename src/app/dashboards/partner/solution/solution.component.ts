@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
+
 @Component({
   selector: 'app-solution',
   standalone: true,
@@ -9,6 +10,7 @@ import { Component, Input } from '@angular/core';
   styleUrl: './solution.component.css'
 })
 export class SolutionComponent {
+  @Input() isVerified!: boolean;
   @Input() ticketTitle: string = 'Fix login bug';
   @Input() solutionText: string = 'You should use FormBuilder to simplify reactive forms in Angular.';
   @Input() description: string = 'This solution suggests using Angular FormBuilder for concise and readable reactive form definitions.';
@@ -16,5 +18,6 @@ export class SolutionComponent {
   @Input() referenceLink?: string = 'https://angular.io/guide/reactive-forms';
   @Input() author: string = 'Hanin 😎';
   @Input() datePosted: string = 'April 22, 2025';
-  @Input() isVerified: boolean = true;
+  
+
 }

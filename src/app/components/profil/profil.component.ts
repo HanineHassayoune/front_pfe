@@ -3,7 +3,7 @@ import { UserService } from '../../services/user.service';
 import { AlertComponent } from '../alert/alert.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-profil',
   standalone: true,

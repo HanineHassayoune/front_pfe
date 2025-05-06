@@ -23,9 +23,9 @@ import { ProjectDetailsComponent } from './dashboards/partner/project-details/pr
 import { ProfilComponent } from './components/profil/profil.component';
 import { TablePaginationComponent } from './components/table-pagination/table-pagination.component';
 import { DashboardManagerComponent } from './dashboards/manager/dashboard-manager/dashboard-manager.component';
-import { ErrorDetailsComponent } from './dashboards/partner/error-details/error-details.component';
 import { ManagerProjectsComponent } from './dashboards/manager/manager-projects/manager-projects.component';
 import { PendingRegisterComponent } from './pending-register/pending-register.component';
+import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
 
 
 export const routes: Routes = [
@@ -44,12 +44,13 @@ export const routes: Routes = [
     {path:'partners',component:PartnersComponent},
     {path:'reset-password',component:ResetPasswordComponent},
     {path:'projects',component:ProjectsComponent},
-    { path: 'projects/:id', component: ProjectDetailsComponent } ,
     { path: 'profil', component: ProfilComponent } ,
     {path: 'table-pagination', component:TablePaginationComponent},
     { path: 'manager-projects', component: ManagerProjectsComponent },
     { path: 'pending-register', component: PendingRegisterComponent},
-   
+    { path: 'projects/:id', component: ProjectDetailsComponent },
+    { path: 'projects/:projectId/tickets/:ticketId', component: TicketDetailsComponent },
+
     {
       path: 'admin',
       component: DashboardAdminComponent, 
@@ -94,8 +95,8 @@ export const routes: Routes = [
         { path: 'users', component: UsersComponent },
         { path: 'projects', component: ProjectsComponent },
         { path: 'profil', component: ProfilComponent },
-        {path: 'projects/:id',component: ProjectDetailsComponent},
-        { path: 'projects/:projectId/error-details/:errorId', component: ErrorDetailsComponent },
+        { path: 'projects/:id', component: ProjectDetailsComponent },
+        { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
         { path: 'pending-register', component: PendingRegisterComponent},
       ]
     },

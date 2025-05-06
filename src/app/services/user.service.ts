@@ -1,9 +1,15 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,BehaviorSubject, tap } from 'rxjs';
 import { environment } from '../../environment/environment';
 
-
+interface User {
+  name?: string;
+  currentPassword?: string;
+  newPassword?: string;
+  confirmationPassword?: string;
+  profileImage?: File;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +18,8 @@ export class UserService {
   
     private usersUrl = environment.usersUrl; 
     private authUrl = environment.authUrl;
-
+    private userSubject = new BehaviorSubject<any>(null); // BehaviorSubject pour suivre l'utilisateur
+    user$ = this.userSubject.asObservable();
   constructor(private http: HttpClient) {}
 
  
@@ -48,6 +55,7 @@ getConnectedUser(): Observable<any> {
     return this.http.get<any>(`${this.usersUrl}/me`);
 }
 
+
 updateProfile(data: {
   name?: string;
   currentPassword?: string;
@@ -63,7 +71,13 @@ updateProfile(data: {
   if (data.confirmationPassword) formData.append('confirmationPassword', data.confirmationPassword);
   if (data.profileImage) formData.append('profileImage', data.profileImage);
 
-  return this.http.patch(`${this.usersUrl}/updateProfile`, formData);
+  //return this.http.patch(`${this.usersUrl}/updateProfile`, formData);
+  return this.http.patch<User>(`${this.usersUrl}/updateProfile`, formData).pipe(
+    tap((updatedUser: User) => {
+      // Mettre à jour le BehaviorSubject avec les nouvelles données
+      this.userSubject.next(updatedUser);
+    })
+  );
 }
 
 

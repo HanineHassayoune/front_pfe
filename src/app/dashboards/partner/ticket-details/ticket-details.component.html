@@ -1,0 +1,23 @@
+<body class="bg-gray-100 min-h-screen">
+  <div class="flex overflow-hidden">
+    <div id="main-content" class="h-full w-full relative overflow-y-auto lg:ml-64"> 
+      <div class="space-y-4 bg-gray-100 min-h-screen" *ngIf="ticket">
+        <!-- 1. Ticket Details -->
+        <app-details 
+        [status]="ticket.status"
+        [priority]="ticket.priority"
+        [imageUrl]="ticket.imageUrl || '../../../assets/images/task.png'"
+        [category]="ticket.type"
+        [description]="ticket.stackTrace"
+        [date]="ticket.date"
+        [level]="ticket.level" 
+        [loggerName]="ticket.loggerName"> 
+        </app-details>
+        <app-solution>
+          
+        </app-solution>
+
+      </div>
+    </div>
+  </div>
+</body>

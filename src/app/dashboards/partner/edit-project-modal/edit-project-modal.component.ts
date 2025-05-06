@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { ModalComponent } from '../../../components/modal/modal.component';
 import { ChipsComponent } from '../../../components/chips/chips.component';
 import { UserService } from '../../../services/user.service';
 import { ProjectService } from '../../../services/project.service';
@@ -17,7 +16,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CommonModule,
     ReactiveFormsModule,
     MatIconModule,
-    ModalComponent,
     ChipsComponent,AlertComponent,
     MatProgressSpinnerModule
   ],

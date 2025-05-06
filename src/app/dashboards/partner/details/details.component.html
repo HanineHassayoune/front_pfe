@@ -1,33 +1,41 @@
-<div class="p-10 bg-gray-100 min-h-screen ">
-    <h2 class="text-2xl font-bold mb-12 ml-4 text-gray-800 flex items-center gap-2">
-      <span>🧾</span> Ticket Details
-    </h2>
-   
-    <div class="bg-white shadow-xl  rounded-2xl p-6 max-w-6xl mx-auto border border-gray-200 hover:shadow-2xl transition-all duration-300">
-      <div class="flex items-center gap-5 mb-6">
-        <img *ngIf="imageUrl" [src]="imageUrl" alt="Ticket Image"
-          class="w-20 h-20 rounded-xl border border-gray-300 object-cover shadow-sm" />
-        <div>
-          <h3 class="text-2xl font-semibold text-gray-800 flex items-center gap-2">
-            🏷️ <span>{{ category }}</span>
-          </h3>
-          <div class="mt-2 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-sm text-gray-600">
-            <p class="flex items-center gap-1">📌 <span class="font-medium">Priority:</span> <span class="text-gray-800">{{ priority }}</span></p>
-            <p class="flex items-center gap-1">📊 <span class="font-medium">Status:</span> <span class="text-gray-800">{{ status }}</span></p>
-          </div>
+<div class="p-4 sm:p-7 bg-gray-100 min-h-screen">
+  <h2 class="text-xl sm:text-2xl font-bold mb-5 text-gray-800 flex items-center gap-2 ml-2 sm:ml-7">
+    <span>🧾</span> Ticket Details
+  </h2>
+
+  <div class="bg-white shadow-xl rounded-2xl p-4 sm:p-6 max-w-full sm:max-w-4xl md:max-w-5xl lg:max-w-6xl mx-auto border border-gray-200 hover:shadow-2xl transition-all duration-300">
+    
+    <!-- Image + Info -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 mb-6">
+      <img *ngIf="imageUrl" [src]="imageUrl" alt="Ticket Image"
+        class="w-20 h-20 rounded-xl border border-gray-300 object-cover shadow-sm self-center sm:self-start" />
+      
+      <div class="flex-1">
+        <h3 class="text-lg sm:text-2xl font-semibold text-gray-800 flex items-center gap-2">
+          🏷️ <span>{{ category }}</span>
+        </h3>
+        <div class="mt-2 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-sm text-gray-600">
+          <p class="flex items-center gap-1">📌 <span class="font-medium">Priority:</span> <span class="text-gray-800">{{ priority }}</span></p>
+          <p class="flex items-center gap-1">📊 <span class="font-medium">Status:</span> <span class="text-gray-800">{{ status }}</span></p>
         </div>
       </div>
-  
-      <div *ngIf="tasks.length" class="mt-6">
-        <h4 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-          📋 Task List
-        </h4>
-        <ul class="space-y-2">
-          <li *ngFor="let task of tasks" class="bg-gray-50 border border-gray-200 p-3 rounded-lg text-gray-700 flex items-center gap-2 shadow-sm hover:bg-blue-50 transition">
-            ✅ {{ task }}
-          </li>
-        </ul>
-      </div>
+    </div>
+
+    <!-- Date / Level / Logger -->
+    <div class="mt-4 flex flex-col sm:flex-row sm:items-center gap-2 text-sm text-gray-600">
+      <p class="flex items-center gap-1">📅 <span class="font-medium">Date:</span> <span class="text-gray-800">{{ date | date:'short' }}</span></p>
+      <p class="flex items-center gap-1">🔍 <span class="font-medium">Level:</span> <span class="text-gray-800">{{ level }}</span></p>
+      <p class="flex items-center gap-1 break-all">📡 <span class="font-medium">Logger:</span> <span class="text-gray-800">{{ loggerName }}</span></p>
+    </div>
+
+    <!-- Stack Trace -->
+    <div *ngIf="description" class="mt-6">
+      <h4 class="text-base sm:text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+        🐞 Bug Stack Trace
+      </h4>
+      <pre class="bg-gray-100 p-3 sm:p-4 rounded-md border border-gray-300 text-sm text-red-600 overflow-auto whitespace-pre-wrap max-h-80">
+{{ description }}
+      </pre>
     </div>
   </div>
-  
+</div>
