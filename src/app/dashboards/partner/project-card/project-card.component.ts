@@ -11,5 +11,6 @@ import { RouterModule } from '@angular/router';
 })
 export class ProjectCardComponent {
   @Input() project!: { id: number;title: string; description: string; imageUrl:string};
+  @Input() role: string | null = null;
 
 }

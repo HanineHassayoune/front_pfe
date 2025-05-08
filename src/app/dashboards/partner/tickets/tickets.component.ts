@@ -13,7 +13,7 @@ import { Ticket, TicketService } from '../../../services/ticket.service';
 export class TicketsComponent implements OnInit {
   projectId: string = '';
   connectedDropLists: string[] = [];
-
+  role: string = '';
   board = {
     columns: [
       { id: 'pending', name: 'Pending', tasks: [] as Ticket[] },
@@ -30,6 +30,7 @@ export class TicketsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.role = localStorage.getItem('role')?.toUpperCase() || ''; 
     this.connectedDropLists = this.board.columns.map(c => c.id);
     this.projectId = this.route.snapshot.paramMap.get('id') || '';
 
@@ -63,6 +64,13 @@ export class TicketsComponent implements OnInit {
   }
 
   openTicketDetails(ticket: Ticket) {
-    this.router.navigate([`/partner/projects/${this.projectId}/tickets/${ticket.id}`]);
+    const role = localStorage.getItem('role')?.toLowerCase(); 
+
+    if (role) {
+      // Utiliser le rôle pour déterminer le chemin de navigation
+      this.router.navigate([`/${role}/projects/${this.projectId}/tickets/${ticket.id}`]);
+    } else {
+      alert('Rôle non défini. Vous devez être connecté pour accéder à cette page.');
+    }
   }
 }

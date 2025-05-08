@@ -80,6 +80,10 @@ updateProfile(data: {
   );
 }
 
+getUserById(id: number): Observable<any> {
+  return this.http.get(`${this.usersUrl}/${id}`);
+}
+
 
 /*  checkCurrentPassword(currentPassword: string): Observable<{ isValid: boolean }> {
   return this.http.post<{ isValid: boolean }>(`${this.usersUrl}/check-current-password`, { currentPassword });

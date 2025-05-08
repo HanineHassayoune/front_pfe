@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environment/environment';
@@ -18,6 +18,10 @@ export interface Ticket {
   stackTrace: string;
   solution: string | null;
   comments: any[];
+  assignedUser?: {
+    id: number;
+    email: string;
+  };
 }
 
 @Injectable({
@@ -38,6 +42,11 @@ export class TicketService {
 
   getTicketById(ticketId: string): Observable<Ticket> {
     return this.http.get<Ticket>(`${this.ticketUrl}/${ticketId}`);
+  }
+
+  assignUserToTicket(ticketId: number, userId: number): Observable<any> {
+    const params = new HttpParams().set('userId', userId.toString());
+    return this.http.put(`${this.ticketUrl}/${ticketId}/assign`, null, { params });
   }
   
 }

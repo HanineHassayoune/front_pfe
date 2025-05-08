@@ -10,7 +10,7 @@
 
   <button 
     class="mt-3 flex items-center text-[#4F959D] hover:underline cursor-pointer"
-    [routerLink]="['/partner/projects', project.id]"
+    [routerLink]="['/', role?.toLowerCase(), 'projects', project.id]"
   >
     <span>View Details</span>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 ml-2">

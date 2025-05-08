@@ -25,7 +25,7 @@ export class TeamComponent {
   }
 
   ngOnInit(): void {
-    this.projectService.getProjectById(this.projectId).subscribe(
+    this.projectService.getProjectById(this.projectId,['DEVELOPER','MANAGER','TESTER']).subscribe(
       (data: any) => {
         this.project = data;
         this.teamMembers = data.affectedUsers || []; 
@@ -37,7 +37,6 @@ export class TeamComponent {
   }
 
   viewProfile(member: any) {
-    // Ici, tu peux ouvrir un dialog, rediriger, etc.
     console.log('Profil de :', member);
   }
 }

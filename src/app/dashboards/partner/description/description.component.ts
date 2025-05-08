@@ -44,7 +44,7 @@ export class DescriptionComponent implements OnInit {
     }
   
     fetchProjectDetails() {
-      this.projectService.getProjectById(this.projectId).subscribe(
+      this.projectService.getProjectById(this.projectId,['DEVELOPER','MANAGER','TESTER']).subscribe(
         (data) => {
           this.project = data;
         },

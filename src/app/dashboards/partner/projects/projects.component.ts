@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AddProjectDialogComponent } from '../add-project-dialog/add-project-dialog.component';
+import { StorageService } from '../../../services/storage.service';
 
 interface User {
   id: number;
@@ -45,6 +46,10 @@ export class ProjectsComponent implements OnInit {
   private userService = inject(UserService);
   private dialog = inject(MatDialog);
 
+  private storageService = inject(StorageService);
+
+  role: string | null = null;
+
   projects: any[] = [];
   allTechnologies: string[] = [
     // Frontend
@@ -71,6 +76,7 @@ export class ProjectsComponent implements OnInit {
   searchQuery = '';
 
   ngOnInit(): void {
+    this.role = this.storageService.getRole()?.toUpperCase() || null;
     this.fetchProjects();
     this.loadUsers();
   }

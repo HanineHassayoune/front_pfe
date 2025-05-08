@@ -108,7 +108,9 @@ export const routes: Routes = [
       children: [
         { path: 'profil', component: ProfilComponent } , 
         { path: 'manager-projects', component: ManagerProjectsComponent },
-      
+        { path: 'projects/:id', component: ProjectDetailsComponent },
+        { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
+
       ]
     },
   

@@ -1,0 +1,27 @@
+<div class="p-4 sm:p-7 bg-gray-100 min-h-screen mt-[-100px]">
+    <h2 class="text-xl sm:text-2xl font-bold mb-5 text-gray-800 flex items-center gap-2 ml-2 sm:ml-7">
+      <span>💬</span> Comments
+    </h2>
+  
+    <div class="bg-white shadow rounded-2xl p-5 border border-gray-200 w-full max-w-6xl mx-auto">
+      <!-- Liste des commentaires -->
+      <div *ngFor="let comment of comments" class="mb-3 border-b border-gray-100 pb-2">
+        <p class="text-sm text-gray-700 flex items-center gap-2">
+          👤 <span class="font-bold text-gray-900">{{ comment.author }}</span> —
+          <span class="text-gray-500">{{ comment.date | date: 'short' }}</span>
+        </p>
+        <p class="text-gray-800 ml-5">{{ comment.message }}</p>
+      </div>
+  
+      <!-- Ajout d’un commentaire -->
+      <div class="mt-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">✍️ Add your comment:</label>
+        <textarea [(ngModel)]="newComment" rows="3" placeholder="Write a comment..."
+          class="w-full p-3 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-[#205781]"></textarea>
+        <button (click)="addComment()" class=" bg-[#205781] text-white p-3 text-sm  px-4 py-2  rounded-md hover:bg-[#4F959D] transition cursor-pointer">
+          ➕ Post Comment
+        </button>
+      </div>
+    </div>
+  </div>
+  

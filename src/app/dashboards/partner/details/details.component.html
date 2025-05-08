@@ -17,8 +17,68 @@
         <div class="mt-2 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-sm text-gray-600">
           <p class="flex items-center gap-1">📌 <span class="font-medium">Priority:</span> <span class="text-gray-800">{{ priority }}</span></p>
           <p class="flex items-center gap-1">📊 <span class="font-medium">Status:</span> <span class="text-gray-800">{{ status }}</span></p>
+          <p class="flex items-center gap-2">
+            👤 <span class="font-medium">Assigned to:</span>
+          
+            <ng-container *ngIf="assignedUser?.name; else noUser">
+              <div class="w-6 h-6 rounded-full bg-[#4F959D] text-white flex items-center justify-center text-xs font-bold">
+                {{ assignedUser.email[0] }}
+              </div>
+              <span class="text-[#4F959D]">
+                {{ assignedUser.email }}
+              </span>
+            </ng-container>
+          
+            <ng-template #noUser>
+              <span class="text-red-400">🚫 Not assigned</span>
+            </ng-template>
+          </p>
+          
+          
+          
+          
         </div>
       </div>
+     
+
+      <div class="flex items-center gap-2 mt-4" *ngIf="role === 'MANAGER'">
+        <div class="relative">
+          <button (click)="toggleDropdown()"
+            class="inline-flex justify-between items-center w-56 px-4 py-2 text-sm font-medium bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#205781]">
+            {{ selectedUser?.name || 'Select a user' }}
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+      
+          <div *ngIf="dropdownOpen"
+            class="absolute z-10 mt-1 w-56 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+            <ul>
+              <li *ngFor="let user of affectedUsers" (click)="selectUser(user)"
+                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                <div class="w-6 h-6 rounded-full bg-[#4F959D] text-white flex items-center justify-center text-xs font-bold">
+                  {{ user.name[0] }}
+                </div>
+                <span>{{ user.name }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      
+        <button (click)="assignUser()"
+          class="bg-[#205781] text-white hover:bg-[#4F959D] text-sm px-4 py-2 rounded-lg shadow-md transition cursor-pointer">
+          Assign
+        </button>
+      </div>
+      
+      <ng-template #partnerView>
+        <!-- Affichage standard pour PARTNER -->
+        <p class="flex items-center gap-1">
+          👤 <span class="font-medium">Assigned to:</span> <span class="text-gray-800"> assignedUserEmail </span>
+        </p>
+      </ng-template>
+      
+      
     </div>
 
     <!-- Date / Level / Logger -->
@@ -27,6 +87,7 @@
       <p class="flex items-center gap-1">🔍 <span class="font-medium">Level:</span> <span class="text-gray-800">{{ level }}</span></p>
       <p class="flex items-center gap-1 break-all">📡 <span class="font-medium">Logger:</span> <span class="text-gray-800">{{ loggerName }}</span></p>
     </div>
+    
 
     <!-- Stack Trace -->
     <div *ngIf="description" class="mt-6">
@@ -34,7 +95,7 @@
         🐞 Bug Stack Trace
       </h4>
       <pre class="bg-gray-100 p-3 sm:p-4 rounded-md border border-gray-300 text-sm text-red-600 overflow-auto whitespace-pre-wrap max-h-80">
-{{ description }}
+      {{ description }}
       </pre>
     </div>
   </div>
