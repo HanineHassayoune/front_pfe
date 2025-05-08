@@ -7,25 +7,20 @@ import { UsersComponent } from './dashboards/partner/users/users.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { RadialChartComponent } from './components/radial-chart/radial-chart.component';
 import { NotificationsComponent } from './dashboards/tester/notifications/notifications.component';
-import { TicketsDevComponent } from './dashboards/developper/tickets-dev/tickets-dev.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PartnersComponent } from './dashboards/admin/partners/partners.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { DashboardAdminComponent } from './dashboards/admin/dashboard-admin/dashboard-admin.component';
-import { DashboardTesterComponent } from './dashboards/tester/dashboard-tester/dashboard-tester.component';
-import { DashboardDeveloppeurComponent } from './dashboards/developper/dashboard-developpeur/dashboard-developpeur.component';
-import { DashboardPartnerComponent } from './dashboards/partner/dashboard-partner/dashboard-partner.component';
 import { authGuard } from './services/auth.guard';
 import { ProjectsComponent } from './dashboards/partner/projects/projects.component';
 import { ProjectDetailsComponent } from './dashboards/partner/project-details/project-details.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { TablePaginationComponent } from './components/table-pagination/table-pagination.component';
-import { DashboardManagerComponent } from './dashboards/manager/dashboard-manager/dashboard-manager.component';
 import { ManagerProjectsComponent } from './dashboards/manager/manager-projects/manager-projects.component';
 import { PendingRegisterComponent } from './pending-register/pending-register.component';
 import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
+import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 
 
 export const routes: Routes = [
@@ -37,7 +32,6 @@ export const routes: Routes = [
     {path:'pieChart',component:PieChartComponent},
     {path:'radialChart',component:RadialChartComponent},
     {path:'notifications',component:NotificationsComponent},
-    {path:'ticketsdev',component:TicketsDevComponent},
     {path:'login',component:LoginComponent},
     {path:'forgot-password',component:ForgotPasswordComponent},
     {path:'register',component:RegisterComponent},
@@ -53,7 +47,7 @@ export const routes: Routes = [
 
     {
       path: 'admin',
-      component: DashboardAdminComponent, 
+      component: DashboardComponent, 
       canActivate: [authGuard], 
       data: { role: 'ADMIN' },
       children: [
@@ -65,7 +59,7 @@ export const routes: Routes = [
     },
     { 
       path: 'tester', 
-      component: DashboardTesterComponent, 
+      component: DashboardComponent, 
       canActivate: [authGuard], 
       data: { role: 'TESTER' },
       children: [
@@ -76,11 +70,10 @@ export const routes: Routes = [
     },
     { 
       path: 'developper', 
-      component:DashboardDeveloppeurComponent,
+      component:DashboardComponent,
       canActivate: [authGuard], 
       data: { role: 'DEVELOPER' },
       children: [
-        {path:'ticketsdev',component:TicketsDevComponent},
         { path: 'profil', component: ProfilComponent } ,
       
        
@@ -88,7 +81,7 @@ export const routes: Routes = [
     },
     {
       path: 'partner',
-      component: DashboardPartnerComponent,
+      component: DashboardComponent,
       canActivate: [authGuard],
       data: { role: 'PARTNER' },
       children: [
@@ -102,7 +95,7 @@ export const routes: Routes = [
     },
     { 
       path: 'manager', 
-      component:DashboardManagerComponent,
+      component:DashboardComponent,
       canActivate: [authGuard], 
       data: { role: 'MANAGER' },
       children: [
