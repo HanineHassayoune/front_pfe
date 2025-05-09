@@ -6,6 +6,7 @@ export const environment = {
     usersUrl :'http://localhost:8222/api/v1/users',
     projectUrl:'http://localhost:8222/api/v1/projects',
     pwdUrl : 'http://localhost:8222/api/v1/password',
-    ticketUrl : 'http://localhost:8222/api/v1/tickets'
+    ticketUrl : 'http://localhost:8222/api/v1/tickets',
+    commentUrl : 'http://localhost:8222/api/v1/comments'
   };
   

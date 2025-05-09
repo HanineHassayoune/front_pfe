@@ -17,8 +17,14 @@ export class TablePaginationComponent {
   @Input() data: any[] = [];
   @Input() totalRows = 0;
   @Output() pageChanged = new EventEmitter<any>();
-  @Output() actionTriggered = new EventEmitter<{ id: number; action: string }>();
+  //@Output() actionTriggered = new EventEmitter<{ id: number; action: string }>();
+  @Output() actionTriggered = new EventEmitter<{ id: number; action: string; user?: any }>();
 
+  // Reçois l'objet complet (pas juste id)
+   triggerAction(user: any, action: string) {
+    this.actionTriggered.emit({ id: user.id, action, user });
+  } 
+  
   displayedColumns: string[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -29,7 +35,7 @@ export class TablePaginationComponent {
     this.pageChanged.emit(event);
   }
 
-  triggerAction(id: number, action: string) {
+  triggerrAction(id: number, action: string) {
     this.actionTriggered.emit({ id, action });
-  }
+  }  
 }

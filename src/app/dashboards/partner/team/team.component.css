@@ -1,0 +1,6 @@
+::ng-deep .custom-dialog .mat-dialog-container {
+    border-radius: 1rem;
+    padding: 0;
+    background: #f9fafb;
+  }
+  

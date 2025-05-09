@@ -1,0 +1,5 @@
+.reply {
+  margin-left: 20px; /* Décale les réponses */
+  border-left: 2px solid #ddd; /* Ajoute une ligne verticale pour visualiser la hiérarchie */
+  padding-left: 10px;
+}

@@ -1,27 +1,67 @@
 <div class="p-4 sm:p-7 bg-gray-100 min-h-screen mt-[-100px]">
-    <h2 class="text-xl sm:text-2xl font-bold mb-5 text-gray-800 flex items-center gap-2 ml-2 sm:ml-7">
-      <span>💬</span> Comments
-    </h2>
-  
-    <div class="bg-white shadow rounded-2xl p-5 border border-gray-200 w-full max-w-6xl mx-auto">
-      <!-- Liste des commentaires -->
-      <div *ngFor="let comment of comments" class="mb-3 border-b border-gray-100 pb-2">
+  <h2 class="text-xl sm:text-2xl font-bold mb-5 text-gray-800 flex items-center gap-2 ml-2 sm:ml-7">
+    <span>💬</span> Comments
+  </h2>
+
+  <div class="bg-white shadow rounded-2xl p-5 border border-gray-200 w-full max-w-6xl mx-auto">
+    <!-- Liste des commentaires parents -->
+    <ng-container *ngFor="let comment of comments">
+      <div *ngIf="!comment.parentCommentId" class="mb-3 border-b border-gray-100 pb-2">
         <p class="text-sm text-gray-700 flex items-center gap-2">
-          👤 <span class="font-bold text-gray-900">{{ comment.author }}</span> —
+          👤 <span class="font-bold text-gray-900">{{ comment.author || 'Unknown' }}</span> —
           <span class="text-gray-500">{{ comment.date | date: 'short' }}</span>
         </p>
-        <p class="text-gray-800 ml-5">{{ comment.message }}</p>
+        <p class="text-gray-800 ml-5">{{ comment.content }}</p>
+        <p *ngIf="comment.reaction" class="ml-5 text-gray-600">Reaction: {{ comment.reaction }}</p>
+
+        <button class="text-xs text-blue-600 ml-5 hover:underline" (click)="toggleReplyBox(comment.id)">Reply</button>
+
+        <!-- Zone de réponse -->
+        <div *ngIf="activeReplyBoxId === comment.id" class="ml-10 mt-2">
+          <textarea [(ngModel)]="replyText" rows="2" placeholder="Write a reply..."
+            class="w-full p-2 border border-gray-300 rounded-md shadow-sm text-sm"></textarea>
+          <button (click)="submitReply(comment.id)"
+                  [disabled]="!replyText.trim()"
+                  class="mt-1 bg-[#205781] text-white text-xs px-3 py-1 rounded hover:bg-[#4F959D]">
+            ➤ Post Reply
+          </button>
+        </div>
+
+        <!-- Affichage des réponses -->
+        <ng-container *ngFor="let reply of getRepliesForComment(comment.id)">
+          <div class="ml-6 mt-2 border-l-2 border-gray-200 pl-4">
+            <p class="text-sm text-gray-700 flex items-center gap-2">
+              ↪️ <span class="font-bold text-gray-900">{{ reply.author }}</span> — 
+              <span class="text-gray-500">{{ reply.date | date: 'short' }}</span>
+            </p>
+            <p class="text-gray-800 ml-5">{{ reply.content }}</p>
+            <p *ngIf="reply.reaction" class="ml-5 text-gray-600">Reaction: {{ reply.reaction }}</p>
+          </div>
+        </ng-container>
       </div>
-  
-      <!-- Ajout d’un commentaire -->
-      <div class="mt-4">
-        <label class="block text-sm font-medium text-gray-700 mb-1">✍️ Add your comment:</label>
-        <textarea [(ngModel)]="newComment" rows="3" placeholder="Write a comment..."
-          class="w-full p-3 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-[#205781]"></textarea>
-        <button (click)="addComment()" class=" bg-[#205781] text-white p-3 text-sm  px-4 py-2  rounded-md hover:bg-[#4F959D] transition cursor-pointer">
-          ➕ Post Comment
-        </button>
+    </ng-container>
+
+    <!-- Ajout d’un commentaire -->
+    <div class="mt-4 pt-4 border-t border-gray-200">
+      <label class="block text-sm font-medium text-gray-700 mb-1">✍️ Add your comment:</label>
+      <textarea [(ngModel)]="newComment" rows="3" placeholder="Write a comment..."
+        class="w-full p-3 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-[#205781]"></textarea>
+
+      <!-- Réactions -->
+      <div class="mt-2 mb-3 flex gap-2">
+        <span *ngFor="let reaction of reactions"
+              (click)="selectReaction(reaction)"
+              class="cursor-pointer text-2xl hover:scale-125 transition-transform"
+              [class.opacity-50]="selectedReaction !== reaction">
+          {{ reaction }}
+        </span>
       </div>
+
+      <button (click)="addComment()" 
+              [disabled]="!newComment.trim()" 
+              class="bg-[#205781] text-white p-3 text-sm px-4 py-2 rounded-md hover:bg-[#4F959D] transition cursor-pointer">
+        ➕ Post Comment
+      </button>
     </div>
   </div>
-  
+</div>

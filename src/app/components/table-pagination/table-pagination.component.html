@@ -7,12 +7,23 @@
       
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="column.field === 'action'; else notAction">
-          <button class="cursor-pointer"   (click)="triggerAction(element.id, element.enabled ? 'block' : 'approve')">
-            <i class="fa text-xl" 
-               [ngClass]="element.enabled ? 'fa-lock-open text-green-500' : 'fa-lock text-red-500'"></i>
-          </button>
+          
+          <ng-container *ngIf="element.action === 'view'; else lockAction">
+            <!-- Icon for view  -->
+            <button class="cursor-pointer" (click)="triggerAction(element, 'view')">
+              <i class="fa fa-eye text-[#799eba]  text-xl hover:scale-110 transition-transform duration-200"></i>
+            </button>
+          </ng-container>
+      
+          <ng-template #lockAction>
+            <!-- Icon for approve/block  -->
+            <button class="cursor-pointer" (click)="triggerrAction(element.id, element.enabled ? 'block' : 'approve')">
+              <i class="fa text-xl"
+                 [ngClass]="element.enabled ? 'fa-lock-open text-green-500' : 'fa-lock text-red-500'"></i>
+            </button>
+          </ng-template>
+      
         </ng-container>
-        
       
         <ng-template #notAction>
           <ng-container *ngIf="column.field === 'profileImage'; else defaultCell">
@@ -28,6 +39,9 @@
           </ng-template>
         </ng-template>
       </td>
+      
+
+      
       
     </ng-container>
   
