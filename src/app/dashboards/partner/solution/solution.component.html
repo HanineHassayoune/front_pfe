@@ -3,12 +3,12 @@
     <span>🛠️</span> Ticket Solution
   </h2>
 
-  <div class="w-full  mx-auto border-l-4 border-blue-500 shadow-md bg-white rounded-xl">
-    <!-- max-w-full sm:max-w-4xl md:max-w-5xl lg:max-w-6xl -->
+  <div class="w-full mx-auto border-l-4 border-blue-500 shadow-md bg-white rounded-xl">
     <!-- HEADER -->
     <!-- Titre avec bouton -->
     <div class="flex items-center justify-between px-4 sm:px-6 pt-5">
-      <h2 class="text-lg font-bold text-gray-800">🛠️ Fix login bug</h2>
+      <!-- Dynamiser le titre du ticket -->
+      <h2 class="text-lg font-bold text-gray-800">{{ ticketTitle }}</h2>
 
       <!-- Bouton visible uniquement pour le rôle DEVELOPER -->
       <button
@@ -19,12 +19,16 @@
       </button>
     </div>
 
-
     <!-- CONTENT -->
     <div class="px-4 sm:px-6 py-5 text-gray-700 space-y-6 text-sm sm:text-base">
 
+      <!-- NO SOLUTION YET MESSAGE -->
+      <div *ngIf="!solutionText || solutionText.trim() === ''" class="bg-gray-100 border-l-4 border-gray-400 p-4 rounded text-gray-700">
+        <p class="font-semibold text-red-600">⚠️ No solution yet for this ticket.</p>
+      </div>
+
       <!-- SOLUTION TEXT (DESCRIPTION OR STEPS) -->
-      <div *ngIf="solutionText">
+      <div *ngIf="solutionText && solutionText.trim() !== ''">
         <p class="font-semibold text-yellow-600 mb-1">📒 Description / Steps:</p>
         <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded text-gray-800 whitespace-pre-line">
           {{ solutionText }}
@@ -32,13 +36,13 @@
       </div>
 
       <!-- CODE BLOCK -->
-      <div >
+      <div *ngIf="code">
         <p class="font-semibold text-indigo-600 mb-1">💻 Code Example:</p>
         <pre class="bg-gray-900 text-green-200 text-sm p-4 rounded overflow-x-auto">
           <code>
-            <h6>hello this is the code</h6>
-            </code>
-          </pre>
+            {{ code }} <!-- Dynamiser le code -->
+          </code>
+        </pre>
       </div>
 
       <!-- REFERENCE LINK -->
@@ -49,7 +53,7 @@
 
       <!-- FOOTER -->
       <div class="text-xs sm:text-sm text-gray-600 pt-3 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-        👤 <strong>{{ author }}</strong> • {{ datePosted }}
+        👤 <strong>{{ author }}</strong> • {{ datePosted  }}
       </div>
     </div>
   </div>

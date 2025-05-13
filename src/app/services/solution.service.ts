@@ -10,6 +10,7 @@ export interface Solution {
   code: string;
   ticketId: number;
   userId: number;
+  datePosted?: string; 
 }
 
 @Injectable({
@@ -27,4 +28,10 @@ export class SolutionService {
   getAllSolutions(): Observable<Solution[]> {
     return this.http.get<Solution[]>(this.solutionUrl);
   }
+
+ getSolutionByTicketId(ticketId: number): Observable<Solution> {
+  return this.http.get<Solution>(`${this.solutionUrl}/by-ticket/${ticketId}`);
+}
+
+
 }
