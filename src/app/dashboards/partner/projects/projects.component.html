@@ -1,11 +1,11 @@
 <body class="bg-gray-100 min-h-screen">
-  <div class="flex overflow-hidden bg-gray-100 pt-5">
+  <div class="flex overflow-hidden bg-gray-100 pt-4">
     <div id="main-content" class="h-full w-full bg-gray-100 relative overflow-y-auto lg:ml-64" >
-      <div class="container mx-auto p-6">
+      <div class="container  p-6"><!-- mx-auto -->
         <!-- Title -->
         <div class="flex justify-between items-center mb-6">
           <h1 class="text-3xl font-bold text-[#205781] "> 📂 List of projects</h1>
-          <div class="flex space-x-4">
+          <div class="flex space-x-4 ">
             <!-- Search Bar -->
             <div class="relative flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
@@ -19,10 +19,17 @@
             </div>
 
             <!-- Add Project Button -->
-            <button class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba] cursor-pointer"
+            <!-- <button class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba] cursor-pointer"
               (click)="openAddProjectDialog()">
               + Add Project
-            </button>
+            </button> -->
+            <!-- || role === 'MANAGER' -->
+            <button
+                *ngIf="role === 'PARTNER' "
+                class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba] cursor-pointer"
+                (click)="openAddProjectDialog()">
+                + Add Project
+          </button>
           </div>
         </div>
 

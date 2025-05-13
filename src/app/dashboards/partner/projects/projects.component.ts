@@ -41,7 +41,6 @@ interface User {
 
 
 export class ProjectsComponent implements OnInit {
-  private fb = inject(FormBuilder);
   private projectService = inject(ProjectService);
   private userService = inject(UserService);
   private dialog = inject(MatDialog);
@@ -81,13 +80,24 @@ export class ProjectsComponent implements OnInit {
     this.loadUsers();
   }
 
-  fetchProjects(): void {
-    this.projectService.getProjects().subscribe((response: any) => {
-      this.projects = response.map((p: any) => ({
-        ...p,
-        imageUrl: p.projectImage,
-      }));
-    });
+    fetchProjects(): void {
+    if (this.role === 'PARTNER') {
+      // PARTNER voit tous les projets
+      this.projectService.getProjects().subscribe((response: any[]) => {
+        this.projects = response.map((p: any) => ({
+          ...p,
+          imageUrl: p.projectImage,
+        }));
+      });
+    } else {
+      // MANAGER, DEVELOPER, TESTER voient seulement les projets assignés
+      this.projectService.getAssignedProject().subscribe((response: any[]) => {
+        this.projects = response.map((p: any) => ({
+          ...p,
+          imageUrl: p.projectImage,
+        }));
+      });
+    }
   }
 
   loadUsers(): void {

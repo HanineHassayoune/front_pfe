@@ -17,7 +17,6 @@ import { ProjectsComponent } from './dashboards/partner/projects/projects.compon
 import { ProjectDetailsComponent } from './dashboards/partner/project-details/project-details.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { TablePaginationComponent } from './components/table-pagination/table-pagination.component';
-import { ManagerProjectsComponent } from './dashboards/manager/manager-projects/manager-projects.component';
 import { PendingRegisterComponent } from './pending-register/pending-register.component';
 import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
 import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
@@ -40,7 +39,6 @@ export const routes: Routes = [
     {path:'projects',component:ProjectsComponent},
     { path: 'profil', component: ProfilComponent } ,
     {path: 'table-pagination', component:TablePaginationComponent},
-    { path: 'manager-projects', component: ManagerProjectsComponent },
     { path: 'pending-register', component: PendingRegisterComponent},
     { path: 'projects/:id', component: ProjectDetailsComponent },
     { path: 'projects/:projectId/tickets/:ticketId', component: TicketDetailsComponent },
@@ -69,12 +67,15 @@ export const routes: Routes = [
       ]
     },
     { 
-      path: 'developper', 
+      path: 'developer', 
       component:DashboardComponent,
       canActivate: [authGuard], 
       data: { role: 'DEVELOPER' },
       children: [
         { path: 'profil', component: ProfilComponent } ,
+        { path: 'projects', component: ProjectsComponent },
+        { path: 'projects/:id', component: ProjectDetailsComponent },
+        { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
       
        
       ]
@@ -100,7 +101,7 @@ export const routes: Routes = [
       data: { role: 'MANAGER' },
       children: [
         { path: 'profil', component: ProfilComponent } , 
-        { path: 'manager-projects', component: ManagerProjectsComponent },
+        { path: 'projects', component: ProjectsComponent },
         { path: 'projects/:id', component: ProjectDetailsComponent },
         { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
 

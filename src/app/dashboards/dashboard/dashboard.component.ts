@@ -95,6 +95,11 @@ export class DashboardComponent implements OnInit {
         break;
       case 'DEVELOPER':
         this.links = [
+           makeLink(
+            'Projects',
+            '/developer/projects',
+            'M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z'
+          ),
           makeLink(
             'Profile',
             '/developer/profil',
@@ -102,7 +107,7 @@ export class DashboardComponent implements OnInit {
           ),
           makeLink(
             'Logout',
-            '/manager/logout',
+            '/developer/logout',
             'M16 17L21 12L16 7V10H9V14H16V17ZM5 19H11V21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H11V5H5V19Z',
             () => this.logout()
           )
@@ -143,7 +148,7 @@ export class DashboardComponent implements OnInit {
           ),
           makeLink(
             'Projects',
-            '/manager/manager-projects',
+            '/manager/projects',
             'M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z'
           ),
           makeLink(

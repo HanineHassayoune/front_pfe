@@ -18,10 +18,7 @@ export interface Ticket {
   stackTrace: string;
   solution: string | null;
   comments: any[];
-  assignedUser?: {
-    id: number;
-    email: string;
-  };
+  assignedUserId: number;
 }
 
 @Injectable({

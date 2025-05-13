@@ -1,0 +1,51 @@
+<div class="p-6 w-full max-w-2xl">
+  <h2 class="text-2xl font-semibold mb-4 flex items-center gap-2 text-gray-700">
+    ➕ Add a New Solution
+  </h2>
+
+  <form [formGroup]="solutionForm" (ngSubmit)="onSubmit()" class="space-y-4">
+
+    <!-- Description -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center gap-2">
+        📒 Description
+      </label>
+      <textarea formControlName="description" class="w-full p-3 border rounded-md resize-y"></textarea>
+    </div>
+
+    <!-- Reference -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center gap-2">
+        🔗 Reference
+      </label>
+      <input type="text" formControlName="reference" class="w-full p-3 border rounded-md" />
+    </div>
+
+    <!-- Code -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center gap-2">
+        💻 Code
+      </label>
+      <textarea formControlName="code" class="w-full p-3 border rounded-md font-mono text-sm bg-gray-50 resize-y"></textarea>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 pt-4">
+      <button type="button" (click)="onCancel()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400">Cancel</button>
+      <button type="submit" [disabled]="solutionForm.invalid" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Save</button>
+    </div>
+<!-- Alert message -->
+<div *ngIf="alertVisible" [ngClass]="'alert-' + alertType" class="alert">
+  {{ alertMessage }}
+</div>
+
+<!-- Loading spinner -->
+<mat-progress-spinner *ngIf="isLoading" mode="indeterminate" diameter="30"></mat-progress-spinner>
+
+    <!-- Spinner -->
+    <div *ngIf="isLoading" class="flex justify-center pt-2">
+      <mat-spinner diameter="30" color="primary"></mat-spinner>
+    </div>
+
+  </form>
+</div>
