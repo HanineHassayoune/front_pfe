@@ -20,7 +20,7 @@ export class SolutionComponent implements OnInit {
   @Input() solutionText: string = '';
   @Input() description: string = '';
   @Input() referenceLink?: string = '';
-  @Input() author: string = ''; // We will update this dynamically
+  @Input() author: string = ''; 
   @Input() datePosted: string = '';
 
   @Input() ticketId!: number;
@@ -37,39 +37,34 @@ export class SolutionComponent implements OnInit {
     private datePipe: DatePipe // Inject DatePipe
   ) {}
 
-  ngOnInit(): void {
-    this.role = this.storageService.getRole()?.toUpperCase() || null;
+ngOnInit(): void {
+  this.role = this.storageService.getRole()?.toUpperCase() || null;
 
-    // Fetch user by userId
-    if (this.userId) {
-      this.userService.getUserById(this.userId).subscribe({
-        next: (user) => {
-          // Use user name or email here
-          this.author =  user.email; // Set the author dynamically
-        },
-        error: (err) => {
-          console.error('Error fetching user by ID', err);
-        }
-      });
-    }
-
-    // Fetch solution data
-    if (this.ticketId) {
-      this.solutionService.getSolutionByTicketId(this.ticketId).subscribe({
-        next: (solution) => {
+  if (this.ticketId) {
+    this.solutionService.getSolutionByTicketId(this.ticketId).subscribe({
+      next: (solution) => {
+        if (solution && solution.description?.trim() !== '') {
           this.solutionText = solution.description;
-          this.referenceLink = solution.reference;
-          this.code = solution.code;
+          this.referenceLink = solution.reference || '';
+          this.code = solution.code || '';
+          this.datePosted = this.datePipe.transform(solution.datePosted, 'MMMM d, yyyy') || '';
 
-          // Format and set the datePosted using DatePipe
-          this.datePosted = this.datePipe.transform(solution.datePosted, 'MMMM d, yyyy') || ''; // Format the date dynamically
-        },
-        error: (err) => {
-          console.error('Error loading solution', err);
+          // ✅ Récupérer l'auteur UNIQUEMENT si la solution existe
+          if (this.userId) {
+            this.userService.getUserById(this.userId).subscribe({
+              next: (user) => {
+                this.author = user?.email || user?.name || 'Unknown';
+              },
+              error: (err) => console.error('Error fetching user by ID', err)
+            });
+          }
         }
-      });
-    }
+      },
+      error: (err) => console.error('Error loading solution', err)
+    });
   }
+}
+
 
   // Method to open the add solution dialog
   onAddSolution(): void {

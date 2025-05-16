@@ -28,24 +28,24 @@
           {{ column.name }}
         </div>
   
-        <!-- Tasks -->
-<div
-class="p-4 min-h-[180px] space-y-4"
-id="{{ column.id }}"
-[cdkDropListConnectedTo]="connectedDropLists"
-cdkDropList
-[cdkDropListData]="column.tasks"
-(cdkDropListDropped)="drop($event)"
->
-<div
-  class="bg-white text-gray-800 px-4 py-3 rounded-lg shadow-md cursor-grab transition-all duration-200 hover:shadow-lg hover:bg-blue-50"
-  *ngFor="let ticket of column.tasks"
-  cdkDrag
-  (click)="openTicketDetails(ticket)"
->
+    <!-- Tasks -->
+    <div
+    class="p-4 min-h-[180px] space-y-4"
+    id="{{ column.id }}"
+    [cdkDropListConnectedTo]="connectedDropLists"
+    cdkDropList
+    [cdkDropListData]="column.tasks"
+    (cdkDropListDropped)="drop($event)"
+    >
+  <div
+    class="bg-white text-gray-800 px-4 py-3 rounded-lg shadow-md cursor-grab transition-all duration-200 hover:shadow-lg hover:bg-blue-50"
+    *ngFor="let ticket of column.tasks"
+    cdkDrag
+    (click)="openTicketDetails(ticket)"
+  >
   <div class="flex items-center gap-2">
     <span class="text-blue-400">📌</span>
-    <span class="font-medium">{{ ticket.title }}</span>
+    <span class="font-medium">{{ ticket.category }}</span>
   </div>
 </div>
 </div>

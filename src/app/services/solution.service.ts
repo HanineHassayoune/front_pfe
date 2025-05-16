@@ -21,9 +21,10 @@ export class SolutionService {
 
   constructor(private http: HttpClient) {}
 
-  addSolution(solution: Solution): Observable<string> {
-    return this.http.post(this.solutionUrl, solution, { responseType: 'text' });
-  }
+  addSolution(solution: Solution): Observable<any> {
+  return this.http.post(this.solutionUrl, solution); 
+}
+
 
   getAllSolutions(): Observable<Solution[]> {
     return this.http.get<Solution[]>(this.solutionUrl);

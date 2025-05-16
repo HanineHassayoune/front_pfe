@@ -30,19 +30,25 @@ export class TicketsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.role = localStorage.getItem('role')?.toUpperCase() || ''; 
-    this.connectedDropLists = this.board.columns.map(c => c.id);
-    this.projectId = this.route.snapshot.paramMap.get('id') || '';
+  this.role = localStorage.getItem('role')?.toUpperCase() || '';
+  this.connectedDropLists = this.board.columns.map(c => c.id);
+  this.projectId = this.route.snapshot.paramMap.get('id') || '';
 
-    this.ticketService.getTicketsByProjectId(Number(this.projectId)).subscribe({
-      next: (tickets) => {
-        this.categorizeTickets(tickets);
-      },
-      error: (err) => {
-        console.error('Erreur lors du chargement des tickets', err);
-      }
-    });
-  }
+  const projectIdNum = Number(this.projectId);
+
+  const ticketRequest = (this.role === 'MANAGER' || this.role === 'PARTNER')
+    ? this.ticketService.getTicketsByProjectId(projectIdNum)
+    : this.ticketService.getMyTicketsByProjectId(projectIdNum);
+
+  ticketRequest.subscribe({
+    next: (tickets) => {
+      this.categorizeTickets(tickets);
+    },
+    error: (err) => {
+      console.error('Erreur lors du chargement des tickets', err);
+    }
+  });
+}
 
   categorizeTickets(tickets: Ticket[]) {
     for (let column of this.board.columns) {

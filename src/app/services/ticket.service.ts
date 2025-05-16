@@ -13,7 +13,7 @@ export interface Ticket {
   date: string;
   projectName: string;
   loggerName: string;
-  type: string;
+  category: string;
   projectId: number;
   stackTrace: string;
   solution: string | null;
@@ -45,5 +45,13 @@ export class TicketService {
     const params = new HttpParams().set('userId', userId.toString());
     return this.http.put(`${this.ticketUrl}/${ticketId}/assign`, null, { params });
   }
+
+  getMyTicketsByProjectId(projectId: number): Observable<Ticket[]> {
+  return this.http.get<Ticket[]>(`${this.ticketUrl}/project/${projectId}/me`);
+}
+
+
+
+
   
 }

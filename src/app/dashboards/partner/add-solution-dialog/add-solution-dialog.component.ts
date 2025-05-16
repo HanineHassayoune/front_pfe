@@ -42,38 +42,38 @@ export class AddSolutionDialogComponent {
   }
 
   onSubmit(): void {
-    if (this.solutionForm.invalid) return;
+  if (this.solutionForm.invalid) return;
 
-    this.isLoading = true;
+  this.isLoading = true;
 
-    const solution: Solution = {
-      ...this.solutionForm.value,
-      ticketId: this.data.ticketId,
-      userId: this.data.userId // 👈 Assure-toi que cette ligne est présente
-    };
+  const solution: Solution = {
+    ...this.solutionForm.value,
+    ticketId: this.data.ticketId,
+    userId: this.data.userId
+  };
 
-    
+  this.solutionService.addSolution(solution).subscribe({
+    next: () => {
+      this.alertType = 'success';
+      this.alertMessage = '✅ Solution added successfully.';
+      this.alertVisible = true;
+      this.isLoading = false;
 
-    this.solutionService.addSolution(solution).subscribe({
-      next: () => {
-        this.alertType = 'success';
-        this.alertMessage = '✅ Solution added successfully.';
-        this.alertVisible = true;
-        this.isLoading = false;
+      setTimeout(() => {
+        this.dialogRef.close(true);
+      }, 1000);
+    },
+    error: (err) => {
+      this.alertType = 'danger';
+      this.alertMessage = `❌ Failed to add solution`;
+      this.alertVisible = true;
+      this.isLoading = false;
+      console.error(err);
+    }
+  });
+}
 
-        setTimeout(() => {
-          this.dialogRef.close(true);
-        }, 1000);
-      },
-      error: (err) => {
-        this.alertType = 'danger';
-        this.alertMessage = `❌ Failed to add solution: ${err?.error || 'Unknown error.'}`;
-        this.alertVisible = true;
-        this.isLoading = false;
-        console.error(err);
-      }
-    });
-  }
+
 
   onCancel(): void {
     this.dialogRef.close(false);
