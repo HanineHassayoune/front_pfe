@@ -51,6 +51,12 @@
 </div>
 
       </div>
+      <app-alert 
+          *ngIf="alertVisible" 
+          [type]="alertType" 
+          [message]="alertMessage" 
+          [isVisible]="alertVisible">
+        </app-alert>
     </div>
   </div>
   

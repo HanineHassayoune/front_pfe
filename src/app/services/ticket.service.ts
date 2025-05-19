@@ -51,6 +51,15 @@ export class TicketService {
 }
 
 
+/* updateTicketStatus(ticketId: number, newStatus: string): Observable<Ticket> {
+  return this.http.put<Ticket>(`${this.ticketUrl}/${ticketId}/status`, { status: newStatus });
+}
+ */
+
+updateTicketStatus(ticketId: number, newStatus: string): Observable<Ticket> {
+  const params = new HttpParams().set('status', newStatus);
+  return this.http.put<Ticket>(`${this.ticketUrl}/${ticketId}/status`, null, { params });
+}
 
 
   
