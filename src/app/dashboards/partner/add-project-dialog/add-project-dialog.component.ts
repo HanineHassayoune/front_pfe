@@ -28,16 +28,18 @@ export class AddProjectDialogComponent {
   projects: any[] = [];
   constructor(
     private dialogRef: MatDialogRef<AddProjectDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { allTechnologies: string[], allUsers: any[] },
+    @Inject(MAT_DIALOG_DATA) public data: { allTechnologies: string[], allUsers: any[],allMicroservices: []  },
     private fb: FormBuilder,
     private projectService: ProjectService,
   ) {
     this.projectForm = this.fb.group({
-      title: ['', Validators.required],
-      description: [''],
-      technologies: [[]],
-      users: [[]],
-      imageUrl: ['']
+        title: ['', Validators.required],
+        description: [''],
+        technologies: [[]],
+        users: [[]],
+        imageUrl: [''],
+        architecture: [''],
+        microservices: [[]] 
     });
   }
 
@@ -52,39 +54,45 @@ export class AddProjectDialogComponent {
     return item?.name || '';
   }
 
-  submit(): void {
-    this.isLoading = true; // Active le spinner
+submit(): void {
+  this.isLoading = true;
+
+  const formData = new FormData();
+  formData.append('title', this.projectForm.value.title);
+  formData.append('description', this.projectForm.value.description || '');
+  formData.append('technologies', JSON.stringify(this.projectForm.value.technologies || []));
+  formData.append('users', JSON.stringify((this.projectForm.value.users || []).map((u: any) => u.id)));
+  formData.append('architecture', this.projectForm.value.architecture);
   
-    const formData = new FormData();
-    formData.append('title', this.projectForm.value.title);
-    formData.append('description', this.projectForm.value.description);
-    formData.append('technologies', JSON.stringify(this.projectForm.value.technologies));
-    formData.append('users', JSON.stringify(this.projectForm.value.users.map((u: any) => u.id)));
-  
-    if (this.selectedImageFile) {
-      formData.append('image', this.selectedImageFile);
-    }
-  
-    this.projectService.addProject(formData).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.dialogRef.close('refresh');
-      },
-      error: (err) => {
-        this.isLoading = false;
-        this.alertMessage = 'Failed to add project';
-        this.alertType = 'danger';
-        this.alertVisible = true;
-        console.error(err);
-      }
-    });
+
+  // Facultatif
+  if (this.projectForm.value.architecture === 'MICROSERVICES') {
+    formData.append('microservices', JSON.stringify(this.projectForm.value.microservices || []));
   }
-  
-  
+ /*  if (this.projectForm.value.architecture === 'microservices') {
+    formData.append('microservices', JSON.stringify(this.projectForm.value.microservices || []));
+  } */
 
+  if (this.selectedImageFile) {
+    formData.append('image', this.selectedImageFile);
+  }
 
-  
-  fetchProjects(): void {
+  this.projectService.addProject(formData).subscribe({
+    next: () => {
+      this.isLoading = false;
+      this.dialogRef.close('refresh');
+    },
+    error: (err) => {
+      this.isLoading = false;
+      this.alertMessage = 'Failed to add project';
+      this.alertType = 'danger';
+      this.alertVisible = true;
+      console.error(err);
+    }
+  });
+}
+
+fetchProjects(): void {
     this.projectService.getProjects().subscribe((response: any) => {
       this.projects = response.map((p: any) => ({
         ...p,

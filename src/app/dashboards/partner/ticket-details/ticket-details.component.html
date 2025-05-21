@@ -15,7 +15,7 @@
         </app-details>
        <!--  <app-solution [ticketId]="myTicket.id"></app-solution> -->
         <!-- Ticket Solution -->
-        <app-solution 
+        <app-solution class="flex flex-col"  
           *ngIf="connectedUserId !== undefined" 
           [ticketId]="ticket.id" 
           [userId]="connectedUserId">

@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SolutionService, Solution } from '../../../services/solution.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AlertComponent } from '../../../components/alert/alert.component';
 
 @Component({
   selector: 'app-add-solution-dialog',
@@ -15,18 +16,19 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AlertComponent
   ],
   templateUrl: './add-solution-dialog.component.html',
   styleUrls: ['./add-solution-dialog.component.css']
 })
 export class AddSolutionDialogComponent {
   solutionForm: FormGroup;
-  isLoading = false;
+  isLoading: boolean = false;
 
   alertType: 'success' | 'danger' | 'warning' | 'info' = 'info';
-  alertMessage = '';
-  alertVisible = false;
+  alertMessage: string = '';
+  alertVisible: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +47,7 @@ export class AddSolutionDialogComponent {
   if (this.solutionForm.invalid) return;
 
   this.isLoading = true;
+  this.alertVisible = false;
 
   const solution: Solution = {
     ...this.solutionForm.value,
@@ -54,24 +57,28 @@ export class AddSolutionDialogComponent {
 
   this.solutionService.addSolution(solution).subscribe({
     next: () => {
-      this.alertType = 'success';
-      this.alertMessage = '✅ Solution added successfully.';
-      this.alertVisible = true;
       this.isLoading = false;
+      this.alertType = 'success';
+      this.alertMessage = 'Solution added successfully.';
+      this.alertVisible = true;
 
       setTimeout(() => {
         this.dialogRef.close(true);
-      }, 1000);
+      }, 2000);
     },
     error: (err) => {
-      this.alertType = 'danger';
-      this.alertMessage = `❌ Failed to add solution`;
-      this.alertVisible = true;
       this.isLoading = false;
-      console.error(err);
+      this.alertType = 'danger';
+      this.alertMessage = err.error?.message || 'Failed to add solution.';
+      this.alertVisible = true;
+
+      setTimeout(() => {
+        this.alertVisible = false;
+      }, 3000);
     }
   });
 }
+
 
 
 

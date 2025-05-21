@@ -3,7 +3,25 @@
     ➕ Add a New Solution
   </h2>
 
-  <form [formGroup]="solutionForm" (ngSubmit)="onSubmit()" class="space-y-4">
+  <!-- Alert component -->
+  <app-alert 
+    *ngIf="alertVisible" 
+    [type]="alertType" 
+    [message]="alertMessage" 
+    [isVisible]="alertVisible">
+  </app-alert>
+
+  <!-- Spinner while loading -->
+  <div *ngIf="isLoading" class="flex justify-center pt-2">
+    <mat-spinner diameter="30" color="primary"></mat-spinner>
+  </div>
+
+  <!-- Form -->
+  <form 
+    *ngIf="!isLoading" 
+    [formGroup]="solutionForm" 
+    (ngSubmit)="onSubmit()" 
+    class="space-y-4">
 
     <!-- Description -->
     <div>
@@ -31,21 +49,18 @@
 
     <!-- Buttons -->
     <div class="flex justify-end gap-3 pt-4">
-      <button type="button" (click)="onCancel()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400">Cancel</button>
-      <button type="submit" [disabled]="solutionForm.invalid" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Save</button>
+      <button 
+        type="button" 
+        (click)="onCancel()" 
+        class="flex items-center gap-2 bg-[#B82132] text-white hover:bg-[#D2665A] px-6 py-2 rounded-md transition-all cursor-pointer">
+        ❌ Cancel
+      </button>
+      <button 
+        type="submit" 
+        [disabled]="solutionForm.invalid"  
+        class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba] cursor-pointer">
+        ➕ Save
+      </button>
     </div>
-<!-- Alert message -->
-<div *ngIf="alertVisible" [ngClass]="'alert-' + alertType" class="alert">
-  {{ alertMessage }}
-</div>
-
-<!-- Loading spinner -->
-<mat-progress-spinner *ngIf="isLoading" mode="indeterminate" diameter="30"></mat-progress-spinner>
-
-    <!-- Spinner -->
-    <div *ngIf="isLoading" class="flex justify-center pt-2">
-      <mat-spinner diameter="30" color="primary"></mat-spinner>
-    </div>
-
   </form>
 </div>
