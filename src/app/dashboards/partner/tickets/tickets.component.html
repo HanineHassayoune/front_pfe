@@ -96,6 +96,13 @@
           [message]="alertMessage" 
           [isVisible]="alertVisible">
         </app-alert>
+
+        <!-- No Tickets Found -->
+      <div *ngIf="areAllColumnsEmpty && !isLoading" class="col-span-full text-center mt-5">
+        <img src="assets/images/no-projects.png" alt="No tickets" class="mx-auto mb-4 w-48 h-48 opacity-70" />
+        <h2 class="text-xl font-semibold text-gray-700">No tickets found</h2>
+      </div>
+
     </div>
   </div>
   

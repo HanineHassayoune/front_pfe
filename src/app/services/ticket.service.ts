@@ -63,15 +63,18 @@ updateTicketStatus(ticketId: number, newStatus: string): Observable<Ticket> {
 
 filterTickets(projectId: number, category?: string, assignedUserName?: string): Observable<Ticket[]> {
   let params = new HttpParams();
-
   if (category) {
     params = params.set('category', category);
   }
   if (assignedUserName) {
     params = params.set('assignedUserName', assignedUserName);
   }
-
   return this.http.get<Ticket[]>(`${this.ticketUrl}/project/${projectId}/filter`, { params });
+}
+
+updateTicketPriority(ticketId: number, newPriority: string): Observable<Ticket> {
+  const params = new HttpParams().set('priority', newPriority);
+  return this.http.put<Ticket>(`${this.ticketUrl}/${ticketId}/priority`, null, { params });
 }
 
 

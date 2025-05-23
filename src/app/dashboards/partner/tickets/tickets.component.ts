@@ -129,6 +129,10 @@ searchTerm: string = '';
     }
   }
 
+get areAllColumnsEmpty(): boolean {
+  return this.board.columns.every(col => col.tasks.length === 0);
+}
+
 
   drop(event: CdkDragDrop<Ticket[]>) {
     const sourceColumnId = event.previousContainer.id;
@@ -196,4 +200,6 @@ searchTerm: string = '';
       alert('Rôle non défini. Vous devez être connecté pour accéder à cette page.');
     }
   }
+
+  
 }

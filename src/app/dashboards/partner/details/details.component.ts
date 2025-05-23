@@ -4,11 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
 import { TicketService } from '../../../services/ticket.service';
 import { UserService } from '../../../services/user.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AlertComponent } from '../../../components/alert/alert.component';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatProgressSpinnerModule,AlertComponent],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
 })
@@ -31,6 +33,8 @@ export class DetailsComponent implements OnInit {
   affectedUsers: any[] = [];
   selectedUser: any = null;
   dropdownOpen = false;
+  
+
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +42,22 @@ export class DetailsComponent implements OnInit {
     private ticketService: TicketService,
     private userService: UserService
   ) {}
+
+  isLoadingAssignUser = false;
+  isLoadingUpdateStatus = false;
+
+  alertType: 'success' | 'danger' | 'warning' | 'info' = 'info';
+  alertMessage = '';
+  alertVisible = false;
+
+  showAlert(type: 'success' | 'danger' | 'warning' | 'info', message: string) {
+    this.alertType = type;
+    this.alertMessage = message;
+    this.alertVisible = true;
+    setTimeout(() => {
+      this.alertVisible = false;
+    }, 2000);
+  }
 
   ngOnInit(): void {
     this.role = this.getRole()?.toUpperCase() || null;
@@ -95,18 +115,47 @@ export class DetailsComponent implements OnInit {
   }
 
   assignUser(): void {
-    if (this.selectedUser) {
-      this.ticketService.assignUserToTicket(this.ticketId, this.selectedUser.id).subscribe({
-        next: (response) => {
-          console.log('Utilisateur assigné avec succès:', response);
-          this.assignedUser = this.selectedUser;
-        },
-        error: (error) => {
-          console.error('Erreur lors de l\'assignation de l\'utilisateur:', error);
-        }
-      });
-    }
+  if (!this.selectedUser) {
+    this.showAlert('warning', 'Please select a user before assigning.');
+    return;
   }
+
+  this.isLoadingAssignUser = true;
+  this.ticketService.assignUserToTicket(this.ticketId, this.selectedUser.id).subscribe({
+    next: (response) => {
+      this.assignedUser = this.selectedUser;
+      this.showAlert('success', 'User assigned successfully!');
+      this.isLoadingAssignUser = false;
+    },
+    error: (error) => {
+      console.error('Error assigning user:', error);
+      this.showAlert('danger', 'Failed to assign user.');
+      this.isLoadingAssignUser = false;
+    }
+  });
+}
+
+updatePriority(): void {
+  if (!this.selectedPriority || !this.ticketId) {
+    this.showAlert('warning', 'Please select a priority before updating.');
+    return;
+  }
+
+  this.isLoadingUpdateStatus = true;
+  this.ticketService.updateTicketPriority(this.ticketId, this.selectedPriority).subscribe({
+    next: (updatedTicket) => {
+      this.priority = updatedTicket.priority;
+      this.showAlert('success', 'Priority updated successfully!');
+      this.isLoadingUpdateStatus = false;
+    },
+    error: (error) => {
+      console.error('Error updating priority:', error);
+      this.showAlert('danger', 'Failed to update priority.');
+      this.isLoadingUpdateStatus = false;
+    }
+  });
+}
+
 
   toggleDropdown(): void {
     this.dropdownOpen = !this.dropdownOpen;
@@ -120,4 +169,42 @@ export class DetailsComponent implements OnInit {
   private getRole(): string | null {
     return localStorage.getItem('role');
   }
+
+
+priorities: string[] = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL','URGENT'];
+
+selectedPriority: string = '';
+priorityDropdownOpen = false;
+
+togglePriorityDropdown(): void {
+  this.priorityDropdownOpen = !this.priorityDropdownOpen;
+}
+
+selectPriority(priority: string): void {
+  this.selectedPriority = priority;
+  this.priorityDropdownOpen = false;
+}
+
+/* updatePriority(): void {
+  if (!this.selectedPriority || !this.ticketId) return;
+
+  this.ticketService.updateTicketPriority(this.ticketId, this.selectedPriority).subscribe({
+    next: (updatedTicket) => {
+      this.priority = updatedTicket.priority;
+      console.log('Priority updated successfully!');
+    },
+    error: (error) => {
+      console.error('Error updating priority:', error);
+    }
+  });
+} */
+
+priorityIcons: { [key: string]: string } = {
+  HIGH: '🔥',
+  MEDIUM: '⚠️',
+  LOW: '✅',
+  CRITICAL: '🚨',
+  URGENT: '⚡',
+};
+
 }
