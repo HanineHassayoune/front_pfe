@@ -6,11 +6,12 @@ import { DetailsComponent } from '../details/details.component';
 import { SolutionComponent } from '../solution/solution.component';
 import { CommentsComponent } from '../comments/comments.component';
 import { UserService } from '../../../services/user.service';
+import { TicketCarouselComponent } from '../ticket-carousel/ticket-carousel.component';
 
 @Component({
   selector: 'app-ticket-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, DetailsComponent, SolutionComponent, CommentsComponent],
+  imports: [CommonModule, RouterModule, DetailsComponent, SolutionComponent, CommentsComponent,TicketCarouselComponent],
   templateUrl: './ticket-details.component.html',
   styleUrl: './ticket-details.component.css'
 })
@@ -42,6 +43,7 @@ ngOnInit(): void {
     });
   }
 }
+
 
 }
 

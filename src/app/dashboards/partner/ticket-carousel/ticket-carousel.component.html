@@ -1,0 +1,52 @@
+<div class="flex flex-col items-center p-6 w-full">
+
+  <!-- Titre bien visible -->
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 self-start flex items-center gap-2">
+    🏷️ Related Tickets
+  </h2>
+
+  <!-- Carousel wrapper -->
+  <div class="w-full max-w-6xl">
+
+    <!-- Carousel viewport -->
+    <div class="overflow-hidden">
+      <div
+        class="flex transition-transform duration-500"
+        [style.transform]="'translateX(-' + currentIndex * itemWidth + 'px)'"
+      >
+        <div
+  *ngFor="let ticket of tickets"
+  (click)="openTicketDetails(ticket)"
+  class="cursor-pointer min-w-[300px] max-w-[300px] flex-shrink-0 mx-2 bg-white p-4 rounded-2xl shadow-md border border-gray-200 hover:shadow-lg hover:bg-blue-50 transition"
+>
+
+          <h3 class="font-bold text-lg text-gray-800 mb-2">📌{{ ticket.title }}</h3>
+          <p class="text-sm text-gray-500 mb-1">
+            {{ ticket.category }} • {{ ticket.priority }}
+          </p>
+          <p class="text-sm text-gray-600 truncate">
+            {{ ticket.stackTrace }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation buttons -->
+    <div class="flex justify-center mt-4 space-x-4">
+      <button
+        (click)="prev()"
+        class="p-2 bg-gray-200 hover:bg-gray-300 rounded-full shadow disabled:opacity-50"
+        [disabled]="currentIndex === 0"
+      >
+        ‹
+      </button>
+      <button
+        (click)="next()"
+        class="p-2 bg-gray-200 hover:bg-gray-300 rounded-full shadow disabled:opacity-50"
+        [disabled]="currentIndex + visibleCount >= tickets.length"
+      >
+        ›
+      </button>
+    </div>
+  </div>
+</div>

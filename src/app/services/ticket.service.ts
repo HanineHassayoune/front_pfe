@@ -37,24 +37,14 @@ export class TicketService {
   }
 
 
-  getTicketById(ticketId: string): Observable<Ticket> {
+getTicketById(ticketId: string): Observable<Ticket> {
     return this.http.get<Ticket>(`${this.ticketUrl}/${ticketId}`);
   }
 
-  assignUserToTicket(ticketId: number, userId: number): Observable<any> {
+assignUserToTicket(ticketId: number, userId: number): Observable<any> {
     const params = new HttpParams().set('userId', userId.toString());
     return this.http.put(`${this.ticketUrl}/${ticketId}/assign`, null, { params });
-  }
-
- /* getMyTicketsByProjectId(projectId: number): Observable<Ticket[]> {
-  return this.http.get<Ticket[]>(`${this.ticketUrl}/project/${projectId}/me`);
-} */
-
-
-/* updateTicketStatus(ticketId: number, newStatus: string): Observable<Ticket> {
-  return this.http.put<Ticket>(`${this.ticketUrl}/${ticketId}/status`, { status: newStatus });
 }
- */
 
 updateTicketStatus(ticketId: number, newStatus: string): Observable<Ticket> {
   const params = new HttpParams().set('status', newStatus);
@@ -77,6 +67,9 @@ updateTicketPriority(ticketId: number, newPriority: string): Observable<Ticket> 
   return this.http.put<Ticket>(`${this.ticketUrl}/${ticketId}/priority`, null, { params });
 }
 
+getRelatedTickets(ticketId: number): Observable<Ticket[]> {
+  return this.http.get<Ticket[]>(`${this.ticketUrl}/${ticketId}/related`);
+}
 
   
 }
