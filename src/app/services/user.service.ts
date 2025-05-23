@@ -20,7 +20,7 @@ export class UserService {
     private authUrl = environment.authUrl;
     private userSubject = new BehaviorSubject<any>(null); // BehaviorSubject pour suivre l'utilisateur
     user$ = this.userSubject.asObservable();
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
  
  

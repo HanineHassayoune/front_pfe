@@ -4,11 +4,13 @@ import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ticket, TicketService } from '../../../services/ticket.service';
 import { AlertComponent } from '../../../components/alert/alert.component';
+import { UserService } from '../../../services/user.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [CommonModule, DragDropModule, AlertComponent],
+  imports: [CommonModule, DragDropModule, AlertComponent,FormsModule],
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.css']
 })
@@ -24,20 +26,28 @@ export class TicketsComponent implements OnInit {
 
   board = {
     columns: [
-      { id: 'pending', name: 'Pending', tasks: [] as Ticket[] },
-      { id: 'resolved', name: 'Resolved', tasks: [] as Ticket[] },
-      { id: 'verified', name: 'Verified', tasks: [] as Ticket[] },
-      { id: 'merging', name: 'Merging', tasks: [] as Ticket[] }
+      { id: 'TO_DO', name: 'To Do', tasks: [] as Ticket[] },
+      { id: 'IN_PROGRESS', name: 'In Progress', tasks: [] as Ticket[] },
+      { id: 'RESOLVED', name: 'Resolved', tasks: [] as Ticket[] },
+      { id: 'MERGING', name: 'Merging', tasks: [] as Ticket[] },
+      { id: 'VERIFIED', name: 'Verified', tasks: [] as Ticket[] },
+      { id: 'DONE', name: 'Done', tasks: [] as Ticket[] }
     ]
   };
+searchTerm: string = '';
+
+  // variable pour garder tous les tickets en cache
+  allTickets: Ticket[] = [];
+  assignedUserNames: Record<number, string> = {}; // key = userId, value = name
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private ticketService: TicketService
+    private ticketService: TicketService,
+    private userService: UserService
   ) {}
 
-  ngOnInit() {
+  /* ngOnInit() {
     this.role = localStorage.getItem('role')?.toUpperCase() || '';
     this.connectedDropLists = this.board.columns.map(c => c.id);
     this.projectId = this.route.snapshot.paramMap.get('id') || '';
@@ -56,13 +66,69 @@ export class TicketsComponent implements OnInit {
         console.error('Erreur lors du chargement des tickets', err);
       }
     });
-  }
+  } */
 
-  categorizeTickets(tickets: Ticket[]) {
+
+  ngOnInit() {
+  this.role = localStorage.getItem('role')?.toUpperCase() || '';
+  this.connectedDropLists = this.board.columns.map(c => c.id);
+  this.projectId = this.route.snapshot.paramMap.get('id') || '';
+
+  const projectIdNum = Number(this.projectId);
+
+  this.ticketService.getTicketsByProjectId(projectIdNum).subscribe({
+    next: (tickets) => {
+      console.log('Tickets reçus:', tickets);
+      this.allTickets = tickets;
+      this.categorizeTickets(tickets);
+    },
+    error: (err) => {
+      console.error('Erreur lors du chargement des tickets', err);
+    }
+  });
+}
+
+ /*categorizeTickets(tickets: Ticket[]) {
     for (let column of this.board.columns) {
       column.tasks = tickets.filter(t => t.status.toLowerCase() === column.name.toLowerCase());
     }
+  }*/
+
+    onSearchChange() {
+  const term = this.searchTerm.trim().toLowerCase();
+
+  if (!term) {
+    this.categorizeTickets(this.allTickets);
+  } else {
+    const filteredTickets = this.allTickets.filter(ticket =>
+      (ticket.category && ticket.category.toLowerCase().includes(term)) ||
+      (this.assignedUserNames[ticket.assignedUserId]?.toLowerCase().includes(term))
+    );
+
+    this.categorizeTickets(filteredTickets);
   }
+}
+
+  categorizeTickets(tickets: Ticket[]) {
+    for (let column of this.board.columns) {
+      column.tasks = tickets.filter(t => t.status === column.id);
+
+      // Charger les utilisateurs assignés
+      column.tasks.forEach(ticket => {
+        if (ticket.assignedUserId && !this.assignedUserNames[ticket.assignedUserId]) {
+          this.userService.getUserById(ticket.assignedUserId).subscribe({
+            next: user => {
+              this.assignedUserNames[ticket.assignedUserId!] = user.name;
+            },
+            error: () => {
+              this.assignedUserNames[ticket.assignedUserId!] = 'Unknown User';
+            }
+          });
+        }
+      });
+    }
+  }
+
 
   drop(event: CdkDragDrop<Ticket[]>) {
     const sourceColumnId = event.previousContainer.id;
@@ -72,17 +138,24 @@ export class TicketsComponent implements OnInit {
 
     const allowedTransitions: Record<string, { from: string; to: string }[]> = {
       DEVELOPER: [
-        { from: 'pending', to: 'resolved' },
-        { from: 'resolved', to: 'pending' }
-      ],
-      TESTER: [
-        { from: 'resolved', to: 'verified' },
-        { from: 'verified', to: 'resolved' }
+        { from: 'TO_DO', to: 'IN_PROGRESS' },
+        { from: 'IN_PROGRESS', to: 'TO_DO' },
+        { from: 'IN_PROGRESS', to: 'RESOLVED'},
+        { from: 'RESOLVED', to: 'IN_PROGRESS'},
+      
       ],
       MANAGER: [
-        { from: 'verified', to: 'merging' },
-        { from: 'merging', to: 'verified' }
+        { from: 'RESOLVED', to: 'MERGING' },
+        { from: 'MERGING', to: 'RESOLVED' },
+        { from: 'VERIFIED', to: 'DONE' },
+        { from: 'DONE', to: 'VERIFIED' },
+       
+      ],
+      TESTER: [
+       { from: 'MERGING', to: 'VERIFIED' },
+       { from: 'VERIFIED', to: 'MERGING' }
       ]
+     
     };
 
     const userRole = this.role.toUpperCase();

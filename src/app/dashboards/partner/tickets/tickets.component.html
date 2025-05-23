@@ -1,21 +1,46 @@
 <div class=" bg-gray-100 min-h-screen mt-4">
-    <h2 class="text-2xl font-bold  mb-4 ml-9 text-gray-800 flex items-center gap-2">
-      <span>🎫</span> Ticket Kanban
-    </h2>
+    <!-- Header: Title + Search Bar -->
+<div class="flex items-center justify-between px-9 mb-4 text-gray-800">
+  <!-- Title -->
+  <h2 class="text-2xl font-bold flex items-center gap-2">
+    <span>🎫</span> Ticket Kanban
+  </h2>
+
+  <!-- Search Bar -->
+  <div class="relative w-full max-w-xs">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+      class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+      <path fill-rule="evenodd"
+        d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+        clip-rule="evenodd" />
+    </svg>
+    <input
+  type="text"
+  class="pl-10 pr-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 w-full"
+  placeholder="Search by user name or category"
+  [(ngModel)]="searchTerm"
+  (input)="onSearchChange()"
+/>
+
+  </div>
+</div>
+
   
     <div
       cdkDropList
       cdkDropListOrientation="horizontal"
-      class="flex flex-wrap gap-8 justify-center"
+      class="flex flex-wrap gap-4 justify-center"
       (cdkDropListDropped)="drop($event)"
     >
       <div
-        class="w-full sm:w-[45%] md:w-[22%] rounded-2xl shadow-xl flex-shrink-0 border border-gray-200 transition-transform hover:scale-[1.02]"
+        class="w-full sm:w-[40%] md:w-[15%] rounded-2xl shadow-xl flex-shrink-0 border border-gray-200 transition-transform hover:scale-[1.02]"
         [ngClass]="{
-          'bg-[#F8D7DA]': column.name === 'Pending',
+          'bg-[#F8D7DA]': column.name === 'To Do',
           'bg-[#D1ECF1]': column.name === 'Resolved',
           'bg-[#D4EDDA]': column.name === 'Verified',
-          'bg-[#FFF3CD]': column.name === 'Merging'
+          'bg-[#FFF3CD]': column.name === 'Merging',
+          'bg-yellow-100': column.name === 'In Progress',
+          'bg-green-100': column.name === 'Done'
         }"
         *ngFor="let column of board.columns"
       >
@@ -25,6 +50,9 @@
           <span *ngIf="column.name === 'Resolved'">✅</span>
           <span *ngIf="column.name === 'Verified'">🔍</span>
           <span *ngIf="column.name === 'Merging'">🔀</span>
+          <span *ngIf="column.name === 'To Do'">📝</span>
+          <span *ngIf="column.name === 'In Progress'">🚧</span>
+          <span *ngIf="column.name === 'Done'">🎉</span>
           {{ column.name }}
         </div>
   
@@ -37,17 +65,28 @@
     [cdkDropListData]="column.tasks"
     (cdkDropListDropped)="drop($event)"
     >
-  <div
-    class="bg-white text-gray-800 px-4 py-3 rounded-lg shadow-md cursor-grab transition-all duration-200 hover:shadow-lg hover:bg-blue-50"
-    *ngFor="let ticket of column.tasks"
-    cdkDrag
-    (click)="openTicketDetails(ticket)"
-  >
+  <div class="bg-white text-gray-800 px-4 py-3 rounded-lg shadow-md cursor-grab transition-all duration-200 hover:shadow-lg hover:bg-blue-50"
+     *ngFor="let ticket of column.tasks"
+     cdkDrag
+     (click)="openTicketDetails(ticket)">
+       <!-- Assignment Info -->
+  <div class="text-sm text-gray-600 mt-2" (click)="$event.stopPropagation()">
+    <span *ngIf="ticket.assignedUserId; else notAssigned"><!-- Assigned to:  -->
+      👤 {{ assignedUserNames[ticket.assignedUserId] || 'Loading...' }}
+    </span>
+    <ng-template #notAssigned>
+      🚫 Not assigned
+    </ng-template>
+  </div>
+  <!-- Ticket Category -->
   <div class="flex items-center gap-2">
     <span class="text-blue-400">📌</span>
     <span class="font-medium">{{ ticket.category }}</span>
   </div>
+
+
 </div>
+
 </div>
 
       </div>

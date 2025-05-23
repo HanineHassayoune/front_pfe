@@ -5,6 +5,7 @@ import { TicketService, Ticket } from '../../../services/ticket.service';
 import { DetailsComponent } from '../details/details.component';
 import { SolutionComponent } from '../solution/solution.component';
 import { CommentsComponent } from '../comments/comments.component';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-ticket-details',
@@ -21,6 +22,7 @@ export class TicketDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ticketService: TicketService,
+    private userService: UserService
  
   ) {}
 
@@ -41,7 +43,6 @@ ngOnInit(): void {
   }
 }
 
-
-  }
+}
 
 

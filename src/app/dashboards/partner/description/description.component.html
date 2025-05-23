@@ -39,4 +39,27 @@
         
           </div>
         </div>
+
       </div>
+
+          <!-- Microservices and Architecture Section -->
+    <div class="mt-10 w-full bg-white rounded-xl shadow-lg p-6" *ngIf="project">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">🧩 Microservices & Architecture</h2>
+
+      <!-- Microservices List -->
+      <ul class="list-disc list-inside text-gray-700 space-y-2" *ngIf="project?.microservices?.length">
+        <li *ngFor="let service of project?.microservices">
+          📁 {{ service }}
+        </li>
+      </ul>
+
+  <!-- Architecture -->
+  <div class="mt-6" *ngIf="project?.architecture">
+    <h3 class="text-lg font-semibold text-gray-800 mb-2">🛠 Architecture :</h3>
+    <p class="text-gray-700 text-base">
+      {{ project.architecture }}
+    </p>
+  </div>
+</div>
+
+</div>
