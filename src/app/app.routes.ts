@@ -20,6 +20,7 @@ import { TablePaginationComponent } from './components/table-pagination/table-pa
 import { PendingRegisterComponent } from './pending-register/pending-register.component';
 import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
 import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
+import { MicroserviceDetailsComponent } from './dashboards/partner/microservice-details/microservice-details.component';
 
 
 export const routes: Routes = [
@@ -92,6 +93,8 @@ export const routes: Routes = [
         { path: 'projects/:id', component: ProjectDetailsComponent },
         { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
         { path: 'pending-register', component: PendingRegisterComponent},
+        { path: 'projects/:projectId/microservice/:microserviceId', component: MicroserviceDetailsComponent } ,
+        { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
       ]
     },
     { 
@@ -104,6 +107,7 @@ export const routes: Routes = [
         { path: 'projects', component: ProjectsComponent },
         { path: 'projects/:id', component: ProjectDetailsComponent },
         { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
+
 
       ]
     },

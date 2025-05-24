@@ -67,8 +67,14 @@ submit(): void {
 
   // Facultatif
   if (this.projectForm.value.architecture === 'MICROSERVICES') {
+  const microserviceTitles = this.projectForm.value.microservices || [];
+  const microservicesArray = microserviceTitles.map((title: string) => ({ title }));
+  formData.append('microservices', JSON.stringify(microservicesArray));
+}
+
+  /* if (this.projectForm.value.architecture === 'MICROSERVICES') {
     formData.append('microservices', JSON.stringify(this.projectForm.value.microservices || []));
-  }
+  } */
  /*  if (this.projectForm.value.architecture === 'microservices') {
     formData.append('microservices', JSON.stringify(this.projectForm.value.microservices || []));
   } */

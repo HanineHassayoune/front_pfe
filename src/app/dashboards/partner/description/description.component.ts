@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditProjectModalComponent } from '../edit-project-modal/edit-project-modal.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class DescriptionComponent implements OnInit {
     constructor(
       private route: ActivatedRoute,
       private projectService: ProjectService,
-      private dialog: MatDialog
+      private dialog: MatDialog,private router:Router
     ) {
       this.projectId = Number(this.route.snapshot.paramMap.get('id'));
     }
@@ -54,5 +54,8 @@ export class DescriptionComponent implements OnInit {
       );
     }
   
-    
+  goToMicroservice(serviceId: number) {
+  this.router.navigate([`/partner/projects/${this.projectId}/microservice/${serviceId}`]);
+}
+
 }

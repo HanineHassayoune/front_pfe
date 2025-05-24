@@ -185,20 +185,6 @@ selectPriority(priority: string): void {
   this.priorityDropdownOpen = false;
 }
 
-/* updatePriority(): void {
-  if (!this.selectedPriority || !this.ticketId) return;
-
-  this.ticketService.updateTicketPriority(this.ticketId, this.selectedPriority).subscribe({
-    next: (updatedTicket) => {
-      this.priority = updatedTicket.priority;
-      console.log('Priority updated successfully!');
-    },
-    error: (error) => {
-      console.error('Error updating priority:', error);
-    }
-  });
-} */
-
 priorityIcons: { [key: string]: string } = {
   HIGH: '🔥',
   MEDIUM: '⚠️',

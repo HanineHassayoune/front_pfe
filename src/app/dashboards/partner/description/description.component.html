@@ -48,10 +48,16 @@
 
       <!-- Microservices List -->
       <ul class="list-disc list-inside text-gray-700 space-y-2" *ngIf="project?.microservices?.length">
-        <li *ngFor="let service of project?.microservices">
-          📁 {{ service }}
-        </li>
+          <li 
+            *ngFor="let service of project?.microservices"
+            class="cursor-pointer text-gray-800 hover:text-gray-600"
+            (click)="goToMicroservice(service.id)"
+          >
+
+         📁 {{ service.title }}
+         </li>
       </ul>
+
 
   <!-- Architecture -->
   <div class="mt-6" *ngIf="project?.architecture">
