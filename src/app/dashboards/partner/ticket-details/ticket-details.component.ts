@@ -23,7 +23,6 @@ export class TicketDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ticketService: TicketService,
-    private userService: UserService
  
   ) {}
 

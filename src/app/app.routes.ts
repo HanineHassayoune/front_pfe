@@ -21,6 +21,7 @@ import { PendingRegisterComponent } from './pending-register/pending-register.co
 import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
 import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 import { MicroserviceDetailsComponent } from './dashboards/partner/microservice-details/microservice-details.component';
+import { TicketsComponent } from './dashboards/partner/tickets/tickets.component';
 
 
 export const routes: Routes = [
@@ -88,13 +89,13 @@ export const routes: Routes = [
       data: { role: 'PARTNER' },
       children: [
         { path: 'users', component: UsersComponent },
-        { path: 'projects', component: ProjectsComponent },
-        { path: 'profil', component: ProfilComponent },
-        { path: 'projects/:id', component: ProjectDetailsComponent },
-        { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
+        { path: 'projects', component: ProjectsComponent ,data: { breadcrumb: 'Projects' }},
+        { path: 'profil', component: ProfilComponent ,data: { breadcrumb: 'Profil' }},
+        { path: 'projects/:id', component: ProjectDetailsComponent , data: { breadcrumb: ' ✅ Project Details' }},
         { path: 'pending-register', component: PendingRegisterComponent},
-        { path: 'projects/:projectId/microservice/:microserviceId', component: MicroserviceDetailsComponent } ,
-        { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
+        { path: 'projects/:projectId/microservice/:microserviceId', component: MicroserviceDetailsComponent,data: { breadcrumb: 'Microservice Ticket' } } ,
+        { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent ,data: { breadcrumb: 'Ticket Details' }},
+        
       ]
     },
     { 

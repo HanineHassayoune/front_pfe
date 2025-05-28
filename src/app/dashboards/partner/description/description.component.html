@@ -50,8 +50,7 @@
       <ul class="list-disc list-inside text-gray-700 space-y-2" *ngIf="project?.microservices?.length">
           <li 
             *ngFor="let service of project?.microservices"
-            class="cursor-pointer text-gray-800 hover:text-gray-600"
-            (click)="goToMicroservice(service.id)"
+            class="text-gray-800 hover:text-gray-600"
           >
 
          📁 {{ service.title }}

@@ -47,28 +47,6 @@ searchTerm: string = '';
     private userService: UserService
   ) {}
 
-  /* ngOnInit() {
-    this.role = localStorage.getItem('role')?.toUpperCase() || '';
-    this.connectedDropLists = this.board.columns.map(c => c.id);
-    this.projectId = this.route.snapshot.paramMap.get('id') || '';
-
-    const projectIdNum = Number(this.projectId);
-
-    const ticketRequest = (this.role === 'MANAGER' || this.role === 'PARTNER')
-      ? this.ticketService.getTicketsByProjectId(projectIdNum)
-      : this.ticketService.getMyTicketsByProjectId(projectIdNum);
-
-    ticketRequest.subscribe({
-      next: (tickets) => {
-        this.categorizeTickets(tickets);
-      },
-      error: (err) => {
-        console.error('Erreur lors du chargement des tickets', err);
-      }
-    });
-  } */
-
-
   ngOnInit() {
   this.role = localStorage.getItem('role')?.toUpperCase() || '';
   this.connectedDropLists = this.board.columns.map(c => c.id);
@@ -88,13 +66,7 @@ searchTerm: string = '';
   });
 }
 
- /*categorizeTickets(tickets: Ticket[]) {
-    for (let column of this.board.columns) {
-      column.tasks = tickets.filter(t => t.status.toLowerCase() === column.name.toLowerCase());
-    }
-  }*/
-
-    onSearchChange() {
+ onSearchChange() {
   const term = this.searchTerm.trim().toLowerCase();
 
   if (!term) {

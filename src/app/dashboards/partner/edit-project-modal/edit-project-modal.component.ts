@@ -56,7 +56,7 @@ export class EditProjectModalComponent implements OnInit {
     private fb: FormBuilder, private userService:UserService,
     private projectService: ProjectService,
     public dialogRef: MatDialogRef<EditProjectModalComponent>, 
-    @Inject(MAT_DIALOG_DATA) public data: { project: any }
+    @Inject(MAT_DIALOG_DATA) public data: { project: any , allMicroservices?: string[]}
   ) {}
   
 
@@ -65,8 +65,6 @@ export class EditProjectModalComponent implements OnInit {
   }
   
   loadUsers(): void {
-    // Appelle ton service ici
-    // Tu dois injecter UserService dans le constructeur aussi
     this.userService.getUsers(['MANAGER', 'TESTER', 'DEVELOPER']).subscribe({
       next: (data: { content: any[] }) => {
         this.allUsers = data.content
@@ -82,6 +80,9 @@ export class EditProjectModalComponent implements OnInit {
           description: [this.data.project?.description || ''],
           technologies: [this.data.project?.technologies || []],
           users: [selectedUsers || []],
+          architecture: [this.data.project?.architecture || ''],
+          microservices: [(this.data.project?.microservices || []).map((ms: any) => typeof ms === 'string' ? ms : ms.title)],
+
           image: [null]
         });
       },
@@ -91,6 +92,10 @@ export class EditProjectModalComponent implements OnInit {
     });
   }
   
+onMicroservicesChange(updatedList: string[]) {
+  this.projectForm.patchValue({ microservices: updatedList });
+}
+
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
@@ -98,30 +103,43 @@ export class EditProjectModalComponent implements OnInit {
 
 
 
-  onSubmit() {
-    const formValues = this.projectForm.value;
-  
-    const formData = new FormData();
-    formData.append('title', formValues.title);
-    formData.append('description', formValues.description || '');
-    formData.append('technologies', JSON.stringify(formValues.technologies || []));
-  
-    const userIds = (formValues.users || []).map((user: any) => user.id);
-    formData.append('users', JSON.stringify(userIds));
-  
-    if (this.selectedFile) {
-      formData.append('image', this.selectedFile);
-    }
-  
-    this.projectService.updateProject(this.data.project.id, formData).subscribe({
-      next: () => {
-        this.dialogRef.close(true); 
-      },
-      error: (err) => {
-        console.error('An error occurred while updating the project. Please try again.', err);
-      }
-    });
+ onSubmit() {
+  const formValues = this.projectForm.value;
+  const formData = new FormData();
+
+  // Champs de base
+  formData.append('title', formValues.title || '');
+  formData.append('description', formValues.description || '');
+  formData.append('technologies', JSON.stringify(formValues.technologies || []));
+  formData.append('architecture', formValues.architecture);
+
+  // Utilisateurs assignés
+  const userIds = (formValues.users || []).map((user: any) => user.id);
+  formData.append('users', JSON.stringify(userIds));
+
+  // Image si sélectionnée
+  if (this.selectedFile) {
+    formData.append('image', this.selectedFile);
   }
+
+  // Microservices (si architecture == MICROSERVICES)
+  if (formValues.architecture === 'MICROSERVICES') {
+    const microserviceTitles = formValues.microservices || [];
+    const microservicesArray = microserviceTitles.map((title: string) => ({ title }));
+    formData.append('microservices', JSON.stringify(microservicesArray));
+  }
+
+  // Appel API
+  this.projectService.updateProject(this.data.project.id, formData).subscribe({
+    next: () => {
+      this.dialogRef.close(true);
+    },
+    error: (err) => {
+      console.error('Erreur lors de la mise à jour du projet :', err);
+    }
+  });
+}
+
 
   displayWith = (user: any) => user?.name || '';
 

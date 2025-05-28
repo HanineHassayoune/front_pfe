@@ -72,13 +72,6 @@ submit(): void {
   formData.append('microservices', JSON.stringify(microservicesArray));
 }
 
-  /* if (this.projectForm.value.architecture === 'MICROSERVICES') {
-    formData.append('microservices', JSON.stringify(this.projectForm.value.microservices || []));
-  } */
- /*  if (this.projectForm.value.architecture === 'microservices') {
-    formData.append('microservices', JSON.stringify(this.projectForm.value.microservices || []));
-  } */
-
   if (this.selectedImageFile) {
     formData.append('image', this.selectedImageFile);
   }

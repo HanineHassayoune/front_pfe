@@ -5,8 +5,14 @@
     🏷️ Related Tickets
   </h2>
 
-  <!-- Carousel wrapper -->
-  <div class="w-full max-w-6xl">
+  <!-- Message "Pas de related ticket" si tickets vide -->
+  <div *ngIf="tickets.length === 0" class="col-span-full text-center mt-10"> 
+    <img src="assets/images/no-projects.png" alt="No tickets" class="mx-auto mb-4 w-48 h-48 opacity-70" />
+    <h2 class="text-xl font-semibold text-gray-700">No related ticket</h2>
+  </div>
+
+  <!-- Carousel wrapper uniquement si au moins un ticket -->
+  <div *ngIf="tickets.length > 0" class="w-full max-w-6xl">
 
     <!-- Carousel viewport -->
     <div class="overflow-hidden">
@@ -15,11 +21,10 @@
         [style.transform]="'translateX(-' + currentIndex * itemWidth + 'px)'"
       >
         <div
-  *ngFor="let ticket of tickets"
-  (click)="openTicketDetails(ticket)"
-  class="cursor-pointer min-w-[300px] max-w-[300px] flex-shrink-0 mx-2 bg-white p-4 rounded-2xl shadow-md border border-gray-200 hover:shadow-lg hover:bg-blue-50 transition"
->
-
+          *ngFor="let ticket of tickets"
+          (click)="openTicketDetails(ticket)"
+          class="cursor-pointer min-w-[300px] max-w-[300px] flex-shrink-0 mx-2 bg-white p-4 rounded-2xl shadow-md border border-gray-200 hover:shadow-lg hover:bg-blue-50 transition"
+        >
           <h3 class="font-bold text-lg text-gray-800 mb-2">📌{{ ticket.title }}</h3>
           <p class="text-sm text-gray-500 mb-1">
             {{ ticket.category }} • {{ ticket.priority }}

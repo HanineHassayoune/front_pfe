@@ -1,4 +1,4 @@
-<div class="p-6 w-full max-w-2xl">
+<div class="p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
   <h2 class="text-2xl font-semibold mb-4 flex items-center gap-2">
     <mat-icon>edit</mat-icon>
     Edit Project
@@ -13,6 +13,35 @@
       <input type="text" formControlName="title" class="w-full p-3 border rounded-md" />
     </div>
 
+     <!-- Architecture -->
+     <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">category</mat-icon> Architecture
+      </label>
+      <div class="flex gap-4 items-center mt-2">
+        <label class="flex items-center gap-2">
+          <input type="radio" value="MONOLITHIC" formControlName="architecture" /> Monolithique
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="radio" value="MICROSERVICES" formControlName="architecture" /> Microservices
+        </label>
+      </div>
+    </div> 
+
+    <!-- Microservices Description - only shown if "microservices" selected -->
+  <div *ngIf="projectForm.get('architecture')?.value === 'MICROSERVICES'">
+      <label class="text-sm font-medium text-gray-700 flex items-center mt-4">
+        <mat-icon class="mr-2">scatter_plot</mat-icon> Microservices
+      </label>
+      <app-chips
+        [label]="'Microservices'"
+        [placeholder]="'Describe microservices...'"
+        [allItems]="data.allMicroservices || []"
+        [selectedItems]="projectForm.get('microservices')?.value"
+       (selectedItemsChange)="onMicroservicesChange($event)"
+>
+      </app-chips>
+    </div> 
     <!-- Description -->
     <div>
       <label class="text-sm font-medium text-gray-700 flex items-center">
