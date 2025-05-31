@@ -147,7 +147,7 @@ get areAllColumnsEmpty(): boolean {
       this.alertVisible = true;
       setTimeout(() => {
         this.alertVisible = false;
-      }, 3000);
+      }, 4000);
       return;
     }
 

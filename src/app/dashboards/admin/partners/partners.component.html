@@ -35,7 +35,7 @@
           <input
             type="text"
             class="px-9 py-1.5 border h-11 rounded-lg focus:ring focus:ring-blue-300 w-full text-sm"
-            placeholder="Search..."
+            placeholder="Search by name..."
             [(ngModel)]="filterName"
             (ngModelChange)="loadUsers()" 
           />
@@ -53,6 +53,14 @@
           (actionTriggered)="onTableAction($event)">
         </app-table-pagination>
       </div>
+
+
+      <!-- No Users Found -->
+<div *ngIf="rows.length === 0 && !isLoading" class="col-span-full text-center mt-10">
+  <img src="assets/images/no-projects.png" alt="No users" class="mx-auto mb-4 w-48 h-48 opacity-70" />
+  <h2 class="text-xl font-semibold text-gray-700">No partners found</h2>
+  <p class="text-gray-500 mt-2">No partners have joined yet.</p>
+</div>
 
       <!-- Alert -->
       <app-alert

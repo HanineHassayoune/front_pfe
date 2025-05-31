@@ -7,6 +7,7 @@ import { ProjectService } from '../../../services/project.service';
 import { TablePaginationComponent } from '../../../components/table-pagination/table-pagination.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UserProfileDialogComponent } from '../user-profile-dialog/user-profile-dialog.component';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-team',
@@ -31,7 +32,8 @@ export class TeamComponent {
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private userService: UserService
   ) {
     this.projectId = Number(this.route.snapshot.paramMap.get('id'));
   }
@@ -52,29 +54,36 @@ export class TeamComponent {
     );
   }
 
-  handleAction(event: { id: number; action: string; user?: any }) {
-    if (event.action === 'view' && event.user) {
-      this.viewProfile(event.user); 
-    }
+ handleAction(event: { id: number; action: string; user?: any }) {
+  if (event.action === 'view' && event.user) {
+    const userId = event.user.id;
+
+    this.userService.getUserProfileById(userId).subscribe({
+      next: (profile) => {
+        this.viewProfile(profile);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération du profil utilisateur', err);
+      }
+    });
   }
+}
+
   
 
-  viewProfile(user: any) {
-    this.dialog.open(UserProfileDialogComponent, {
-      data: {
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        projectName: this.project?.title,
-        projectTech: this.project?.technologies?.join(', ') || 'N/A',
-        image: user.profileImage || 'assets/images/default-user.jpg'
-      },width: '600px',  
-      height: 'auto',  
-      panelClass: 'custom-dialog'
-     
-      
-    });
-    console.log(user);
-  }
-  
+viewProfile(profile: any) {
+  this.dialog.open(UserProfileDialogComponent, {
+    data: {
+      name: profile.name,
+      email: profile.email,
+      role: profile.role,
+      projects: profile.projects, 
+      image: profile.profileImage || 'assets/images/default-user.jpg'
+    },
+    width: '600px',
+    height: 'auto',
+    panelClass: 'custom-dialog'
+  });
+}
+
 }

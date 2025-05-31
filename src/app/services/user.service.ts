@@ -89,5 +89,9 @@ getUserById(id: number): Observable<any> {
   return this.http.post<{ isValid: boolean }>(`${this.usersUrl}/check-current-password`, { currentPassword });
 }
  */
-  
+ 
+getUserProfileById(id: number): Observable<any> {
+  return this.http.get(`${this.usersUrl}/${id}/profile`);
+}
+
 }

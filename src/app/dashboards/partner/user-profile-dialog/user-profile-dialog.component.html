@@ -19,14 +19,21 @@
         
         <span><strong>🧑‍💼 Role:</strong> {{ data.role }}</span>
       </div>
-      <div class="flex items-center gap-3">
-       
-        <span><strong>📁 Project:</strong> {{ data.projectName }}</span>
-      </div>
-      <div class="flex items-center gap-3">
-        
-        <span><strong>💻 Technologies:</strong> {{ data.projectTech }}</span>
-      </div>
+     <div *ngIf="data.projects?.length; else noProjects" class="space-y-3">
+  <div *ngFor="let project of data.projects" class="border-t pt-3">
+    <div class="flex items-center gap-3">
+      <span><strong>📁 Project:</strong> {{ project.title }}</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span><strong>💻 Technologies:</strong> {{ project.technologies?.join(', ') || 'Aucune' }}</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #noProjects>
+  <p class="text-gray-500">Aucun projet assigné.</p>
+</ng-template>
+
     </div>
   </div>
   

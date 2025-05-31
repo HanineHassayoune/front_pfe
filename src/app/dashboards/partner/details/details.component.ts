@@ -15,17 +15,18 @@ import { AlertComponent } from '../../../components/alert/alert.component';
   styleUrl: './details.component.css'
 })
 export class DetailsComponent implements OnInit {
-  @Input() status: string = 'In Progress';
-  @Input() priority: string = 'High';
+  @Input() status: string = '';
+  @Input() priority: string = '';
   @Input() tasks: string[] = [];
   @Input() imageUrl: string = '';
-  @Input() category: string = 'Bug';
+  @Input() category: string = '';
   @Input() description: string = '';
   @Input() date: string = ''; 
   @Input() level: string = ''; 
   @Input() loggerName: string = ''; 
   @Input() projectId?: number;
   @Input() ticket: any;
+  @Input() projectName: string = '';
 
   role: string | null = null;
   ticketId!: number;
@@ -93,6 +94,7 @@ export class DetailsComponent implements OnInit {
       next: (ticketData: any) => {
         this.ticket = ticketData;
         this.loadAssignedUser(ticketData.assignedUserId);
+         this.projectName = ticketData.projectName
       },
       error: (err) => {
         console.error('Erreur lors du chargement du ticket :', err);
