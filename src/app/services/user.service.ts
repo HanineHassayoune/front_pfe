@@ -10,6 +10,11 @@ interface User {
   confirmationPassword?: string;
   profileImage?: File;
 }
+interface UserUpdateRequest {
+  name?: string;
+  role?: string; 
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -92,6 +97,9 @@ getUserById(id: number): Observable<any> {
  
 getUserProfileById(id: number): Observable<any> {
   return this.http.get(`${this.usersUrl}/${id}/profile`);
+}
+updateUserRoleAndName(id: number, updateRequest: { name?: string; role?: string }): Observable<any> {
+  return this.http.patch(`${this.usersUrl}/update-role-name/${id}`, updateRequest);
 }
 
 }

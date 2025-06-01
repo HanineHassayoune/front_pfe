@@ -1,0 +1,63 @@
+<div class="p-6 w-full">
+  <h2 class="text-2xl font-medium mb-4 flex items-center gap-2">
+    <mat-icon>edit</mat-icon> Update User
+  </h2>
+
+  <form [formGroup]="userForm" class="space-y-4" (ngSubmit)="submit()">
+    <!-- Name -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">badge</mat-icon>Name
+      </label>
+      <input type="text" formControlName="name" class="w-full p-3 border rounded-md" />
+      <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="text-red-500 text-sm mt-1">
+        Name is required.
+      </div>
+    </div>
+
+    <!-- Email (disabled) -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">mail</mat-icon>Email
+      </label>
+     <input type="email" formControlName="email" class="w-full p-3 border rounded-md" [disabled]="true" />
+
+    </div>
+
+    <!-- Role -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">work</mat-icon>Role
+      </label>
+      <select formControlName="role" class="w-full p-3 border rounded-md">
+        <option value="" disabled>Select a role</option>
+        <option value="DEVELOPER">Developer</option>
+        <option value="TESTER">Tester</option>
+        <option value="MANAGER">Manager</option>
+      </select>
+      <div *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched" class="text-red-500 text-sm mt-1">
+        Role is required.
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 pt-4">
+      <button type="button" mat-button (click)="cancel()" class="bg-[#B82132] text-white px-4 py-2 rounded-lg hover:bg-[#D2665A]">
+        Cancel ❌
+      </button>
+      <button
+        type="submit"
+        mat-raised-button
+        [disabled]="userForm.invalid || isLoading"
+        class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba]"
+      >
+        Update ✏️
+      </button>
+    </div>
+
+    <!-- Spinner -->
+    <div *ngIf="isLoading" class="flex justify-center pt-4">
+      <mat-spinner diameter="30" color="primary"></mat-spinner>
+    </div>
+  </form>
+</div>

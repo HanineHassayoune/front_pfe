@@ -10,6 +10,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddUserDialogComponent } from '../add-user-dialog/add-user-dialog.component';
 
 import { ConfirmationDialogComponent } from '../../../components/confirmation-dialog/confirmation-dialog.component'; 
+import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -86,7 +87,7 @@ export class UsersComponent implements OnInit {
   
 
     // to activate and block users (TESTER,MANAGER,DEVELOPER)
-    onTableAction(event: { id: number; action: string }) {
+   /*  onTableAction(event: { id: number; action: string }) {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         data: { message: `Are you sure you want to ${event.action} this user?` },
         width: '450px',
@@ -98,8 +99,60 @@ export class UsersComponent implements OnInit {
           this.triggerUserAction(event.id, event.action);
         }
       });
-    }
+    } */
   
+  onTableAction(event: { id: number; action: string; user?: any }) {
+  if (event.action === 'update') {
+    this.openUpdateDialog(event.user); // À implémenter si ce n'est pas fait
+  } else {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { message: `Are you sure you want to ${event.action} this user?` },
+      width: '450px',
+      height: '200px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.triggerUserAction(event.id, event.action);
+      }
+    });
+  }
+}
+
+    
+openUpdateDialog(user: any) {
+  const dialogRef = this.dialog.open(EditUserDialogComponent, {
+    width: '500px',
+    data: user, 
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.isLoading = true;
+      this.userService.updateUserRoleAndName(user.id, result).subscribe({
+        next: () => {
+          this.alertType = 'success';
+          this.alertMessage = 'User role and name updated successfully!';
+          this.alertVisible = true;
+          this.loadUsers();
+          setTimeout(() => { this.alertVisible = false; }, 3000);
+        },
+        error: (err) => {
+          console.error('Error updating user role and name:', err);
+          this.alertType = 'danger';
+          this.alertMessage = 'Failed to update user role and name.';
+          this.alertVisible = true;
+          setTimeout(() => { this.alertVisible = false; }, 3000);
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      });
+    }
+  });
+}
+
+
     triggerUserAction(id: number, action: string) {
       this.isLoading = true;
       const successMsg = action === 'approve'

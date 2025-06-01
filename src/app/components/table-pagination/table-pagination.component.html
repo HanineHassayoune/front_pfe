@@ -16,9 +16,12 @@
           </ng-container>
       
           <ng-template #lockAction>
+            <button class="cursor-pointer mr-5" (click)="triggerAction(element, 'update')">
+            <i class="fa fa-edit text-yellow-500 text-xl hover:scale-110 transition-transform duration-200"></i>
+          </button>
             <!-- Icon for approve/block  -->
             <button class="cursor-pointer" (click)="triggerrAction(element.id, element.enabled ? 'block' : 'approve')">
-              <i class="fa text-xl"
+              <i class="fa text-xl hover:scale-110 transition-transform duration-200"
                  [ngClass]="element.enabled ? 'fa-lock-open text-green-500' : 'fa-lock text-red-500'"></i>
             </button>
           </ng-template>
