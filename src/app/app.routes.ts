@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { NavbarDashboardComponent } from './components/navbar-dashboard/navbar-dashboard.component';
 import { FooterDashboardComponent } from './components/footer-dashboard/footer-dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { AddTicketComponent } from './dashboards/tester/add-ticket/add-ticket.component';
 import { UsersComponent } from './dashboards/partner/users/users.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { RadialChartComponent } from './components/radial-chart/radial-chart.component';
@@ -21,14 +20,12 @@ import { PendingRegisterComponent } from './pending-register/pending-register.co
 import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
 import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 import { MicroserviceDetailsComponent } from './dashboards/partner/microservice-details/microservice-details.component';
-import { TicketsComponent } from './dashboards/partner/tickets/tickets.component';
 
 
 export const routes: Routes = [
    {path:'navbar',component:NavbarDashboardComponent},
     {path:'footer',component:FooterDashboardComponent},
     {path:'sidebar',component:SidebarComponent},
-    {path:'addticket',component:AddTicketComponent},
     {path:'users',component:UsersComponent},
     {path:'pieChart',component:PieChartComponent},
     {path:'radialChart',component:RadialChartComponent},
@@ -63,9 +60,10 @@ export const routes: Routes = [
       canActivate: [authGuard], 
       data: { role: 'TESTER' },
       children: [
-        {path:'addticket',component:AddTicketComponent},
-        {path:'notifications',component:NotificationsComponent},
         { path: 'profil', component: ProfilComponent } ,
+        { path: 'projects', component: ProjectsComponent },
+        { path: 'projects/:id', component: ProjectDetailsComponent },
+        { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
       ]
     },
     { 

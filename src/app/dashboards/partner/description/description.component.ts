@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute} from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-description',
@@ -17,16 +18,18 @@ export class DescriptionComponent implements OnInit {
 
     projectId: number;
     project: any;
-  
+    role: string | null = null;
     constructor(
       private route: ActivatedRoute,
       private projectService: ProjectService,
-      private dialog: MatDialog
+      private dialog: MatDialog,
+      private storageService: StorageService,
     ) {
       this.projectId = Number(this.route.snapshot.paramMap.get('id'));
     }
   
     ngOnInit(): void {
+      this.role = this.storageService.getRole()?.toUpperCase() || null;
       this.fetchProjectDetails();
     }
   
