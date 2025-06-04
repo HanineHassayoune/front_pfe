@@ -5,12 +5,13 @@ import { UserService } from '../../services/user.service';
 import { NavbarDashboardComponent } from '../../components/navbar-dashboard/navbar-dashboard.component';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { BreadcrumbComponent } from 'xng-breadcrumb';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [NavbarDashboardComponent, SidebarComponent, RouterModule,BreadcrumbComponent],
+  imports: [NavbarDashboardComponent, SidebarComponent, RouterModule,BreadcrumbComponent,CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -59,7 +60,7 @@ export class DashboardComponent implements OnInit {
           ),
           makeLink(
             'Logout',
-            '/admin/logout',
+            '/logout',
             'M16 17L21 12L16 7V10H9V14H16V17ZM5 19H11V21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H11V5H5V19Z',
             () => this.logout()
           )
@@ -79,7 +80,7 @@ export class DashboardComponent implements OnInit {
           ),
            makeLink(
             'Logout',
-            '/tester/logout',
+            '/logout',
             'M16 17L21 12L16 7V10H9V14H16V17ZM5 19H11V21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H11V5H5V19Z',
             () => this.logout()
           )
@@ -99,7 +100,7 @@ export class DashboardComponent implements OnInit {
           ),
           makeLink(
             'Logout',
-            '/developer/logout',
+            '/logout',
             'M16 17L21 12L16 7V10H9V14H16V17ZM5 19H11V21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H11V5H5V19Z',
             () => this.logout()
           )
@@ -125,7 +126,7 @@ export class DashboardComponent implements OnInit {
           ),
           makeLink(
             'Logout',
-            '/partner/logout',
+            '/logout',
             'M16 17L21 12L16 7V10H9V14H16V17ZM5 19H11V21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H11V5H5V19Z',
             () => this.logout()
           )
@@ -145,7 +146,7 @@ export class DashboardComponent implements OnInit {
           ),
           makeLink(
             'Logout',
-            '/manager/logout',
+            '/logout',
             'M16 17L21 12L16 7V10H9V14H16V17ZM5 19H11V21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H11V5H5V19Z',
             () => this.logout()
           )

@@ -9,5 +9,9 @@ export const environment = {
     ticketUrl : 'http://localhost:8222/api/v1/tickets',
     commentUrl : 'http://localhost:8222/api/v1/comments',
     solutionUrl : 'http://localhost:8222/api/v1/solutions',
+    WS_BASE_URL: 'http://localhost:8070/ws-notification' 
+    
+
+
   };
   

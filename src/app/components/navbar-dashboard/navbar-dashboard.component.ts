@@ -1,5 +1,8 @@
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { WebSocketService } from '../../services/websocket.service';
+import { AppNotification } from '../../models/app-notification.model'; // adapte le chemin si besoin
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-navbar-dashboard',
@@ -8,22 +11,33 @@ import { Component, Input } from '@angular/core';
   templateUrl: './navbar-dashboard.component.html',
   styleUrl: './navbar-dashboard.component.css'
 })
-export class NavbarDashboardComponent {
-
-  /* @Input() title?: string; */
+export class NavbarDashboardComponent implements OnInit, OnDestroy {
   @Input() imageUrl?: string;
   @Input() userName?: string;
   @Input() userAvatarUrl?: string;
 
   showNotifications = false;
-notifications: string[] = [
-  "Nouveau message reçu",
-  "Erreur dans le système de logs",
-  "Nouvelle tâche assignée"
-];
+  notifications: AppNotification[] = [];
 
-toggleNotifications() {
-  this.showNotifications = !this.showNotifications;
-}
+  private notificationSub?: Subscription;
 
+  constructor(private webSocketService: WebSocketService) {}
+
+  ngOnInit() {
+    this.notificationSub = this.webSocketService.onNotification().subscribe((notif: AppNotification) => {
+      console.log("📥 Notification reçue dans navbar:", notif);
+      this.notifications.unshift(notif);
+    });
+  }
+
+
+
+
+  ngOnDestroy() {
+    this.notificationSub?.unsubscribe();
+  }
+
+  toggleNotifications() {
+    this.showNotifications = !this.showNotifications;
+  }
 }
