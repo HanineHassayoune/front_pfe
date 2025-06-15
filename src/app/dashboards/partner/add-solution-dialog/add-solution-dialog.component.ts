@@ -61,16 +61,17 @@ export class AddSolutionDialogComponent {
       this.alertType = 'success';
       this.alertMessage = 'Solution added successfully.';
       this.alertVisible = true;
-
-      setTimeout(() => {
-        this.dialogRef.close(true);
-      }, 2000);
+      this.solutionService.notifySolutionUpdated();
+      this.dialogRef.close(true);
+  
     },
     error: (err) => {
       this.isLoading = false;
       this.alertType = 'danger';
       this.alertMessage = err.error?.message || 'Failed to add solution.';
       this.alertVisible = true;
+
+      
 
       setTimeout(() => {
         this.alertVisible = false;

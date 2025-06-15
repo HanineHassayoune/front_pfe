@@ -55,12 +55,26 @@ export class LoginComponent {
           }
         }, 2000);
       },
-      error: (error) => {
-        this.alertType = 'danger';
-        this.alertMessage = error.error?.message || 'Login error. Please check your credentials.';
-        this.alertVisible = true;
-        setTimeout(() => { this.alertVisible = false; }, 2000);
-      }
+     error: (error) => {
+  const message = error.error?.message || '';
+
+  if (message.includes('not yet been approved')) {
+    this.alertType = 'danger';
+    this.alertMessage = "Your account has not been approved by the admin.";
+  } else if (message.includes('Invalid credentials')) {
+    this.alertType = 'danger';
+    this.alertMessage = "Invalid email or password.";
+  } else {
+    this.alertType = 'danger';
+    this.alertMessage = 'Login error. Please try again.';
+  }
+
+  this.alertVisible = true;
+  setTimeout(() => {
+    this.alertVisible = false;
+  }, 3000);
+}
+
     });
   }
 

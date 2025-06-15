@@ -22,7 +22,7 @@ replyText: string = '';
   newComment = '';
   @Input() comments: Comment[] = []; 
   constructor(private commentsService: CommentsService,private userService: UserService) {}
-  reactions: string[] = ['👍', '❤️', '😄', '😢'];
+  reactions: string[] = ['👍', '❤️', '😄', '😢', '🎉', '😡', '👏', '🤔', '🙌', '🔥','👀', '💯'];
   selectedReaction: string | null = null;
   ngOnInit(): void {
      this.loadComments();

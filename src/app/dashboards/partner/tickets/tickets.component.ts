@@ -142,7 +142,7 @@ get areAllColumnsEmpty(): boolean {
     );
 
     if (!isAllowed) {
-      this.alertType = 'danger';
+      this.alertType = 'warning';
       this.alertMessage = "You don't have permission to move this ticket to the selected column.";
       this.alertVisible = true;
       setTimeout(() => {

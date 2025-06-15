@@ -57,11 +57,22 @@ export class RegisterComponent {
         }, 2000); 
       },
       error: (error) => {
+      const message = error.error?.message || '';
+
+      if (message.includes("already exists")) {
         this.alertType = 'danger';
-        this.alertMessage = error.error?.message || 'Register error.';
-        this.alertVisible = true;
-        setTimeout(() => { this.alertVisible = false; }, 2000);
+        this.alertMessage = "An account with this email already exists.";
+      } else {
+        this.alertType = 'danger';
+        this.alertMessage = "Registration failed. Please try again.";
       }
+
+      this.alertVisible = true;
+      setTimeout(() => {
+        this.alertVisible = false;
+      }, 3000);
+    }
+
     });
   }
   

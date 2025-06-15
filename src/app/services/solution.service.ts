@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environment/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface Solution {
   id?: number;
@@ -17,6 +17,8 @@ export interface Solution {
   providedIn: 'root'
 })
 export class SolutionService {
+  private solutionUpdatedSubject = new BehaviorSubject<boolean>(false);
+  solutionUpdated$ = this.solutionUpdatedSubject.asObservable();
   private solutionUrl = environment.solutionUrl;
 
   constructor(private http: HttpClient) {}
@@ -34,5 +36,8 @@ export class SolutionService {
   return this.http.get<Solution>(`${this.solutionUrl}/by-ticket/${ticketId}`);
 }
 
+ notifySolutionUpdated(): void {
+    this.solutionUpdatedSubject.next(true);
+  }
 
 }

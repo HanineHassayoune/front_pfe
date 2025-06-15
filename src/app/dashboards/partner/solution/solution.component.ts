@@ -37,9 +37,22 @@ export class SolutionComponent implements OnInit {
     private datePipe: DatePipe // Inject DatePipe
   ) {}
 
-ngOnInit(): void {
+
+  ngOnInit(): void {
   this.role = this.storageService.getRole()?.toUpperCase() || null;
 
+  // ⬅️ Chargement initial
+  this.loadSolution();
+
+  // 🔁 Réagir aux mises à jour via BehaviorSubject
+  this.solutionService.solutionUpdated$.subscribe((updated) => {
+    if (updated) {
+      this.loadSolution();
+    }
+  });
+}
+
+private loadSolution(): void {
   if (this.ticketId) {
     this.solutionService.getSolutionByTicketId(this.ticketId).subscribe({
       next: (solution) => {
@@ -49,7 +62,6 @@ ngOnInit(): void {
           this.code = solution.code || '';
           this.datePosted = this.datePipe.transform(solution.datePosted, 'MMMM d, yyyy') || '';
 
-          // ✅ Récupérer l'auteur UNIQUEMENT si la solution existe
           if (this.userId) {
             this.userService.getUserById(this.userId).subscribe({
               next: (user) => {
@@ -66,6 +78,7 @@ ngOnInit(): void {
 }
 
 
+
   // Method to open the add solution dialog
   onAddSolution(): void {
     this.dialog.open(AddSolutionDialogComponent, {
@@ -75,5 +88,6 @@ ngOnInit(): void {
         userId: this.userId
       }
     });
+   
   }
 }
