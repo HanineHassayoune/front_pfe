@@ -4,10 +4,11 @@ import { AlertComponent } from '../alert/alert.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { RoleBadgeComponent } from '../role-badge/role-badge.component';
 @Component({
   selector: 'app-profil',
   standalone: true,
-  imports: [AlertComponent, CommonModule, FormsModule],
+  imports: [AlertComponent, CommonModule, FormsModule,RoleBadgeComponent],
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.css']
 })

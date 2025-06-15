@@ -29,7 +29,9 @@
           <div class="text-center sm:text-left mt-4 sm:mt-0">
             <h2 class="text-2xl font-bold text-gray-800">{{ user.name }}</h2>
             <p class="text-gray-500">{{ user.email }}</p>
-            <p class="text-gray-500 capitalize">{{ user.role }}</p>
+            <app-role-badge [role]="user.role" ></app-role-badge>
+
+            
           </div>
         </div>
 

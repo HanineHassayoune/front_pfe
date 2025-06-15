@@ -38,7 +38,7 @@ export class SidebarComponent {
     this.userService.user$.subscribe(user => {
       if (user) {
         this.user = user;
-        this.userAvatarUrl = user.profileImage; // adapte le champ selon ton backend
+        this.userAvatarUrl = user.profileImage || 'assets/images/default-user.jpg';
         this.userName = user.name;
       }
     });

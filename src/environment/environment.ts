@@ -12,6 +12,8 @@ export const environment = {
     WS_BASE_URL: 'http://localhost:8070/ws-notification' ,
     notificationUrl:'http://localhost:8222/api/v1/notifications' ,
     statisticsUrl : 'http://localhost:8222/api/v1/statistics',
+    imageUrl:'http://localhost:8060/api/uploads/images/',
+    
 
   };
   

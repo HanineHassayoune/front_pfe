@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChipsComponent } from './chips.component';
+import { RoleBadgeComponent } from './role-badge.component';
 
-describe('ChipsComponent', () => {
-  let component: ChipsComponent<string>;
-  let fixture: ComponentFixture<ChipsComponent<string>>;
+describe('RoleBadgeComponent', () => {
+  let component: RoleBadgeComponent;
+  let fixture: ComponentFixture<RoleBadgeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChipsComponent]
+      imports: [RoleBadgeComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ChipsComponent<string>);
+    fixture = TestBed.createComponent(RoleBadgeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

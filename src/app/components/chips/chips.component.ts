@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
@@ -13,16 +13,16 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 @Component({
   selector: 'app-chips',
   standalone: true,
-  templateUrl: './chips.component.html',
-  styleUrls: ['./chips.component.css'],
-  imports: [
-    CommonModule,
+  imports: [ CommonModule,
     MatFormFieldModule,
     MatChipsModule,
     MatIconModule,
     MatAutocompleteModule,
-    ReactiveFormsModule,
-  ],
+    ReactiveFormsModule,],
+  templateUrl: './chips.component.html',
+  styleUrl: './chips.component.css',
+//encapsulation: ViewEncapsulation.None
+
 })
 export class ChipsComponent<T> implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -102,6 +102,7 @@ export class ChipsComponent<T> implements OnInit {
       this.selectedItems.splice(index, 1);
       this.emitChanges(item, 'remove');
       this.announcer.announce(`Removed ${this.displayWith(item)}`);
+
     }
   }
 

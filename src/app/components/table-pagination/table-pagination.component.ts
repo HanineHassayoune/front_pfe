@@ -4,11 +4,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { RoleBadgeComponent } from '../role-badge/role-badge.component';
 
 @Component({
   selector: 'app-table-pagination',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule,RoleBadgeComponent ],
   templateUrl: './table-pagination.component.html',
   styleUrls: ['./table-pagination.component.css']
 })

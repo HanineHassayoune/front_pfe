@@ -17,7 +17,11 @@
     <div class="mt-6 space-y-4 text-gray-700 text-base">
       <div class="flex items-center gap-3">
         
-        <span><strong>🧑‍💼 Role:</strong> {{ data.role }}</span>
+      <span>
+        <strong>🧑‍💼 Role:</strong>
+        <app-role-badge [role]="data.role" class="ml-2"></app-role-badge>
+      </span>
+
       </div>
      <div *ngIf="data.projects?.length; else noProjects" class="space-y-3">
   <div *ngFor="let project of data.projects" class="border-t pt-3">

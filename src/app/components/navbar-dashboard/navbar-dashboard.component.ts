@@ -36,7 +36,7 @@ export class NavbarDashboardComponent implements OnInit, OnDestroy {
     this.userSub = this.userService.user$.subscribe(user => {
       if (user) {
         this.user = user;
-        this.userAvatarUrl = user.profileImage; // adapte selon ton backend
+       this.userAvatarUrl = user.profileImage || 'assets/images/default-user.jpg';
         this.userName = user.name;
         this.userEmail = user.email;
       }

@@ -10,7 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MatIconModule, MatProgressSpinnerModule],
   templateUrl: './edit-user-dialog.component.html',
-  styleUrls: ['./edit-user-dialog.component.css']  // corrigé ici (styleUrls)
+  styleUrls: ['./edit-user-dialog.component.css']  
 })
 export class EditUserDialogComponent {
   userForm: FormGroup;

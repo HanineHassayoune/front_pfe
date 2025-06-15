@@ -1,31 +1,20 @@
+  
 <body class="bg-gray-100 min-h-screen">
-  <div class="flex overflow-hidden pt-5">
-    
-    <div *ngIf="isLoading" class="fixed inset-0 bg-black/40 bg-opacity-10 flex items-center justify-center z-50">
-      <div class="flex flex-col items-center gap-3">
-        <mat-progress-spinner
-          mode="indeterminate"
-          class="text-[#205781]"
-          diameter="50">
-        </mat-progress-spinner>
-        <p class="text-white text-lg font-medium">Loading...</p>
-      </div>
-    </div>
-    
-    
-    <div id="main-content" class="h-full w-full relative overflow-y-auto lg:ml-64">
+  <div class="flex overflow-hidden bg-gray-100 pt-1">
+    <div id="main-content" class="h-full w-full bg-gray-100 relative overflow-y-auto lg:ml-64" >
+      <div class=" p-6"><!-- mx-auto container-->
     
       <!-- Conteneur titre + search bar -->
- <div class="flex justify-between items-center p-4">
-  <h1 class="text-3xl font-bold text-[#205781] ">👥 List of users</h1>
+ <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+  <h1 class="text-2xl sm:text-3xl font-bold text-[#205781]">👥 List of users</h1>
 
-  <div class="flex items-center gap-3">
+  <div class="flex flex-col sm:flex-row sm:items-center gap-4 w-full sm:w-auto">
     <!-- Search input -->
-    <div class="relative flex items-center w-64">
+    <div class="relative flex items-center w-full sm:w-auto">
       <svg xmlns="http://www.w3.org/2000/svg" 
           viewBox="0 0 24 24" 
           fill="currentColor" 
-          class="w-5 h-5 absolute left-3 text-gray-500">
+           class="w-5 h-5 sm:w-6 sm:h-6 absolute left-3 text-gray-500">
         <path fill-rule="evenodd" 
               d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 
                  6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 
@@ -37,7 +26,7 @@
       </svg>
       <input
         type="text"
-        class="px-9 py-1.5 border h-11 rounded-lg focus:ring focus:ring-blue-300 w-full text-sm"
+        class="px-10 py-2 border rounded-lg focus:ring focus:ring-blue-300 w-full"
         placeholder="Search by name..."
         [(ngModel)]="filterName"
         (ngModelChange)="loadUsers()" 
@@ -47,7 +36,7 @@
     <!-- Add User Button -->
     <button 
       id="open-modal-btn" 
-      class="bg-[#205781] text-white px-4 py-2.5 rounded-lg hover:bg-[#799eba] focus:outline-none cursor-pointer"
+      class="  w-full sm:w-auto  bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba] cursor-pointer"
       (click)="openModal()">
       + Add user
     </button>
@@ -56,9 +45,9 @@
 
 
       <!-- Table Pagination -->
-      <div class="flex">
+      <div class="flex"><!-- mx-auto p-2  -->
         <app-table-pagination
-          class="w-full mx-auto p-2 "
+          class="w-full "
           [data]="rows"
           [columns]="columns"
           [totalRows]="totalRows"
@@ -83,6 +72,7 @@
       </app-alert>
 
     </div>
+  </div>
   </div>
 </body>
 

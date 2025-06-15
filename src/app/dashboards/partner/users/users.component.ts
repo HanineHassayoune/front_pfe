@@ -11,6 +11,10 @@ import { AddUserDialogComponent } from '../add-user-dialog/add-user-dialog.compo
 
 import { ConfirmationDialogComponent } from '../../../components/confirmation-dialog/confirmation-dialog.component'; 
 import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.component';
+import { UserProfileDialogComponent } from '../user-profile-dialog/user-profile-dialog.component';
+import { environment } from '../../../../environment/environment';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-users',
@@ -18,7 +22,7 @@ import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.co
   imports: [CommonModule,PieChartComponent,
     ReactiveFormsModule,AlertComponent,MatProgressSpinnerModule,
     FormsModule,TablePaginationComponent,MatDialogModule,
-    AddUserDialogComponent
+    AddUserDialogComponent,UserProfileDialogComponent,MatTableModule, MatButtonModule, TablePaginationComponent,MatDialogModule
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
@@ -78,6 +82,7 @@ export class UsersComponent implements OnInit {
       next: (res) => {
         this.rows = res.content;
         this.totalRows = res.totalElements;
+        action: 'view'
       },
       error: (err) => {
         console.error('Error loading users.', err);
@@ -86,24 +91,25 @@ export class UsersComponent implements OnInit {
   }
   
 
-    // to activate and block users (TESTER,MANAGER,DEVELOPER)
-   /*  onTableAction(event: { id: number; action: string }) {
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        data: { message: `Are you sure you want to ${event.action} this user?` },
-        width: '450px',
-        height: '200px'
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.triggerUserAction(event.id, event.action);
-        }
-      });
-    } */
-  
   onTableAction(event: { id: number; action: string; user?: any }) {
-  if (event.action === 'update') {
-    this.openUpdateDialog(event.user); // À implémenter si ce n'est pas fait
+   if (event.action === 'view' && event.user) {
+    const userId = event.user.id;
+
+    this.userService.getUserProfileById(userId).subscribe({
+      next: (profile) => {
+        profile.profileImage = profile.profileImage
+          ? environment.imageUrl + profile.profileImage
+          : 'assets/images/default-user.jpg';
+          
+        this.viewProfile(profile);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération du profil utilisateur', err);
+      }
+    });
+  }
+  else if (event.action === 'update') {
+    this.openUpdateDialog(event.user); 
   } else {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { message: `Are you sure you want to ${event.action} this user?` },
@@ -227,5 +233,24 @@ openUpdateDialog(user: any) {
       }
     });
   }
+  
+
+  
+
+viewProfile(profile: any) {
+  this.dialog.open(UserProfileDialogComponent, {
+    data: {
+      name: profile.name,
+      email: profile.email,
+      role: profile.role,
+      projects: profile.projects, 
+      image: profile.profileImage || 'assets/images/default-user.jpg'
+    },
+    width: '600px',
+    height: 'auto',
+    panelClass: 'custom-dialog'
+  });
+}
+
   
 }

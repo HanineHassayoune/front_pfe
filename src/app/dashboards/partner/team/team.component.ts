@@ -8,6 +8,7 @@ import { TablePaginationComponent } from '../../../components/table-pagination/t
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UserProfileDialogComponent } from '../user-profile-dialog/user-profile-dialog.component';
 import { UserService } from '../../../services/user.service';
+import { environment } from '../../../../environment/environment';
 
 @Component({
   selector: 'app-team',
@@ -39,14 +40,18 @@ export class TeamComponent {
   }
 
   ngOnInit(): void {
+    
     this.projectService.getProjectById(this.projectId, ['DEVELOPER', 'MANAGER', 'TESTER']).subscribe(
       (data: any) => {
         this.project = data;
         this.data = (data.affectedUsers || []).map((member: any) => ({
           ...member,
+          profileImage: member.profileImage ? environment.imageUrl + member.profileImage : 'assets/images/default-user.jpg',
           action: 'view'
+        
         }));
         this.totalRows = this.data.length;
+        
       },
       (error: any) => {
         console.error('Erreur lors du chargement du projet :', error);
@@ -60,6 +65,9 @@ export class TeamComponent {
 
     this.userService.getUserProfileById(userId).subscribe({
       next: (profile) => {
+        profile.profileImage = profile.profileImage
+          ? environment.imageUrl + profile.profileImage
+          : 'assets/images/default-user.jpg';
         this.viewProfile(profile);
       },
       error: (err) => {

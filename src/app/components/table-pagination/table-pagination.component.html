@@ -15,20 +15,27 @@
             </button>
           </ng-container>
       
-          <ng-template #lockAction>
+ <ng-template #lockAction>
+      <div class="flex items-center justify-start gap-3 flex-wrap">
         <button
           *ngIf="userRole !== 'ADMIN'"
-          class="cursor-pointer mr-5"
+          class="cursor-pointer"
           (click)="triggerAction(element, 'update')">
           <i class="fa fa-edit text-yellow-500 text-xl hover:scale-110 transition-transform duration-200"></i>
         </button>
 
-            <!-- Icon for approve/block  -->
-            <button class="cursor-pointer" (click)="triggerrAction(element.id, element.enabled ? 'block' : 'approve')">
-              <i class="fa text-xl hover:scale-110 transition-transform duration-200"
-                 [ngClass]="element.enabled ? 'fa-lock-open text-green-500' : 'fa-lock text-red-500'"></i>
-            </button>
-          </ng-template>
+        <!-- Approve/Block Icon -->
+        <button class="cursor-pointer" (click)="triggerrAction(element.id, element.enabled ? 'block' : 'approve')">
+          <i class="fa text-xl hover:scale-110 transition-transform duration-200"
+             [ngClass]="element.enabled ? 'fa-lock-open text-green-500' : 'fa-lock text-red-500'"></i>
+        </button>
+
+        <!-- View Icon -->
+        <button class="cursor-pointer" (click)="triggerAction(element, 'view')">
+          <i class="fa fa-eye text-[#799eba] text-xl hover:scale-110 transition-transform duration-200"></i>
+        </button>
+      </div>
+    </ng-template>
       
         </ng-container>
       
@@ -41,9 +48,16 @@
             />
           </ng-container>
       
-          <ng-template #defaultCell>
-            {{ element[column.field] }}
-          </ng-template>
+         <ng-template #defaultCell>
+  <ng-container *ngIf="column.field === 'role'; else normalText">
+    <app-role-badge [role]="element[column.field]"></app-role-badge>
+  </ng-container>
+
+  <ng-template #normalText>
+    {{ element[column.field] }}
+  </ng-template>
+</ng-template>
+
         </ng-template>
       </td>
       
