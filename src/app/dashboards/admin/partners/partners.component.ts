@@ -7,6 +7,8 @@ import { TablePaginationComponent } from '../../../components/table-pagination/t
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../../components/confirmation-dialog/confirmation-dialog.component'; 
+import { StorageService } from '../../../services/storage.service';
+
 
 @Component({
   selector: 'app-partners',
@@ -18,7 +20,8 @@ import { ConfirmationDialogComponent } from '../../../components/confirmation-di
 export class PartnersComponent implements OnInit {
   constructor(
     private userService: UserService, 
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private storageService: StorageService 
   ) { }
 
   columns = [
@@ -29,6 +32,7 @@ export class PartnersComponent implements OnInit {
     { field: 'action', header: 'Action' }
   ];
 
+  userRole: string = '';
   rows: { id: number; profileImage: string; name: string; email: string; role: string; enabled: boolean }[] = [];
 
 
@@ -37,6 +41,7 @@ export class PartnersComponent implements OnInit {
   alertVisible: boolean = false;
 
   ngOnInit() {
+    this.userRole = this.storageService.getRole() || '';
     this.loadUsers();
   }
 

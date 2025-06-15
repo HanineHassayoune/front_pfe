@@ -59,7 +59,7 @@
         <!-- User Info -->
         <div *ngIf="userName || userAvatarUrl" class="flex items-center space-x-2">
           <img *ngIf="userAvatarUrl" [src]="userAvatarUrl" alt="User Avatar" class="w-8 h-8 rounded-full" />
-          <span *ngIf="userName" class="text-base font-normal text-gray-700">{{ userName }}</span>
+          <span *ngIf="userEmail" class="text-base font-normal text-gray-700">{{ userEmail }}</span>
         </div>
       </div>
     </div>

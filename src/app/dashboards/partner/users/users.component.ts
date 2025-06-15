@@ -132,15 +132,15 @@ openUpdateDialog(user: any) {
       this.userService.updateUserRoleAndName(user.id, result).subscribe({
         next: () => {
           this.alertType = 'success';
-          this.alertMessage = 'User role and name updated successfully!';
+          this.alertMessage = 'User successfully updated!';
           this.alertVisible = true;
           this.loadUsers();
           setTimeout(() => { this.alertVisible = false; }, 3000);
         },
         error: (err) => {
-          console.error('Error updating user role and name:', err);
+          console.error('Error updating user:', err);
           this.alertType = 'danger';
-          this.alertMessage = 'Failed to update user role and name.';
+          this.alertMessage = 'Failed to update user .';
           this.alertVisible = true;
           setTimeout(() => { this.alertVisible = false; }, 3000);
         },

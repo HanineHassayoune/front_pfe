@@ -41,7 +41,8 @@ export class DescriptionComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.project = result; 
+          //this.project = result; 
+          this.fetchProjectDetails();
         }
       });
     }
@@ -57,6 +58,6 @@ export class DescriptionComponent implements OnInit {
       );
     }
   
- 
+   
 
 }

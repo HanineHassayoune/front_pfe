@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import ApexCharts from 'apexcharts';
 
 @Component({
@@ -8,10 +8,22 @@ import ApexCharts from 'apexcharts';
   templateUrl: './pie-chart.component.html',
   styleUrl: './pie-chart.component.css'
 })
-export class PieChartComponent {
+export class PieChartComponent implements OnChanges {
+  @Input() categoriesData: { [category: string]: number } = {};
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['categoriesData'] && this.categoriesData) {
+      this.renderChart();
+    }
+  }
+
   getChartOptions() {
+    const labels = Object.keys(this.categoriesData);
+    const series = Object.values(this.categoriesData);
+
     return {
-      series: [52.8, 26.8, 20.4],
+      series,
+      labels,
       colors: ["#1C64F2", "#16BDCA", "#9061F9"],
       chart: {
         height: "300",
@@ -29,7 +41,6 @@ export class PieChartComponent {
           }
         },
       },
-      labels: ["Devops", "Font-end", "Back-end"],
       legend: {
         position: "bottom",
       },
@@ -37,14 +48,11 @@ export class PieChartComponent {
   }
 
   renderChart() {
-    if (document.getElementById("pie-chart") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("pie-chart"), this.getChartOptions());
+    const chartElement = document.getElementById("pie-chart");
+    if (chartElement && typeof ApexCharts !== 'undefined') {
+      chartElement.innerHTML = ""; // reset if re-render
+      const chart = new ApexCharts(chartElement, this.getChartOptions());
       chart.render();
     }
   }
-
-  ngAfterViewInit() {
-    this.renderChart();
-  }
-
 }

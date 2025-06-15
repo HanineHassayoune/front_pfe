@@ -28,7 +28,6 @@ export class EditProjectModalComponent implements OnInit {
   alertType: 'success' | 'danger' | 'warning' | 'info' = 'info';
   alertMessage = '';
   alertVisible = false;
-
   projectForm!: FormGroup;
   selectedFile: File | null = null;
   allTechnologies: string[] = [
@@ -104,6 +103,8 @@ onMicroservicesChange(updatedList: string[]) {
 
 
  onSubmit() {
+  if (!this.projectForm.valid) return;
+  this.isLoading = true;
   const formValues = this.projectForm.value;
   const formData = new FormData();
 
@@ -130,15 +131,31 @@ onMicroservicesChange(updatedList: string[]) {
   }
 
   // Appel API
-  this.projectService.updateProject(this.data.project.id, formData).subscribe({
+  /* this.projectService.updateProject(this.data.project.id, formData).subscribe({
     next: () => {
       this.dialogRef.close(true);
     },
     error: (err) => {
       console.error('Erreur lors de la mise à jour du projet :', err);
     }
+  }); */
+    this.projectService.updateProject(this.data.project.id, formData).subscribe({
+    next: (updatedProject) => {
+      this.isLoading = false; 
+      this.dialogRef.close(updatedProject); 
+    },
+    error: (err) => {
+      this.isLoading = false;
+      this.alertType = 'danger';
+      this.alertMessage = 'Project update failed!';
+      this.alertVisible = true;
+      setTimeout(() => this.alertVisible = false, 3000);
+      console.error('Update failed', err);
+    }
   });
 }
+
+ 
 
 
   displayWith = (user: any) => user?.name || '';

@@ -57,7 +57,9 @@ export class UserService {
 }
 
 getConnectedUser(): Observable<any> {
-    return this.http.get<any>(`${this.usersUrl}/me`);
+    return this.http.get<any>(`${this.usersUrl}/me`).pipe(
+      tap(user => this.userSubject.next(user)) // met à jour le BehaviorSubject
+    );
 }
 
 
@@ -79,9 +81,8 @@ updateProfile(data: {
   //return this.http.patch(`${this.usersUrl}/updateProfile`, formData);
   return this.http.patch<User>(`${this.usersUrl}/updateProfile`, formData).pipe(
     tap((updatedUser: User) => {
-      // Mettre à jour le BehaviorSubject avec les nouvelles données
-      this.userSubject.next(updatedUser);
-    })
+    this.userSubject.next(updatedUser); // ⬅️ TRIGGER
+   })
   );
 }
 

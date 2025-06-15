@@ -49,8 +49,8 @@ export class LoginComponent {
             case 'ADMIN': this.router.navigate(['/admin']); break;
             case 'TESTER': this.router.navigate(['/tester']); break;
             case 'DEVELOPER': this.router.navigate(['/developer']); break;
-            case 'PARTNER': this.router.navigate(['/partner']); break;
-            case 'MANAGER': this.router.navigate(['/manager']); break;
+            case 'PARTNER': this.router.navigate(['/partner/dashboard']); break;
+            case 'MANAGER': this.router.navigate(['/manager/dashboard']); break;
             default: this.router.navigate(['/login']); break;
           }
         }, 2000);

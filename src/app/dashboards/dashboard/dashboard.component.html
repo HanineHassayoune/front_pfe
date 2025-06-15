@@ -1,21 +1,120 @@
-<app-navbar-dashboard 
-  [imageUrl]="'../../../assets/images/images.png'"
-  [userName]="user.email"
-  [userAvatarUrl]="user.profileImage !== null ? user.profileImage : 'assets/images/default-user.jpg'">
-</app-navbar-dashboard>
+<body class="bg-gray-100 min-h-screen">
+  <div class="flex overflow-hidden  pt-4">
+    <!-- Main content -->
+     
+    <div id="main-content" class="h-full w-full bg-gray-100 relative overflow-y-auto lg:ml-64">
+      <div class=" mx-auto px-6"><!-- container -->
+        
+        <!-- Titre -->
+        <div class="mb-6">
+          <h1 class="text-3xl font-bold text-[#205781]">📊 Dashboard</h1>
+        </div>
 
-<div class="flex overflow-hidden bg-white pt-16">
-  <app-sidebar
-   [links]="links"
-   [userAvatarUrl]="user.profileImage !== null ? user.profileImage : 'assets/images/default-user.jpg'" 
-   [userName]="user.name">
-  </app-sidebar>
-  <div class="content w-full bg-gray-100">
-    <!-- breadcrumb bar -->
-   <!--  <xng-breadcrumb ></xng-breadcrumb> -->
-    <router-outlet></router-outlet>
+        <!-- ✅ Boutons de sélection de projet -->
+         <div class="mb-6 flex flex-wrap gap-4">
+          <!-- No Projects Yet -->
+        <div *ngIf="projects.length === 0" class="w-full text-center mt-10">
+          <img src="assets/images/no-projects.png" alt="No projects" class="mx-auto mb-4 w-48 h-48 opacity-70" />
+          <h2 class="text-xl font-semibold text-gray-700">No projects yet</h2>
+          <p class="text-gray-500 mt-2">Try adding a new project to get started.</p>
+        </div>
+
+        <button
+          *ngFor="let project of projects"
+          (click)="selectProject(project)"
+          class="px-4 py-2 rounded-md border transition duration-200"
+          [class.bg-[#205781]]="selectedProject === project"
+          [class.text-white]="selectedProject === project"
+          [class.bg-white]="selectedProject !== project"
+          [class.text-gray-800]="selectedProject !== project"
+          [class.border-gray-300]="selectedProject !== project"
+        >
+          {{ project.title }}
+        </button>
+      </div>
+
+      <!-- Statistiques -->
+    <div 
+      *ngIf="selectedProject && stats[selectedProject.title]" 
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
+
+
+      <!-- Carte Projet -->
+      <div class="bg-white rounded-lg shadow p-4">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">{{ selectedProject.title }}</h2>
+        <p class="text-gray-600">👥 Membres : {{ stats[selectedProject.title]?.members }}</p>
+        <!-- <p class="text-gray-600">⏳ Durée : {{ stats[selectedProject.title]?.duration }}</p> -->
+      </div>
+
+      <!-- Carte Projet -->
+      <div class="bg-white rounded-lg shadow p-4">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">{{ selectedProject.title }}</h2>
+        <p class="text-gray-600">👥 Membres : {{ stats[selectedProject.title]?.members }}</p>
+        <!-- <p class="text-gray-600">⏳ Durée : {{ stats[selectedProject.title]?.duration }}</p> -->
+      </div>
+
+                    <!-- Column Chart 📈 -->
+      <div class="bg-white rounded-lg shadow p-4">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">📊 Ticket Status</h3>
+ <app-column-chart
+  *ngIf="selectedProject && stats[selectedProject.title]?.tickets"
+  [statuses]="stats[selectedProject.title].tickets">
+</app-column-chart>
+        </div> 
+
+    <div class="bg-white rounded-lg shadow p-4 flex flex-col items-center">
+      <h3 class="text-lg font-bold text-gray-800 mb-4 self-start">🏷️ Ticket Categories</h3>
+      
+      <div class="w-full flex justify-center">
+        <app-pie-chart
+          *ngIf="stats[selectedProject.title]?.logs"
+          [categoriesData]="stats[selectedProject.title].logs">
+        </app-pie-chart>
+      </div>
+    </div>
+
+
+          <!-- Logs -->
+      <!--     <div class="bg-white rounded-lg shadow p-4">
+            <h3 class="text-lg font-bold text-gray-800 mb-2">🪵 Logs</h3>
+            <ul class="text-gray-600 list-disc list-inside">
+              <li *ngFor="let log of (stats[selectedProject].logs | keyvalue)">
+                {{ log.key }} : {{ log.value }}
+              </li>
+            </ul>
+          </div> 
+           -->
+      
+          <!-- Pie Chart -->
+         <!--  <div class="bg-white rounded-lg shadow p-4">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">💻 Catégorie Dev</h3>
+            <app-pie-chart></app-pie-chart>
+          </div>
+ -->
+          <!-- Column Chart -->
+        <!-- <div class="bg-white rounded-lg shadow p-4">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">📈 Tâches par Semaine</h3>
+          <app-column-chart></app-column-chart>
+        </div> -->
+
+            <!-- Tickets -->
+      <!--  <div class="bg-white rounded-lg shadow p-4">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">🎫 Statut des Tickets</h3>
+            <ul class="text-gray-600">
+              <li>✅ Done : {{ stats[selectedProject].tickets.done }}</li>
+              <li>🚧 In progress : {{ stats[selectedProject].tickets.inProgress }}</li>
+              <li>📝 To do : {{ stats[selectedProject].tickets.todo }}</li>
+            </ul>
+          </div>
+ -->
+          <!-- Line Chart -->
+        <!-- <div class="bg-white rounded-lg shadow p-4">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">📈 Tickets résolus</h3>
+          <app-line-chart></app-line-chart>
+        </div> -->
+
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-
-
- 
+</body>

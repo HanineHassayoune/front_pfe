@@ -16,6 +16,8 @@ export class TablePaginationComponent {
   @Input() columns: { field: string; header: string }[] = [];
   @Input() data: any[] = [];
   @Input() totalRows = 0;
+  @Input() userRole: string = '';
+
   @Output() pageChanged = new EventEmitter<any>();
   //@Output() actionTriggered = new EventEmitter<{ id: number; action: string }>();
   @Output() actionTriggered = new EventEmitter<{ id: number; action: string; user?: any }>();

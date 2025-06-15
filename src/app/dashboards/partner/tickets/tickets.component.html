@@ -1,6 +1,6 @@
-<div class=" bg-gray-100 min-h-screen mt-4">
+<div class=" bg-gray-100 min-h-screen mt-3">
     <!-- Header: Title + Search Bar -->
-<div class="flex items-center justify-between px-9 mb-4 text-gray-800">
+<div class="flex items-center justify-between px-5 mb-4 text-gray-800">
   <!-- Title -->
   <h2 class="text-2xl font-bold flex items-center gap-2">
     <span>🎫</span> Ticket Kanban
@@ -29,18 +29,18 @@
     <div
       cdkDropList
       cdkDropListOrientation="horizontal"
-      class="flex flex-wrap gap-4 justify-center"
+      class="flex flex-wrap gap-2 justify-center"
       (cdkDropListDropped)="drop($event)"
     >
       <div
-        class="w-full sm:w-[40%] md:w-[15%] rounded-2xl shadow-xl flex-shrink-0 border border-gray-200 transition-transform hover:scale-[1.02]"
+        class="w-full sm:w-[40%]  md:w-[15.9%] rounded-2xl shadow-xl flex-shrink-0 border border-gray-200 transition-transform hover:scale-[1.02]"
         [ngClass]="{
-          'bg-[#F8D7DA]': column.name === 'To Do',
-          'bg-[#D1ECF1]': column.name === 'Resolved',
-          'bg-[#D4EDDA]': column.name === 'Verified',
-          'bg-[#FFF3CD]': column.name === 'Merging',
-          'bg-yellow-100': column.name === 'In Progress',
-          'bg-green-100': column.name === 'Done'
+          'bg-[#F8D7DA]/50': column.name === 'To Do',
+          'bg-[#D1ECF1]/50': column.name === 'Resolved',
+          'bg-[#D4EDDA]/50': column.name === 'Verified',
+          'bg-[#FFF3CD]/50': column.name === 'Merging',
+          'bg-yellow-100/50': column.name === 'In Progress',
+          'bg-green-100/50': column.name === 'Done'
         }"
         *ngFor="let column of board.columns"
       >
@@ -56,16 +56,16 @@
           {{ column.name }}
         </div>
   
-    <!-- Tasks -->
+    <!-- Tasks space-y-2 expacement entre les tickets-->
     <div
-    class="p-4 min-h-[180px] space-y-4"
+    class="p-4 min-h-[180px] space-y-2" 
     id="{{ column.id }}"
     [cdkDropListConnectedTo]="connectedDropLists"
     cdkDropList
     [cdkDropListData]="column.tasks"
     (cdkDropListDropped)="drop($event)"
     >
-  <div class="bg-white text-gray-800 px-4 py-3 rounded-lg shadow-md cursor-grab transition-all duration-200 hover:shadow-lg hover:bg-blue-50"
+  <div class="bg-white text-gray-800 px-4 py-0.5 rounded-lg shadow-md cursor-grab transition-all duration-200 hover:shadow-lg hover:bg-blue-50"
      *ngFor="let ticket of column.tasks"
      cdkDrag
      (click)="openTicketDetails(ticket)">
@@ -78,10 +78,9 @@
       🚫 Not assigned
     </ng-template>
   </div>
-  <!-- Ticket Category -->
-  <div class="flex items-center gap-2">
-    <span class="text-blue-400">📌</span>
-    <span class="font-medium">{{ ticket.category }}</span>
+  <!-- Ticket Category text-sm-->
+  <div class="flex items-center gap-2 ">
+    <span class="font-medium">📌 {{ ticket.category }}</span>
   </div>
 
 

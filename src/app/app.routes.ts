@@ -20,6 +20,7 @@ import { PendingRegisterComponent } from './pending-register/pending-register.co
 import { TicketDetailsComponent } from './dashboards/partner/ticket-details/ticket-details.component';
 import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 import { MicroserviceDetailsComponent } from './dashboards/partner/microservice-details/microservice-details.component';
+import { LayoutComponent } from './dashboards/layout/layout.component';
 
 
 export const routes: Routes = [
@@ -44,7 +45,7 @@ export const routes: Routes = [
 
     {
       path: 'admin',
-      component: DashboardComponent, 
+      component: LayoutComponent, 
       canActivate: [authGuard], 
       data: { role: 'ADMIN' },
       children: [
@@ -56,7 +57,7 @@ export const routes: Routes = [
     },
     { 
       path: 'tester', 
-      component: DashboardComponent, 
+      component: LayoutComponent, 
       canActivate: [authGuard], 
       data: { role: 'TESTER' },
       children: [
@@ -68,7 +69,7 @@ export const routes: Routes = [
     },
     { 
       path: 'developer', 
-      component:DashboardComponent,
+      component:LayoutComponent,
       canActivate: [authGuard], 
       data: { role: 'DEVELOPER' },
       children: [
@@ -82,23 +83,23 @@ export const routes: Routes = [
     },
     {
       path: 'partner',
-      component: DashboardComponent,
+      component: LayoutComponent,
       canActivate: [authGuard],
-      data: { role: 'PARTNER' },
+      data: { role: 'PARTNER' , breadcrumb: '🤝partner'},
       children: [
-        { path: 'users', component: UsersComponent },
-        { path: 'projects', component: ProjectsComponent ,data: { breadcrumb: 'Projects' }},
-        { path: 'profil', component: ProfilComponent ,data: { breadcrumb: 'Profil' }},
-        { path: 'projects/:id', component: ProjectDetailsComponent , data: { breadcrumb: ' ✅ Project Details' }},
+        { path: 'users', component: UsersComponent ,data: { breadcrumb: '👥users' } },
+        { path: 'projects', component: ProjectsComponent ,data: { breadcrumb: '📁projects' }},
+        { path: 'profil', component: ProfilComponent ,data: { breadcrumb: '👤profil' }},
+        { path: 'projects/:id', component: ProjectDetailsComponent , data: { breadcrumb: ' 🗂️project details' }},
         { path: 'pending-register', component: PendingRegisterComponent},
-        { path: 'projects/:projectId/microservice/:microserviceId', component: MicroserviceDetailsComponent,data: { breadcrumb: 'Microservice Ticket' } } ,
-        { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent ,data: { breadcrumb: 'Ticket Details' }},
-        
+        { path: 'projects/:projectId/microservice/:microserviceId', component: MicroserviceDetailsComponent,data: { breadcrumb: '🎟️microservice ticket' } } ,
+        { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent ,data: { breadcrumb: '🧾ticket details' }},
+        { path: 'dashboard', component: DashboardComponent,data:{ breadcrumb: '📊dashboard' }},
       ]
     },
     { 
       path: 'manager', 
-      component:DashboardComponent,
+      component:LayoutComponent,
       canActivate: [authGuard], 
       data: { role: 'MANAGER' },
       children: [
@@ -106,6 +107,7 @@ export const routes: Routes = [
         { path: 'projects', component: ProjectsComponent },
         { path: 'projects/:id', component: ProjectDetailsComponent },
         { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
+        { path: 'dashboard', component: DashboardComponent},
 
 
       ]

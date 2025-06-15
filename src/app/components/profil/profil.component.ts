@@ -25,6 +25,12 @@ export class ProfilComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.userService.user$.subscribe((user) => {
+    if (user) {
+      this.user = user;
+      this.originalUserName = user.name;
+    }
+  });
     this.loadUserProfile();
   }
 
