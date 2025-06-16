@@ -14,7 +14,7 @@ interface Project {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [PieChartComponent, RadialChartComponent, CommonModule, ColumnChartComponent, LineChartComponent],
+  imports: [PieChartComponent, RadialChartComponent, CommonModule, ColumnChartComponent, LineChartComponent,RadialChartComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
@@ -84,7 +84,38 @@ export class DashboardComponent implements OnInit {
       },
       error: (err) => console.error('Erreur tickets', err)
     });
+
+    this.statisticsService.getTicketPrioritiesByProject(projectId).subscribe({
+  next: (prioritiesMap) => {
+    const priorities = Object.entries(prioritiesMap);
+    const labels = priorities.map(([label]) => label);
+    const series = priorities.map(([, count]) => count);
+    const colors = labels.map((label) => this.getPriorityColor(label));
+
+    this.stats[key] = {
+      ...this.stats[key],
+      priorities: {
+        labels,
+        series,
+        colors
+      }
+    };
+  },
+  error: (err) => console.error('Erreur priorités', err)
+});
+
   }
+
+  
+getPriorityColor(priority: string): string {
+  switch (priority) {
+    case 'LOW': return '#1C64F2';
+    case 'MEDIUM': return '#16BDCA';
+    case 'HIGH': return '#FDBA8C';
+    case 'CRITICAL': return '#DC2626';
+    default: return '#9CA3AF'; // gris
+  }
+}
 
   selectProject(project: Project): void {
     this.selectedProject = project;

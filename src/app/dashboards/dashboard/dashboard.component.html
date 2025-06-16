@@ -49,18 +49,18 @@
       <!-- Carte Projet -->
       <div class="bg-white rounded-lg shadow p-4">
         <h2 class="text-xl font-semibold text-gray-700 mb-2">{{ selectedProject.title }}</h2>
-        <p class="text-gray-600">👥 Membres : {{ stats[selectedProject.title]?.members }}</p>
+        <p class="text-gray-600">⏳ Durée : 5 Semaines</p> 
         <!-- <p class="text-gray-600">⏳ Durée : {{ stats[selectedProject.title]?.duration }}</p> -->
       </div>
 
                     <!-- Column Chart 📈 -->
       <div class="bg-white rounded-lg shadow p-4">
           <h3 class="text-lg font-bold text-gray-800 mb-4">📊 Ticket Status</h3>
- <app-column-chart
-  *ngIf="selectedProject && stats[selectedProject.title]?.tickets"
-  [statuses]="stats[selectedProject.title].tickets">
-</app-column-chart>
-        </div> 
+          <app-column-chart
+            *ngIf="selectedProject && stats[selectedProject.title]?.tickets"
+            [statuses]="stats[selectedProject.title].tickets">
+          </app-column-chart>
+      </div> 
 
     <div class="bg-white rounded-lg shadow p-4 flex flex-col items-center">
       <h3 class="text-lg font-bold text-gray-800 mb-4 self-start">🏷️ Ticket Categories</h3>
@@ -72,6 +72,20 @@
         </app-pie-chart>
       </div>
     </div>
+
+    <!-- Radial Chart: Ticket Priorities -->
+<div class="bg-white rounded-lg shadow p-4">
+  <h3 class="text-lg font-bold text-gray-800 mb-4">🎯 Ticket Priorities</h3>
+
+  <div class="w-full flex justify-center">
+    <app-radial-chart
+      *ngIf="stats[selectedProject.title]?.priorities"
+      [series]="stats[selectedProject.title].priorities.series"
+      [labels]="stats[selectedProject.title].priorities.labels"
+      [colors]="stats[selectedProject.title].priorities.colors">
+    </app-radial-chart>
+  </div>
+</div>
 
 
           <!-- Logs -->

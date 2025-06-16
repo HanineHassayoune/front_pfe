@@ -28,4 +28,10 @@ export class StatisticsService {
   getUserCountByProject(projectId: number): Observable<number> {
     return this.http.get<number>(`${this.statisticsUrl}/users/count/${projectId}`);
   }
+
+
+  getTicketPrioritiesByProject(projectId: number): Observable<Record<string, number>> {
+  return this.http.get<Record<string, number>>(`${this.statisticsUrl}/tickets/priorities/${projectId}`);
+}
+
 }

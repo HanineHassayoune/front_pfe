@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import ApexCharts from 'apexcharts';
 
 @Component({
@@ -8,16 +8,23 @@ import ApexCharts from 'apexcharts';
   templateUrl: './radial-chart.component.html',
   styleUrls: ['./radial-chart.component.css'],
 })
-export class RadialChartComponent {
-  ngOnInit(): void {
-    this.renderChart();
+export class RadialChartComponent implements OnChanges {
+
+  @Input() series: number[] = [];
+  @Input() labels: string[] = [];
+  @Input() colors: string[] = [];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.series.length && this.labels.length && this.colors.length) {
+      this.renderChart();
+    }
   }
 
-  // Function to get chart options
   private getChartOptions() {
     return {
-      series: [90, 85, 70],
-      colors: ["#1C64F2", "#16BDCA", "#FDBA8C"],
+      series: this.series,
+      labels: this.labels,
+      colors: this.colors,
       chart: {
         height: "350px",
         width: "100%",
@@ -28,29 +35,15 @@ export class RadialChartComponent {
       },
       plotOptions: {
         radialBar: {
-          track: {
-            background: '#E5E7EB',
-          },
-          dataLabels: {
-            show: false,
-          },
-          hollow: {
-            margin: 0,
-            size: "32%",
-          },
+          track: { background: '#E5E7EB' },
+          dataLabels: { show: false },
+          hollow: { margin: 0, size: "32%" },
         },
       },
       grid: {
         show: false,
-        strokeDashArray: 4,
-        padding: {
-          left: 2,
-          right: 2,
-          top: -23,
-          bottom: -20,
-        },
+        padding: { left: 2, right: 2, top: -23, bottom: -20 },
       },
-      labels: ["Done", "In progress", "To do"],
       legend: {
         show: true,
         position: "bottom",
@@ -58,25 +51,21 @@ export class RadialChartComponent {
       },
       tooltip: {
         enabled: true,
-        x: {
-          show: false,
-        },
+        x: { show: false },
       },
       yaxis: {
         show: false,
         labels: {
-          formatter: function (value: number) {
-            return value + '%';
-          },
+          formatter: (value: number) => value + '%',
         },
       },
     };
   }
 
-  // Function to render the chart
   private renderChart(): void {
     const chartElement = document.getElementById("radial-chart");
     if (chartElement && typeof ApexCharts !== 'undefined') {
+      chartElement.innerHTML = ''; // reset
       const chart = new ApexCharts(chartElement, this.getChartOptions());
       chart.render();
     }
