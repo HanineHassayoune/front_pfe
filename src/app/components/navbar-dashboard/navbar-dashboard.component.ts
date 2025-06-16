@@ -7,6 +7,7 @@ import { NotificationService } from '../../services/notification.service';
 import { StorageService } from '../../services/storage.service';
 import { BreadcrumbComponent } from 'xng-breadcrumb';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-dashboard',
@@ -29,7 +30,12 @@ export class NavbarDashboardComponent implements OnInit, OnDestroy {
   private userSub?: Subscription;
   private notificationSub?: Subscription;
 
-  constructor(private webSocketService: WebSocketService,private notificationService :NotificationService,private storageService: StorageService ,private userService: UserService) {}
+  constructor(private webSocketService: WebSocketService,
+    private notificationService :NotificationService,
+    private storageService: StorageService ,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     // BehaviorSubject 
@@ -61,6 +67,11 @@ export class NavbarDashboardComponent implements OnInit, OnDestroy {
 }); */
 
   }
+
+  goToNotifications() {
+  this.showNotifications = false; 
+  this.router.navigate(['/manager/notifications']);
+}
 
 
   ngOnDestroy() {

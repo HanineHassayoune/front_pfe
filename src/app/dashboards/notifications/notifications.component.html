@@ -1,0 +1,36 @@
+<div class="min-h-screen bg-gray-100 py-6 px-4 lg:ml-64">
+  <!-- Title -->
+  <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <h1 class="text-3xl font-bold text-[#205781] flex items-center gap-2">
+      🔔 Notifications
+    </h1>
+  </div>
+
+  <!-- Notifications container -->
+  <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-200 transition-all duration-300">
+    <div *ngIf="errorMessage" class="text-red-600 mb-4">{{ errorMessage }}</div>
+
+    <ul *ngIf="notifications.length > 0; else noNotifications" class="divide-y divide-gray-200">
+      <li
+        *ngFor="let notif of notifications"
+        class="py-4 flex items-start gap-4 hover:bg-gray-50 rounded-lg transition-colors duration-200 px-2"
+      >
+        <div class="text-2xl text-[#205781]">🔔</div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-[#205781] text-base">{{ notif.title }}</h3>
+          <p class="text-sm text-gray-700">{{ notif.message }}</p>
+        </div>
+        <!-- Optional date -->
+        <!-- <span class="text-xs text-gray-400">{{ notif.date | date:'short' }}</span> -->
+      </li>
+    </ul>
+
+    <ng-template #noNotifications>
+  <div class="flex items-center justify-center p-6 text-gray-500 gap-2 bg-gray-50 rounded-lg">
+    <span class="text-xl">🔕</span>
+    <span class="text-sm font-semibold">No notifications yet</span>
+  </div>
+</ng-template>
+
+  </div>
+</div>

@@ -5,7 +5,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { UsersComponent } from './dashboards/partner/users/users.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { RadialChartComponent } from './components/radial-chart/radial-chart.component';
-import { NotificationsComponent } from './dashboards/tester/notifications/notifications.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PartnersComponent } from './dashboards/admin/partners/partners.component';
@@ -21,6 +20,7 @@ import { TicketDetailsComponent } from './dashboards/partner/ticket-details/tick
 import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 import { MicroserviceDetailsComponent } from './dashboards/partner/microservice-details/microservice-details.component';
 import { LayoutComponent } from './dashboards/layout/layout.component';
+import { NotificationsComponent } from './dashboards/notifications/notifications.component';
 
 
 export const routes: Routes = [
@@ -30,7 +30,6 @@ export const routes: Routes = [
     {path:'users',component:UsersComponent},
     {path:'pieChart',component:PieChartComponent},
     {path:'radialChart',component:RadialChartComponent},
-    {path:'notifications',component:NotificationsComponent},
     {path:'login',component:LoginComponent},
     {path:'forgot-password',component:ForgotPasswordComponent},
     {path:'register',component:RegisterComponent},
@@ -42,6 +41,7 @@ export const routes: Routes = [
     { path: 'pending-register', component: PendingRegisterComponent},
     { path: 'projects/:id', component: ProjectDetailsComponent },
     { path: 'projects/:projectId/tickets/:ticketId', component: TicketDetailsComponent },
+    { path: 'notifications', component: NotificationsComponent},
 
     {
       path: 'admin',
@@ -108,6 +108,7 @@ export const routes: Routes = [
         { path: 'projects/:id', component: ProjectDetailsComponent },
         { path: 'projects/:id/tickets/:ticketId', component: TicketDetailsComponent },
         { path: 'dashboard', component: DashboardComponent},
+        { path: 'notifications', component: NotificationsComponent},
 
 
       ]
