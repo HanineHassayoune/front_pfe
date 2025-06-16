@@ -2,15 +2,25 @@
     <mat-form-field class="w-full">
       <mat-label>{{ label }}</mat-label>
       <mat-chip-grid #chipGrid [attr.aria-label]="label + ' selection'">
-        <mat-chip-row
-          *ngFor="let item of selectedItems; trackBy: trackByFn"
-          (removed)="remove(item)"
-        >
-          {{ displayWith(item) }}
-          <button matChipRemove [attr.aria-label]="'Remove ' + displayWith(item)">
-            <mat-icon>cancel</mat-icon>
-          </button>
-        </mat-chip-row>
+       <mat-chip-row
+  *ngFor="let item of selectedItems; trackBy: trackByFn"
+  (removed)="remove(item)"
+>
+  <div class="flex items-center gap-2">
+    <img *ngIf="getIcon" 
+         [src]="getIcon(item)" 
+         alt="{{ displayWith(item) }} icon"
+         class="w-5 h-5 rounded-sm" />
+    <span>{{ displayWith(item) }}</span>
+  </div>
+
+  <button matChipRemove [attr.aria-label]="'Remove ' + displayWith(item)">
+    <mat-icon>cancel</mat-icon>
+  </button>
+</mat-chip-row>
+
+
+
       </mat-chip-grid>
   
       <input
@@ -26,8 +36,15 @@
   
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
         <mat-option *ngFor="let item of filteredItems | async" [value]="item">
-          {{ displayWith(item) }}
-        </mat-option>
+  <div class="flex items-center gap-2">
+    <img *ngIf="getIcon" 
+         [src]="getIcon(item)" 
+         alt="{{ displayWith(item) }} icon"
+         class="w-5 h-5 rounded-sm" />
+    <span>{{ displayWith(item) }}</span>
+  </div>
+</mat-option>
+
       </mat-autocomplete>
     </mat-form-field>
   </form>

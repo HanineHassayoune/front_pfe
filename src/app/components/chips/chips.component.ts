@@ -35,6 +35,7 @@ export class ChipsComponent<T> implements OnInit {
   @Input() selectedItems: T[] = [];
   @Input() displayWith: (item: any) => string = (item) => item?.toString?.() || '';
 
+  @Input() getIcon?: (item: any) => string;
 
   @Output() selectedItemsChange = new EventEmitter<T[]>();
   @Output() itemAdded = new EventEmitter<T>();
