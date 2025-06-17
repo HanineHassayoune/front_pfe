@@ -6,11 +6,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProjectService } from '../../services/project.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TicketService } from '../../services/ticket.service';
+import { AlertComponent } from '../../components/alert/alert.component';
 
 @Component({
   selector: 'app-add-ticket-dialog',
   standalone: true,
-  imports: [MatIconModule,MatProgressSpinnerModule,CommonModule, ReactiveFormsModule, FormsModule,],
+  imports: [MatIconModule,MatProgressSpinnerModule,CommonModule, ReactiveFormsModule, FormsModule,AlertComponent],
   templateUrl: './add-ticket-dialog.component.html',
   styleUrl: './add-ticket-dialog.component.css'
 })
@@ -19,7 +20,9 @@ export class AddTicketDialogComponent {
   project: any;
   ticketForm: FormGroup;
   developers: any[] = [];
-
+ alertVisible: boolean = false;
+  alertMessage: string = '';
+  alertType: 'success' | 'danger' | 'warning' | 'info' | 'dark' = 'info';
   constructor(
     private fb: FormBuilder,
     private ticketService: TicketService,
@@ -86,12 +89,22 @@ loadProject() {
     this.ticketService.createManualTicket(formValue).subscribe({
       next: res => {
         console.log(res);
-        alert('Ticket created!');
-        this.dialogRef.close(true);
+        this.alertType = 'success';
+        this.alertMessage = 'Ticket created!';
+        this.alertVisible = true;
+        setTimeout(() => {
+          this.alertVisible = false;
+          this.dialogRef.close(true);
+        }, 2000);
+
       },
       error: err => {
         console.error(err);
-        alert('Error creating ticket');
+        this.alertType = 'danger';
+        this.alertMessage = 'Error creating ticket.';
+        this.alertVisible = true;
+        setTimeout(() => { this.alertVisible = false; }, 2000);
+
       }
     });
   } else {

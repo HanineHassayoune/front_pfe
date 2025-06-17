@@ -29,7 +29,7 @@ export class PartnersComponent implements OnInit {
     { field: 'name', header: 'Name' },
     { field: 'email', header: 'Email' },
     { field: 'role', header: 'Role' },
-    { field: 'action', header: 'Action' }
+    { field: 'action', header: 'Action'}
   ];
 
   userRole: string = '';

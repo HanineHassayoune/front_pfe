@@ -5,10 +5,11 @@
  
   <div class="bg-white shadow-xl rounded-2xl p-4 sm:p-6 max-w-full  mx-auto border border-gray-200 hover:shadow-2xl transition-all duration-300">
     <!-- sm:max-w-4xl md:max-w-5xl lg:max-w-6xl -->
-    <!-- Image + Info -->
     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 mb-6">
-      <img *ngIf="imageUrl" [src]="imageUrl" alt="Ticket Image"
-        class="w-20 h-20 rounded-xl border border-gray-300 object-cover shadow-sm self-center sm:self-start" />
+     <!-- Image statique toujours visible en haut -->
+    <img src="../../assets/images/task.png" alt="Ticket Icon"
+      class="w-20 h-20 rounded-xl border border-gray-300 object-cover shadow-sm self-center sm:self-start" />
+
       
       <div class="flex-1">
         <h3 class="text-lg sm:text-2xl font-semibold text-gray-800 flex items-center gap-2">
@@ -142,13 +143,24 @@
     
 
     <!-- Stack Trace -->
-    <div *ngIf="description" class="mt-6">
-      <h4 class="text-base sm:text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-        🐞 Bug Stack Trace
-      </h4>
-      <pre class="bg-gray-100 p-3 sm:p-4 rounded-md border border-gray-300 text-sm text-red-600 overflow-auto whitespace-pre-wrap max-h-80">
-      {{ description }}
-      </pre>
-    </div>
+    <!-- Stack Trace -->
+<div *ngIf="description" class="mt-6">
+  <h4 class="text-base sm:text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+    🐞 Bug Stack Trace
+  </h4>
+  <pre class="bg-gray-100 p-3 sm:p-4 rounded-md border border-gray-300 text-sm text-red-600 overflow-auto whitespace-pre-wrap max-h-80">
+    {{ description }}
+  </pre>
+</div>
+
+<div *ngIf="imageUrl" class="mt-6">
+  <h4 class="text-base sm:text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+    🖼️ Bug Screenshot
+  </h4>
+  <img [src]="imageUrl" alt="Ticket Screenshot"
+       class="max-w-full max-h-96 rounded-xl border border-gray-300 object-contain shadow-sm" />
+</div>
+
+
   </div>
 </div>

@@ -93,6 +93,7 @@ export class DetailsComponent implements OnInit {
     this.ticketService.getTicketById(String(this.ticketId)).subscribe({
       next: (ticketData: any) => {
         this.ticket = ticketData;
+        this.imageUrl = ticketData.imageUrl?.trim() || '';
         this.loadAssignedUser(ticketData.assignedUserId);
          this.projectName = ticketData.projectName
       },

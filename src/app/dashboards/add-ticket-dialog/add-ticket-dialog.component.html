@@ -3,7 +3,13 @@
     <mat-icon>add_task</mat-icon>
     Add Ticket
   </h2>
-
+ <app-alert 
+    *ngIf="alertVisible" 
+    [type]="alertType" 
+    [message]="alertMessage" 
+    [isVisible]="alertVisible"
+    class="mb-4"
+  ></app-alert>
   
   <form  [formGroup]="ticketForm"class="space-y-4">
 

@@ -10,10 +10,8 @@ export class StorageService {
     window.addEventListener('storage', (event) => {
       console.log('event',event);
       if (localStorage.length === 0) {
-        // Storage is completely cleared
         this.router.navigate(['/login']);
       } else if (event.key === 'auth_token' && (event.newValue != event.oldValue)) {
-        // Specific key (authToken) is deleted
         this.router.navigate(['/login']);
       }
     });

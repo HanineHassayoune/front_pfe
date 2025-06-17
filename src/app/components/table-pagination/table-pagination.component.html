@@ -31,7 +31,7 @@
         </button>
 
         <!-- View Icon -->
-        <button class="cursor-pointer" (click)="triggerAction(element, 'view')">
+        <button *ngIf="userRole !== 'ADMIN'" class="cursor-pointer" (click)="triggerAction(element, 'view')">
           <i class="fa fa-eye text-[#799eba] text-xl hover:scale-110 transition-transform duration-200"></i>
         </button>
       </div>

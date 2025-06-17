@@ -46,9 +46,9 @@ export class LoginComponent {
   
         setTimeout(() => {
           switch (response.role.toUpperCase()) {
-            case 'ADMIN': this.router.navigate(['/admin']); break;
-            case 'TESTER': this.router.navigate(['/tester']); break;
-            case 'DEVELOPER': this.router.navigate(['/developer']); break;
+            case 'ADMIN': this.router.navigate(['/admin/partners']); break;
+            case 'TESTER': this.router.navigate(['/tester/projects']); break;
+            case 'DEVELOPER': this.router.navigate(['/developer/projects']); break;
             case 'PARTNER': this.router.navigate(['/partner/dashboard']); break;
             case 'MANAGER': this.router.navigate(['/manager/dashboard']); break;
             default: this.router.navigate(['/login']); break;
