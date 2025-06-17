@@ -6,11 +6,13 @@ import { Ticket, TicketService } from '../../../services/ticket.service';
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { UserService } from '../../../services/user.service';
 import { FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AddTicketDialogComponent } from '../../add-ticket-dialog/add-ticket-dialog.component';
 
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [CommonModule, DragDropModule, AlertComponent,FormsModule],
+  imports: [CommonModule, DragDropModule, AlertComponent,FormsModule,MatDialogModule],
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.css']
 })
@@ -44,7 +46,8 @@ searchTerm: string = '';
     private router: Router,
     private route: ActivatedRoute,
     private ticketService: TicketService,
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -65,6 +68,26 @@ searchTerm: string = '';
     }
   });
 }
+
+ openAddTicketDialog(): void {
+  const dialogRef = this.dialog.open(AddTicketDialogComponent, {
+    data: { projectId: this.projectId },
+    width: '600px',
+    disableClose: false
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      console.log('Ticket created:', result);
+      this.refreshTickets();
+    }
+  });
+}
+
+refreshTickets(): void {
+    // Logique pour recharger les tickets
+    // Par exemple : this.loadTickets();
+  }
 
  onSearchChange() {
   const term = this.searchTerm.trim().toLowerCase();
@@ -172,6 +195,9 @@ get areAllColumnsEmpty(): boolean {
       alert('Rôle non défini. Vous devez être connecté pour accéder à cette page.');
     }
   }
+
+
+ 
 
   
 }

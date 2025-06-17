@@ -86,11 +86,11 @@ export class DashboardComponent implements OnInit {
     });
 
     this.statisticsService.getTicketPrioritiesByProject(projectId).subscribe({
-  next: (prioritiesMap) => {
-    const priorities = Object.entries(prioritiesMap);
-    const labels = priorities.map(([label]) => label);
-    const series = priorities.map(([, count]) => count);
-    const colors = labels.map((label) => this.getPriorityColor(label));
+    next: (prioritiesMap) => {
+      const priorities = Object.entries(prioritiesMap);
+      const labels = priorities.map(([label]) => label);
+      const series = priorities.map(([, count]) => count);
+      const colors = labels.map((label) => this.getPriorityColor(label));
 
     this.stats[key] = {
       ...this.stats[key],
@@ -103,6 +103,17 @@ export class DashboardComponent implements OnInit {
   },
   error: (err) => console.error('Erreur priorités', err)
 });
+
+this.statisticsService.getTicketCountByCategoryAndPriority(projectId).subscribe({
+  next: (categoryPriorityMap) => {
+    this.stats[key] = {
+      ...this.stats[key],
+      categoryPriority: categoryPriorityMap
+    };
+  },
+  error: (err) => console.error('Erreur category + priority', err)
+});
+
 
   }
 

@@ -71,5 +71,8 @@ getRelatedTickets(ticketId: number): Observable<Ticket[]> {
   return this.http.get<Ticket[]>(`${this.ticketUrl}/${ticketId}/related`);
 }
 
-  
+createManualTicket(ticketData: Partial<Ticket>): Observable<string> {
+  return this.http.post(`${this.ticketUrl}/manual`, ticketData, { responseType: 'text' });
+}
+
 }

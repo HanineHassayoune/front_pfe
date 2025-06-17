@@ -78,14 +78,41 @@
   <h3 class="text-lg font-bold text-gray-800 mb-4">🎯 Ticket Priorities</h3>
 
   <div class="w-full flex justify-center">
-    <app-radial-chart
-      *ngIf="stats[selectedProject.title]?.priorities"
-      [series]="stats[selectedProject.title].priorities.series"
-      [labels]="stats[selectedProject.title].priorities.labels"
-      [colors]="stats[selectedProject.title].priorities.colors">
-    </app-radial-chart>
+    <!-- Radial Chart: Ticket Priorities -->
+<app-radial-chart
+  *ngIf="stats[selectedProject.title]?.priorities"
+  [series]="stats[selectedProject.title].priorities.series"
+  [labels]="stats[selectedProject.title].priorities.labels"
+  [colors]="stats[selectedProject.title].priorities.colors">
+</app-radial-chart>
   </div>
 </div>
+
+ <!-- Line Chart -->
+       <div class="bg-white rounded-lg shadow p-4">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">📈 Tickets résolus</h3>
+          <app-line-chart></app-line-chart>
+        </div> 
+
+        
+<!-- Radial Chart: Category + Priority -->
+<div class="bg-white rounded-lg shadow p-4">
+  <h3 class="text-lg font-bold text-gray-800 mb-4">📂 Catégorie + Priorité</h3>
+
+  <div class="w-full flex justify-center">
+    <!-- Radial Chart: Catégorie + Priorité -->
+<!-- <app-radial-chart
+  *ngIf="stats[selectedProject.title]?.categoryPriorityData"
+  [series]="stats[selectedProject.title].categoryPriorityData.series"
+  [labels]="stats[selectedProject.title].categoryPriorityData.labels"
+  [colors]="stats[selectedProject.title].categoryPriorityData.colors">
+</app-radial-chart> -->
+  </div>
+</div>
+
+
+
+
 
 
           <!-- Logs -->
@@ -121,11 +148,7 @@
             </ul>
           </div>
  -->
-          <!-- Line Chart -->
-        <!-- <div class="bg-white rounded-lg shadow p-4">
-          <h3 class="text-lg font-bold text-gray-800 mb-4">📈 Tickets résolus</h3>
-          <app-line-chart></app-line-chart>
-        </div> -->
+         
 
         </div>
       </div>

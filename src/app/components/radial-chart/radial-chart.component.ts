@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
 import ApexCharts from 'apexcharts';
 
 @Component({
@@ -13,6 +13,8 @@ export class RadialChartComponent implements OnChanges {
   @Input() series: number[] = [];
   @Input() labels: string[] = [];
   @Input() colors: string[] = [];
+
+  @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.series.length && this.labels.length && this.colors.length) {
@@ -63,10 +65,10 @@ export class RadialChartComponent implements OnChanges {
   }
 
   private renderChart(): void {
-    const chartElement = document.getElementById("radial-chart");
-    if (chartElement && typeof ApexCharts !== 'undefined') {
-      chartElement.innerHTML = ''; // reset
-      const chart = new ApexCharts(chartElement, this.getChartOptions());
+    const container = this.chartContainer?.nativeElement;
+    if (container && typeof ApexCharts !== 'undefined') {
+      container.innerHTML = ''; // Reset if re-rendering
+      const chart = new ApexCharts(container, this.getChartOptions());
       chart.render();
     }
   }

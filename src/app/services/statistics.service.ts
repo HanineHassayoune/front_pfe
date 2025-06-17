@@ -34,4 +34,12 @@ export class StatisticsService {
   return this.http.get<Record<string, number>>(`${this.statisticsUrl}/tickets/priorities/${projectId}`);
 }
 
+
+getTicketCountByCategoryAndPriority(projectId: number): Observable<Record<string, Record<string, number>>> {
+  return this.http.get<Record<string, Record<string, number>>>(
+    `${this.statisticsUrl}/tickets/count-category-priority/${projectId}`
+  );
+}
+
+
 }

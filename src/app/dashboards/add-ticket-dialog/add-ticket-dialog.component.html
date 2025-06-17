@@ -1,0 +1,176 @@
+<div class="p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+  <h2 class="text-2xl font-semibold mb-4 flex items-center gap-2">
+    <mat-icon>add_task</mat-icon>
+    Add Ticket
+  </h2>
+
+  
+  <form  [formGroup]="ticketForm"class="space-y-4">
+
+    <!-- Title -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">title</mat-icon> Title
+      </label>
+      <input type="text"  class="w-full p-3 border rounded-md" formControlName="title"/>
+    </div>
+
+        <!-- Project Name -->
+        <div>
+        <label class="text-sm font-medium text-gray-700 flex items-center">
+            <mat-icon class="mr-2">folder_open</mat-icon> Project Name
+        </label>
+       <input
+        type="text"
+        class="w-full p-3 border rounded-md bg-gray-100"
+        formControlName="projectName"
+        [readonly]="true"
+        />
+        </div>
+
+
+    <!-- Assigned Developers -->
+    <div>
+    <label class="text-sm font-medium text-gray-700 flex items-center mb-1">
+        <mat-icon class="mr-2">code</mat-icon> Assigned Developers
+    </label>
+    <select formControlName="assignedUserId" class="w-full p-3 border rounded-md">
+        <option>Select Priority</option>
+        <option *ngFor="let dev of developers" [value]="dev.id">
+        {{ dev.name }}
+        </option>
+    </select>
+    </div>
+
+    
+    <!-- Category -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">category</mat-icon> Category
+      </label>
+       <input type="text"  class="w-full p-3 border rounded-md" formControlName="category"/>
+       
+    </div>
+
+    <!-- Level -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">signal_cellular_alt</mat-icon> Level
+      </label>
+      <div class="flex gap-4 items-center mt-2 flex-wrap">
+        <label class="flex items-center gap-2">
+          <input type="radio" name="level" formControlName="level" value="ERROR"/> 
+          <span class="text-red-600">Error</span>
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="radio" name="level"formControlName="level"  value="WARNING"/> 
+          <span class="text-yellow-600">Warning</span>
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="radio" name="level" formControlName="level"  value="INFO"/> 
+          <span class="text-blue-600">Info</span>
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="radio" name="level"formControlName="level"  value="DEBUG"/> 
+          <span class="text-green-600">Debug</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Logger Name -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">bug_report</mat-icon> Logger Name
+      </label>
+      <input type="text" class="w-full p-3 border rounded-md" placeholder="Enter logger name..." formControlName="loggerName"/>
+    </div>
+
+ 
+    <!-- Priority -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">priority_high</mat-icon> Priority
+      </label>
+      <select class="w-full p-3 border rounded-md" formControlName="priority">
+        <option>Select Priority</option>
+        <option [value]="'LOW'" class="text-green-600">✅ Low</option>
+        <option [value]="'MEDIUM'" class="text-yellow-600">⚠️ Medium</option>
+        <option [value]="'HIGH'" class="text-orange-600">🔥 High</option>
+        <option [value]="'CRITICAL'" class="text-red-600">🚨 Critical</option>
+        <option [value]="'URGENT'" class="text-red-800">⚡ Urgent</option>
+      </select>
+      
+
+    </div>
+
+   
+     
+    <!-- Status -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">track_changes</mat-icon> Status
+      </label>
+      <select class="w-full p-3 border rounded-md" formControlName="status">
+        <option>Select Status</option>
+        <option  [value]="'TO_DO'">📝 To Do</option>
+        <option  [value]="'IN_PROGRESS'">🚧 In Progress</option>
+        <option  [value]="'RESOLVED'">✅ Resolved</option>
+        <option  [value]="'MERGING'">🔀 Merging</option>
+        <option  [value]="'VERIFIED'">🔍 Verified</option>
+        <option  [value]="'DONE'">🎉 Done</option>
+      </select>
+    </div>
+
+    <!-- Stack Trace -->
+    <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">code</mat-icon> Stack Trace
+      </label>
+      <textarea class="w-full p-3 border rounded-md h-32" placeholder="Paste stack trace here..." formControlName="stackTrace"></textarea>
+    </div>
+
+    <!-- Image Upload -->
+   <!--  <div>
+      <label class="text-sm font-medium text-gray-700 flex items-center">
+        <mat-icon class="mr-2">image</mat-icon> Upload Image (Screenshot)
+      </label>
+      <input type="file" accept="image/*" class="w-full p-3 border rounded-md" />
+      <small class="text-gray-500 mt-1">Upload screenshot or image related to the ticket</small>
+    </div> -->
+    <!-- Capture Image (Screenshot) -->
+    <!-- Paste Screenshot -->
+   <div>
+  <label class="text-sm font-medium text-gray-700 flex items-center">
+    <mat-icon class="mr-2">image</mat-icon> Paste Screenshot
+  </label>
+
+  <!-- Paste zone -->
+  <div
+    #pasteArea
+    (paste)="handlePaste($event)"
+    class="w-full p-4 border border-dashed border-gray-400 rounded-md text-gray-500 text-center cursor-pointer"
+  >
+    Paste screenshot here (Ctrl + V)
+  </div>
+
+  <!-- Preview image -->
+  <img *ngIf="imagePreview" [src]="imagePreview" class="mt-3 max-h-64 rounded-lg" />
+</div>
+
+
+
+
+
+     <!-- Submit -->
+    <div class="flex justify-end gap-3 pt-4">
+      <button mat-button  (click)="close()" class="bg-[#B82132] text-white px-4 py-2 rounded-lg hover:bg-[#D2665A]">❌ Cancel</button>
+      <button mat-raised-button (click)="submit()" class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba]" >➕ Add Ticket</button>
+    </div>
+
+
+
+  </form>
+</div>
+
+
+
