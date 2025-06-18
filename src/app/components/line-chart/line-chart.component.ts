@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import {
   ApexChart,
   ApexAxisChartSeries,
@@ -16,7 +16,7 @@ export type LineChartOptions = {
   title: ApexTitleSubtitle;
   xaxis: ApexXAxis;
   stroke: ApexStroke;
-  yaxis: ApexYAxis; // <-- add this
+  yaxis: ApexYAxis;
 };
 
 @Component({
@@ -26,16 +26,20 @@ export type LineChartOptions = {
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.css']
 })
-export class LineChartComponent {
+export class LineChartComponent implements OnChanges {
   @ViewChild("chart") chart: ChartComponent | undefined;
+
+  @Input() dataByDate: Record<string, number> = {};
+
   public chartOptions: LineChartOptions;
 
   constructor() {
+    // initialisation vide par défaut
     this.chartOptions = {
       series: [
         {
-          name: "Tickets résolus",
-          data: [1, 2, 3, 3, 5, 6, 7]
+          name: "Tickets Created Daily",
+          data: []
         }
       ],
       chart: {
@@ -43,19 +47,37 @@ export class LineChartComponent {
         height: 350
       },
       title: {
-        text: "Évolution des tickets résolus par semaine"
+        text: "Tickets Created Per Day"
       },
       xaxis: {
-        categories: ["S1", "S2", "S3", "S4", "S5", "S6", "S7"]
+        categories: []
       },
       stroke: {
         curve: "smooth"
       },
       yaxis: {
         labels: {
-          formatter: (val: number) => val.toString() 
+          formatter: (val: number) => val.toString()
         }
       }
     };
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['dataByDate'] && this.dataByDate) {
+      const dates = Object.keys(this.dataByDate).sort();
+      const counts = dates.map(date => this.dataByDate[date]);
+
+      this.chartOptions = {
+        ...this.chartOptions,
+        series: [{
+          name: "Tickets Created Daily",
+          data: counts
+        }],
+        xaxis: {
+          categories: dates
+        }
+      };
+    }
   }
 }

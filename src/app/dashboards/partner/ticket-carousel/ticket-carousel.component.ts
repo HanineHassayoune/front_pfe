@@ -51,6 +51,7 @@ ngOnInit() {
     if (role) {
       this.router.navigate([`/${role}/projects/${ticket.projectId}/tickets/${ticket.id}`]);
        window.scrollTo({ top: 0, behavior: 'smooth' });
+       
     } else {
       alert('Rôle non défini. Vous devez être connecté pour accéder à cette page.');
     }

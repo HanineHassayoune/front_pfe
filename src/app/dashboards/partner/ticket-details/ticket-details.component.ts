@@ -27,20 +27,19 @@ export class TicketDetailsComponent implements OnInit {
   ) {}
 
 ngOnInit(): void {
-  const id = this.route.snapshot.paramMap.get('ticketId');
-  if (id) {
-    this.ticketService.getTicketById(id).subscribe({
-      next: (ticket) => {
-        this.ticket = ticket;
-        console.log('Ticket:', this.ticket);
-        
-        // ✅ Changer de userId à assignedUserId
-        this.connectedUserId = ticket.assignedUserId;
-        console.log('Assigned User ID:', this.connectedUserId);
-      },
-      error: (err) => console.error('Erreur', err)
-    });
-  }
+  this.route.paramMap.subscribe(params => {
+    const id = params.get('ticketId');
+    if (id) {
+      this.ticketService.getTicketById(id).subscribe({
+        next: (ticket) => {
+          this.ticket = ticket;
+          this.connectedUserId = ticket.assignedUserId;
+          console.log('Nouveau ticket chargé:', this.ticket);
+        },
+        error: (err) => console.error('Erreur', err)
+      });
+    }
+  });
 }
 
 

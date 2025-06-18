@@ -21,7 +21,7 @@ interface Project {
 export class DashboardComponent implements OnInit {
   projects: Project[] = [];
   selectedProject!: Project;
-
+  ticketCountPerDay: Record<string, number> = {}
   stats: Record<string, any> = {};
 
   constructor(private statisticsService: StatisticsService) {}
@@ -113,6 +113,13 @@ this.statisticsService.getTicketCountByCategoryAndPriority(projectId).subscribe(
   },
   error: (err) => console.error('Erreur category + priority', err)
 });
+
+this.statisticsService.getTicketCountPerDay(projectId).subscribe({
+      next: (data) => {
+        this.ticketCountPerDay = data;
+      },
+      error: (err) => console.error('Erreur tickets par jour', err)
+    });
 
 
   }

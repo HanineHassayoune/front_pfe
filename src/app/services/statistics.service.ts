@@ -41,5 +41,11 @@ getTicketCountByCategoryAndPriority(projectId: number): Observable<Record<string
   );
 }
 
+getTicketCountPerDay(projectId: number): Observable<Record<string, number>> {
+  return this.http.get<Record<string, number>>(
+    `${this.statisticsUrl}/tickets/count-per-day/${projectId}`
+  );
+}
+
 
 }
