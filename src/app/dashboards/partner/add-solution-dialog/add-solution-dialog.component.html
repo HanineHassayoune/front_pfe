@@ -10,15 +10,22 @@
     [message]="alertMessage" 
     [isVisible]="alertVisible">
   </app-alert>
-
-  <!-- Spinner while loading -->
-  <div *ngIf="isLoading" class="flex justify-center pt-2">
-    <mat-spinner diameter="30" color="primary"></mat-spinner>
-  </div>
+  
+   <!-- Spinner -->
+    <div *ngIf="isLoading" class="fixed inset-0 bg-black/40 bg-opacity-10 flex items-center justify-center z-50">
+      <div class="flex flex-col items-center gap-3">
+        <mat-progress-spinner
+          mode="indeterminate"
+          class="text-[#205781]"
+          diameter="50">
+        </mat-progress-spinner>
+        <p class="text-white text-lg font-medium">Loading...</p>
+      </div>
+    </div>
+  
 
   <!-- Form -->
   <form 
-    *ngIf="!isLoading" 
     [formGroup]="solutionForm" 
     (ngSubmit)="onSubmit()" 
     class="space-y-4">
@@ -62,5 +69,7 @@
         ➕ Save
       </button>
     </div>
+
+     
   </form>
 </div>

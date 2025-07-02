@@ -12,14 +12,13 @@ import { UserService } from '../../services/user.service';
 })
 export class SidebarComponent {
   constructor(private userService: UserService) {}
-  isSidebarVisible: boolean = true; // Contrôler la visibilité du sidebar
+  isSidebarVisible: boolean = true; // Controler la visibilité du sidebar
 
   // Fonction pour afficher/masquer le sidebar
   toggleSidebar() {
     this.isSidebarVisible = !this.isSidebarVisible;
   }
 
-  //@Input() links: { name: string; href: string; iconPath: string }[] = [];
   @Input() links: { name: string; href: string; iconPath: string; action?: () => void }[] = [];
   @Input() userAvatarUrl: string = '';  
   @Input() userName: string = '';

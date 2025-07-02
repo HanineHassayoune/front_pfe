@@ -3,7 +3,17 @@
     <mat-icon>Add</mat-icon>
     Add Project
   </h2>
-
+   <!-- Spinner -->
+    <div *ngIf="isLoading" class="fixed inset-0 bg-black/40 bg-opacity-10 flex items-center justify-center z-50">
+      <div class="flex flex-col items-center gap-3">
+        <mat-progress-spinner
+          mode="indeterminate"
+          class="text-[#205781]"
+          diameter="50">
+        </mat-progress-spinner>
+        <p class="text-white text-lg font-medium">Loading...</p>
+      </div>
+    </div>
   <form *ngIf="projectForm" [formGroup]="projectForm" class="space-y-4">
 
     <!-- Title -->
@@ -94,10 +104,7 @@
       <button mat-raised-button (click)="submit()" class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba]" >➕ Add Project</button>
     </div>
 
-    <!-- Spinner -->
-<div *ngIf="isLoading" class="flex justify-center">
-  <mat-spinner diameter="30" color="primary"></mat-spinner>
-</div>
+  
 
   </form>
 </div>

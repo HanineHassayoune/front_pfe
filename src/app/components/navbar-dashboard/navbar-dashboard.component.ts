@@ -57,14 +57,7 @@ export class NavbarDashboardComponent implements OnInit, OnDestroy {
       this.notifications.unshift(notif);
     });
 
- /*  this.notificationService.getMyNotifications().subscribe({
-  next: (notifications) => {
-    this.notifications = notifications.reverse(); // tri si besoin
-  },
-  error: (err) => {
-    console.error('❌ Erreur lors du chargement des notifications :', err);
-  }
-}); */
+
 
   }
 

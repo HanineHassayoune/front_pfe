@@ -1,8 +1,8 @@
 <body class="bg-gray-100 min-h-screen">
   <div class="flex overflow-hidden">
     <div id="main-content" class="h-full w-full relative overflow-y-auto lg:ml-64 " *ngIf="ticket" > 
-<!--       <div class="space-y-2 bg-gray-100 min-h-screen" *ngIf="ticket"> -->
-        <!-- 1. Ticket Details -->
+
+        <!-- Ticket Details -->
         <app-details 
         [status]="ticket.status"
         [priority]="ticket.priority"
@@ -13,24 +13,25 @@
         [level]="ticket.level" 
         [loggerName]="ticket.loggerName"> 
         </app-details>
-       <!--  <app-solution [ticketId]="myTicket.id"></app-solution> -->
+      
         <!-- Ticket Solution -->
         <app-solution class="flex flex-col"  
           *ngIf="connectedUserId !== undefined" 
           [ticketId]="ticket.id" 
-          [userId]="connectedUserId">
+          [userId]="connectedUserId"
+          [status]="ticket.status">
         </app-solution>
 
         <app-ticket-carousel [ticketId]="ticket.id"></app-ticket-carousel>
 
 
 
-        <!-- <app-comments [comments]="ticket.comments"></app-comments> -->
+        <!-- comments -->
          <app-comments [ticketId]="ticket.id"></app-comments>
      
 
 
-  <!--     </div> -->
+
     </div>
   </div>
 </body>

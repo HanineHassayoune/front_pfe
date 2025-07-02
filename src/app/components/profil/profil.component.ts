@@ -119,49 +119,6 @@ export class ProfilComponent implements OnInit {
   
   
   
-    // Vérification que le mot de passe actuel est correct
-    /* this.userService.checkCurrentPassword(this.currentPassword).subscribe({
-      next: (response) => {
-        if (response.isValid) {
-          const body = {
-            currentPassword: this.currentPassword,
-            newPassword: this.newPassword,
-            confirmationPassword: this.confirmationPassword
-          };
-  
-          this.userService.updateProfile(body).subscribe({
-            next: () => {
-              this.alertType = 'success';
-              this.alertMessage = 'Mot de passe mis à jour avec succès';
-              this.alertVisible = true;
-              setTimeout(() => { this.alertVisible = false; }, 2000);
-            },
-            error: (err) => {
-              this.alertType = 'danger';
-              this.alertMessage = 'Erreur : ' + (err.error?.message || 'Une erreur inconnue est survenue.');
-              this.alertVisible = true;
-              setTimeout(() => { this.alertVisible = false; }, 2000);
-            }
-          });
-        } else {
-          this.alertType = 'danger';
-          this.alertMessage = 'Le mot de passe actuel est incorrect.';
-          this.alertVisible = true;
-          setTimeout(() => { this.alertVisible = false; }, 2000);
-        }
-      },
-      error: (err:any) => {
-        this.alertType = 'danger';
-        this.alertMessage = 'Erreur lors de la vérification du mot de passe actuel.';
-        this.alertVisible = true;
-        setTimeout(() => { this.alertVisible = false; }, 2000);
-      }
-    }); */
-
-  
-  
-  
-  
   
   
   

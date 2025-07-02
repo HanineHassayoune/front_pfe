@@ -82,7 +82,7 @@
      (click)="openTicketDetails(ticket)">
        <!-- Assignment Info -->
   <div class="text-sm text-gray-600 mt-2" (click)="$event.stopPropagation()">
-    <span *ngIf="ticket.assignedUserId; else notAssigned"><!-- Assigned to:  -->
+    <span *ngIf="ticket.assignedUserId; else notAssigned">
       👤 {{ assignedUserNames[ticket.assignedUserId] || 'Loading...' }}
     </span>
     <ng-template #notAssigned>

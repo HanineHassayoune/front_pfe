@@ -18,7 +18,7 @@ export class TablePaginationComponent {
   @Input() userRole: string = '';
 
   @Output() pageChanged = new EventEmitter<any>();
-  //@Output() actionTriggered = new EventEmitter<{ id: number; action: string }>();
+
   @Output() actionTriggered = new EventEmitter<{ id: number; action: string; user?: any }>();
 
   // Reçois l'objet complet (pas juste id)

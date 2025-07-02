@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class TicketCarouselComponent {
 
  @Input() ticketId!: number;
-//tickets: Ticket[] = []
+
   currentSlide = 0;
 
 

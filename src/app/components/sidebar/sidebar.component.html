@@ -20,7 +20,7 @@
                 <span class="ml-3">{{ link.name }}</span>
               </a>
           
-              <!-- Lien avec action (ex: Logout) -->
+              <!-- Lien avec action -->
               <a *ngIf="link.action" href="#" (click)="handleClick(link); $event.preventDefault();"
                 class="text-base text-gray-50 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 hover:text-gray-900 group">
                 <svg class="w-6 h-6 text-gray-50 group-hover:text-gray-900"  xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 24 24">

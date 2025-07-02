@@ -167,6 +167,7 @@ updatePriority(): void {
   selectUser(user: any): void {
     this.selectedUser = user;
     this.dropdownOpen = false;
+    this.assignUser();
   }
 
   private getRole(): string | null {
@@ -186,6 +187,7 @@ togglePriorityDropdown(): void {
 selectPriority(priority: string): void {
   this.selectedPriority = priority;
   this.priorityDropdownOpen = false;
+  this.updatePriority();
 }
 
 priorityIcons: { [key: string]: string } = {

@@ -70,7 +70,7 @@ export class EditProjectModalComponent implements OnInit {
           .filter(user => user.enabled)
           .map(user => ({ id: user.id, name: user.name }));
   
-        // Maintenant que les users sont chargés, tu peux peupler le form
+       
         const userIds = this.data.project?.affectedUsers.map((u: any) => u.id) || [];
         const selectedUsers = this.allUsers.filter(user => userIds.includes(user.id));
   
@@ -108,17 +108,17 @@ onMicroservicesChange(updatedList: string[]) {
   const formValues = this.projectForm.value;
   const formData = new FormData();
 
-  // Champs de base
+  // Champs form
   formData.append('title', formValues.title || '');
   formData.append('description', formValues.description || '');
   formData.append('technologies', JSON.stringify(formValues.technologies || []));
   formData.append('architecture', formValues.architecture);
 
-  // Utilisateurs assignés
+  // assigned users
   const userIds = (formValues.users || []).map((user: any) => user.id);
   formData.append('users', JSON.stringify(userIds));
 
-  // Image si sélectionnée
+  // Image 
   if (this.selectedFile) {
     formData.append('image', this.selectedFile);
   }
@@ -130,15 +130,7 @@ onMicroservicesChange(updatedList: string[]) {
     formData.append('microservices', JSON.stringify(microservicesArray));
   }
 
-  // Appel API
-  /* this.projectService.updateProject(this.data.project.id, formData).subscribe({
-    next: () => {
-      this.dialogRef.close(true);
-    },
-    error: (err) => {
-      console.error('Erreur lors de la mise à jour du projet :', err);
-    }
-  }); */
+  
     this.projectService.updateProject(this.data.project.id, formData).subscribe({
     next: (updatedProject) => {
       this.isLoading = false; 

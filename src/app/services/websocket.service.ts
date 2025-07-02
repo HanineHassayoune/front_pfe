@@ -20,31 +20,31 @@ export class WebSocketService {
       reconnectDelay: 5000,
       debug: str => console.log(str),
       onConnect: () => {
-        console.log('✅ Connected to WebSocket');
+        console.log('Connected to WebSocket');
 
         this.userService.getConnectedUser().subscribe(user => {
           const userId = user?.id;
           if (userId) {
             const topic = `${WEBSOCKET_NOTIFY_TOPIC}/${userId}`;
-            console.log(`📡 Abonnement au topic : ${topic}`);
+            console.log(`Abonnement au topic : ${topic}`);
 
             this.stompClient.subscribe(topic, (message: Message) => {
               try {
-                console.log('📩 Message brut reçu du serveur STOMP:', message);
+                console.log('Message brut reçu du serveur STOMP:', message);
                 const notification: AppNotification = JSON.parse(message.body);
-                console.log('🔔 Notification WebSocket reçue et parsée :', notification);
+                console.log('Notification WebSocket reçue et parsée :', notification);
                 this.notificationSubject.next(notification);
               } catch (error) {
-                console.error('❌ Erreur lors du parsing de la notification :', error);
+                console.error('Erreur lors du parsing de la notification :', error);
               }
             });
           } else {
-            console.warn("⚠️ Impossible de s'abonner : utilisateur sans ID");
+            console.warn("Impossible de s'abonner : utilisateur sans ID");
           }
         });
       },
       onStompError: frame => {
-        console.error('❌ STOMP error', frame);
+        console.error('STOMP error', frame);
       }
     });
 
@@ -52,7 +52,7 @@ export class WebSocketService {
   }
 
   public onNotification(): Observable<AppNotification> {
-    console.log('👂 Composant appelé onNotification()');
+    console.log('Composant appelé onNotification()');
     return this.notificationSubject.asObservable();
   }
 }

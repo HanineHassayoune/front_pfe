@@ -28,9 +28,7 @@ export class CommentsService {
     return this.http.get<Comment[]>(`${this.commentUrl}/ticket/${ticketId}`);
   }
 
-/* addComment(ticketId: number, comment: Omit<Comment, 'id'>): Observable<Comment> {
-  return this.http.post<Comment>(`${this.commentUrl}/ticket/${ticketId}`, comment);
-} */
+
 addComment(ticketId: number, comment: Omit<Comment, 'id'>): Observable<Comment> {
   const params = comment.parentCommentId !== undefined
     ? { parentCommentId: comment.parentCommentId }

@@ -78,7 +78,7 @@ updateProfile(data: {
   if (data.confirmationPassword) formData.append('confirmationPassword', data.confirmationPassword);
   if (data.profileImage) formData.append('profileImage', data.profileImage);
 
-  //return this.http.patch(`${this.usersUrl}/updateProfile`, formData);
+  
   return this.http.patch<User>(`${this.usersUrl}/updateProfile`, formData).pipe(
     tap((updatedUser: User) => {
     this.userSubject.next(updatedUser); // ⬅️ TRIGGER
@@ -91,10 +91,6 @@ getUserById(id: number): Observable<any> {
 }
 
 
-/*  checkCurrentPassword(currentPassword: string): Observable<{ isValid: boolean }> {
-  return this.http.post<{ isValid: boolean }>(`${this.usersUrl}/check-current-password`, { currentPassword });
-}
- */
  
 getUserProfileById(id: number): Observable<any> {
   return this.http.get(`${this.usersUrl}/${id}/profile`);

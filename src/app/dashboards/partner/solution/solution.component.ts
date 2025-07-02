@@ -22,7 +22,7 @@ export class SolutionComponent implements OnInit {
   @Input() referenceLink?: string = '';
   @Input() author: string = ''; 
   @Input() datePosted: string = '';
-
+  @Input() status: string = '';
   @Input() ticketId!: number;
   @Input() userId!: number;
   @Input() solutionId!: number;
@@ -41,10 +41,9 @@ export class SolutionComponent implements OnInit {
   ngOnInit(): void {
   this.role = this.storageService.getRole()?.toUpperCase() || null;
 
-  // ⬅️ Chargement initial
   this.loadSolution();
 
-  // 🔁 Réagir aux mises à jour via BehaviorSubject
+  // BehaviorSubject
   this.solutionService.solutionUpdated$.subscribe((updated) => {
     if (updated) {
       this.loadSolution();

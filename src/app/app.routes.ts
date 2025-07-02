@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { NavbarDashboardComponent } from './components/navbar-dashboard/navbar-dashboard.component';
-import { FooterDashboardComponent } from './components/footer-dashboard/footer-dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { UsersComponent } from './dashboards/partner/users/users.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
@@ -25,7 +24,6 @@ import { NotificationsComponent } from './dashboards/notifications/notifications
 
 export const routes: Routes = [
    {path:'navbar',component:NavbarDashboardComponent},
-    {path:'footer',component:FooterDashboardComponent},
     {path:'sidebar',component:SidebarComponent},
     {path:'users',component:UsersComponent},
     {path:'pieChart',component:PieChartComponent},

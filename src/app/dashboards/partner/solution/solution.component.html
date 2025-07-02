@@ -12,7 +12,7 @@
 
       <!-- Bouton visible uniquement pour le rôle DEVELOPER -->
       <button
-        *ngIf="role === 'DEVELOPER'"
+         *ngIf="role === 'DEVELOPER' && status === 'IN_PROGRESS' && (!solutionText || solutionText.trim() === '')"
         class="bg-[#205781] text-white px-4 py-2 rounded-lg hover:bg-[#799eba] cursor-pointer"
         (click)="onAddSolution()">
         + Add Solution

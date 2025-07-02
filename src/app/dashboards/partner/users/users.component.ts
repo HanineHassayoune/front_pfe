@@ -21,7 +21,7 @@ import { MatTableModule } from '@angular/material/table';
   standalone: true,
   imports: [CommonModule,PieChartComponent,
     ReactiveFormsModule,AlertComponent,MatProgressSpinnerModule,
-    FormsModule,TablePaginationComponent,MatDialogModule,
+    FormsModule,
     AddUserDialogComponent,UserProfileDialogComponent,MatTableModule, MatButtonModule, TablePaginationComponent,MatDialogModule
   ],
   templateUrl: './users.component.html',

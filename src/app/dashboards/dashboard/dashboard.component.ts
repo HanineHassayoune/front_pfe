@@ -131,7 +131,7 @@ getPriorityColor(priority: string): string {
     case 'MEDIUM': return '#16BDCA';
     case 'HIGH': return '#FDBA8C';
     case 'CRITICAL': return '#DC2626';
-    default: return '#9CA3AF'; // gris
+    default: return '#9CA3AF'; 
   }
 }
 

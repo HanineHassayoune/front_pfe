@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AddProjectDialogComponent } from '../add-project-dialog/add-project-dialog.component';
 import { StorageService } from '../../../services/storage.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 interface User {
   id: number;
@@ -33,7 +34,7 @@ interface User {
     ProjectCardComponent,
     ChipsComponent,
     MatDialogModule,
-    AddProjectDialogComponent 
+    AddProjectDialogComponent,MatProgressSpinnerModule
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css',
@@ -44,7 +45,7 @@ export class ProjectsComponent implements OnInit {
   private projectService = inject(ProjectService);
   private userService = inject(UserService);
   private dialog = inject(MatDialog);
-
+isLoading: boolean = false;
   private storageService = inject(StorageService);
 
   role: string | null = null;
@@ -116,6 +117,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   openAddProjectDialog(): void {
+    this.isLoading = true;
     const dialogRef = this.dialog.open(AddProjectDialogComponent, {
       width: '600px',
       data: {
@@ -125,6 +127,7 @@ export class ProjectsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+       this.isLoading = false;
       if (result === 'refresh') {
         this.fetchProjects();
       }

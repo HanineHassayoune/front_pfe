@@ -38,9 +38,9 @@ export class TicketsComponent implements OnInit {
   };
 searchTerm: string = '';
 
-  // variable pour garder tous les tickets en cache
+
   allTickets: Ticket[] = [];
-  assignedUserNames: Record<number, string> = {}; // key = userId, value = name
+  assignedUserNames: Record<number, string> = {};
 
   constructor(
     private router: Router,
@@ -79,15 +79,12 @@ searchTerm: string = '';
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
       console.log('Ticket created:', result);
-      this.refreshTickets();
+     
     }
   });
 }
 
-refreshTickets(): void {
-    // Logique pour recharger les tickets
-    // Par exemple : this.loadTickets();
-  }
+
 
  onSearchChange() {
   const term = this.searchTerm.trim().toLowerCase();

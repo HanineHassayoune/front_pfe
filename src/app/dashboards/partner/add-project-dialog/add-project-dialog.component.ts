@@ -162,7 +162,7 @@ submit(): void {
   formData.append('architecture', this.projectForm.value.architecture);
   
 
-  // Facultatif
+
   if (this.projectForm.value.architecture === 'MICROSERVICES') {
   const microserviceTitles = this.projectForm.value.microservices || [];
   const microservicesArray = microserviceTitles.map((title: string) => ({ title }));
